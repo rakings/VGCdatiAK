@@ -1,0 +1,12 @@
+name: Prove di lettura 2 (solo lettura, nessun file salvato)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prove2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 prove2.py
