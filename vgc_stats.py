@@ -416,6 +416,48 @@ def list_events_storico(testo=None):
     return out
 
 
+def get_lista(url):
+    """Come get_json, ma per i file dei vecchi tornei, che sono una LISTA di giocatori (non un dizionario)."""
+    global used
+    if used >= budget:
+        raise Budget()
+    used += 1
+    time.sleep(DELAY)
+    try:
+        text = fetch_text(url)
+    except urllib.error.HTTPError as e:
+        if e.code in (403, 429) or e.code >= 500:
+            raise Stop("Pokedata ha risposto %s per %s" % (e.code, url))
+        raise
+    i = text.find("[")
+    if i < 0:
+        raise ValueError("risposta inattesa (non e' una lista)")
+    return json.loads(text[i:])
+
+
+LETTERE_ESITO = {"W": 3, "L": 0, "T": 1, "D": 1}
+
+
+def converti_storico(giocatori, ev):
+    """Il file di un vecchio torneo (standingsVGC/<id>/masters/<id>_Masters.json) ha gli stessi campi dell'API dei tornei nuovi,
+    tranne la squadra (che li' si chiama «decklist» invece di «teamlist»). Si rimette tutto nella forma che process() conosce."""
+    if not isinstance(giocatori, list) or not giocatori or not all(isinstance(p, dict) and p.get("name") for p in giocatori):
+        raise ValueError("file dei giocatori vuoto o in un formato diverso dal previsto")
+    raw = []
+    for p in giocatori:
+        q = dict(p)
+        dl = p.get("decklist")
+        q["teamlist"] = dl if isinstance(dl, list) else []
+        q["rounds"] = {r: (dict(e, result=LETTERE_ESITO.get(str(e.get("result")).upper(), e.get("result"))) if isinstance(e, dict) else e)
+                       for r, e in (p.get("rounds") or {}).items()}      # nei vecchi file l'esito e' una lettera (W/L/T), nell'API un numero
+        raw.append(q)
+    totale = max((int(r) for p in giocatori for r in (p.get("rounds") or {}) if str(r).isdigit()), default=0)
+    primo = next((p["name"] for p in giocatori if p.get("placing") == 1), None)
+    return {"tournament": {"id": ev["id"], "name": ev["name"], "date": {"start": ev["start"], "end": ev["end"]},
+                           "tournamentStatus": "finished", "roundNumbers": {"masters": totale}, "winners": {"masters": primo}},
+            "tournament_data": [{"division": "masters", "data": raw}]}
+
+
 def controlla_torneo(ev, info):
     """Per lo storico: Pokedata, se non conosce l'id chiesto, risponde con l'ULTIMO torneo invece di un errore. Si controlla che il torneo
     ricevuto sia davvero quello chiesto, altrimenti ci si ferma prima di salvare qualsiasi cosa."""
@@ -522,7 +564,10 @@ def finale_decisa(swiss):
 
 def collect(ev, write):
     tid = ev["id"]
-    data = get_json("%s/vg/id/%s/division/masters" % (API, tid))
+    if ev.get("storico"):
+        data = converti_storico(get_lista("%s%s/masters/%s_Masters.json" % (STORICO_URL, tid, tid)), ev)
+    else:
+        data = get_json("%s/vg/id/%s/division/masters" % (API, tid))
     info, players, teams, swiss, day1, swiss_total = process(data)
     if ev.get("storico"):
         controlla_torneo(ev, info)
@@ -940,7 +985,7 @@ def main():
     ap.add_argument("--max-events", type=int, default=2, help="con --auto: quanti regionali finiti non raccolti per giro")
     a = ap.parse_args()
     budget = int(os.environ.get("VGC_BUDGET", "6"))
-    print("Versione del collettore: 2026-11-02t STORICO con controllo del torneo ricevuto (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
+    print("Versione del collettore: 2026-11-02u STORICO letto dai file json dei vecchi tornei (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
     print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
     try:
         if a.cf_test:
