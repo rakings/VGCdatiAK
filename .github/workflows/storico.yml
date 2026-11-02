@@ -1,5 +1,7 @@
 name: Storico Pokedata - vecchi tornei
 on:
+  schedule:
+    - cron: "41 6 * * 0,3"
   workflow_dispatch:
     inputs:
       salva:
@@ -27,7 +29,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Raccolta dei vecchi tornei
         env:
-          SALVA: ${{ inputs.salva }}
+          SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
           QUANTI: ${{ inputs.quanti || '12' }}
           VGC_BUDGET: ${{ inputs.quanti || '12' }}
         run: |
