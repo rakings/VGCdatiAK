@@ -1,0 +1,25 @@
+MAPPA DELLE FONTI - seconda repo VGCdatiAK (aggiornata 02/11/2026)
+Regole per tutte: identificazione onesta (nessun dato personale), poche richieste, lente e a tempi irregolari, credito e link alla fonte nell'app.
+Nessun accesso diretto a Battlefy (loro API: "Direct API access is not permitted").
+
+1) POKEDATA (pokedata.ovh) - permesso esplicito dell'autore
+   a) Regionali recenti e in corso: GIA' nel collettore della repo principale (Cloudflare + GitHub).
+   b) Vecchi regionali (prima di settembre 2025): elenco storico su /standingsVGC, dati su /apiv3/vg/id/<id>/division/masters.
+      Stato: PROVA (esplora.py). Poi: copia lenta una volta sola, nella seconda repo.
+   c) CP bar: https://www.pokedata.ovh/2027/ (VG, Europa, Masters, prime 3 pagine, soglia posizione 90 = stima non ufficiale).
+      Stato: PRONTO in prova (cp_pokedata.py). Archivio: una copia al giorno, solo se cambia. Altre stagioni: da verificare.
+   robots.txt: da controllare (https://www.pokedata.ovh/robots.txt) - il permesso dell'autore c'e' comunque.
+
+2) VICTORY ROAD (circuit.victoryroad.pro) - nessuna risposta alla richiesta di permesso
+   Pagine per torneo: /tournament/<id> (classifica + squadre a icone + link vrpastes), /pairings, /metagame, /megas.
+   Stato: PROVA (vr_prova.py). La pagina sembra aggiornata a torneo finito: la "diretta" e' DA VERIFICARE durante un torneo.
+   Diretta (se le pagine si aggiornano): stesse regole dei regionali, ma pausa >= 10 minuti anche nel Top cut (limite GitHub Pages: 10 pubblicazioni all'ora).
+   robots.txt: DA CONTROLLARE (https://circuit.victoryroad.pro/robots.txt).
+   Contatto staff (pubblico sul loro sito): management@victoryroad.pro
+
+3) LIMITLESS VGC (limitlessvgc.com) - storico giocatori
+   robots.txt vuoto (nessun divieto). Legal Notice e Terms of Service (piattaforma tornei): nessuna regola su accesso automatico.
+   Idea: ricostruire lo storico dalle ~450 pagine dei tornei (una volta + una dopo ogni evento) invece di migliaia di profili.
+   Stato: PROVA (limitless_prova.py). Contatto facoltativo: contact@limitlesstcg.com
+
+4) BATTLEFY - NON si usa. battlefy.com/robots.txt ok per le pagine, ma l'API risponde "Direct API access is not permitted".
