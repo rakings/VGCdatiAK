@@ -113,12 +113,12 @@ def controlla(righe):
     p = []
     if len(righe) < 30:
         p.append("trovate solo %d righe (ne aspettavo almeno 30)" % len(righe))
-    rk = sorted(r["rank"] for r in righe)
-    if rk and rk[0] != 1:
-        p.append("la classifica non parte dal primo posto (parte da %d)" % rk[0])
-    if len(set(rk)) < len(rk) * 0.9:
-        p.append("troppi posti ripetuti: le pagine potrebbero essere uguali")
-    pts = [r["cp"] for r in sorted(righe, key=lambda r: r["rank"])]
+    if righe and righe[0]["rank"] != 1:
+        p.append("la classifica non parte dal primo posto (parte da %d)" % righe[0]["rank"])
+    nomi = [r["name"] for r in righe]
+    if len(set(nomi)) < len(nomi) * 0.95:
+        p.append("troppi nomi ripetuti: le pagine potrebbero essere uguali")
+    pts = [r["cp"] for r in righe]
     if any(pts[i] < pts[i + 1] for i in range(len(pts) - 1)):
         p.append("i punti non scendono con la posizione")
     return p
@@ -126,11 +126,11 @@ def controlla(righe):
 
 def costruisci(game, region, division, righe, totale, adesso=None):
     adesso = adesso or time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
-    righe = sorted(righe, key=lambda r: r["rank"])
-    sg = next((r for r in righe if r["rank"] == SOGLIA_POSIZIONE), None)
+    righe = [dict(r, pos=i + 1) for i, r in enumerate(righe)]     # pos = posto nell'elenco (a pari punti il «rank» stampato si ripete)
+    sg = righe[SOGLIA_POSIZIONE - 1] if len(righe) >= SOGLIA_POSIZIONE else None
     return {"fonte": "Pokedata", "url": url_pagina(game, region, division, 1), "stagione": STAGIONE,
             "game": game, "region": region, "division": division, "aggiornato": adesso, "giocatori_totali": totale,
-            "soglia": {"posizione": SOGLIA_POSIZIONE, "cp": sg["cp"] if sg else None,
+            "soglia": {"posizione": SOGLIA_POSIZIONE, "cp": sg["cp"] if sg else None, "rank_stampato": sg["rank"] if sg else None,
                        "nota": "posizione stimata, non ufficiale"},
             "righe": righe}
 
@@ -144,7 +144,7 @@ def salva(dati, out=OUT, oggi=None):
     oggi = oggi or time.strftime("%Y-%m-%d", time.gmtime())
     base = nome_file(dati["game"], dati["region"], dati["division"])
     os.makedirs(os.path.join(out, "storico", base), exist_ok=True)
-    firma = hashlib.sha1(json.dumps([[r["rank"], r["name"], r["cp"]] for r in dati["righe"]]).encode()).hexdigest()
+    firma = hashlib.sha1(json.dumps([[r["pos"], r["name"], r["cp"]] for r in dati["righe"]]).encode()).hexdigest()
     ultimo = os.path.join(out, base + ".json")
     try:
         with open(ultimo, encoding="utf-8") as f:
@@ -182,10 +182,12 @@ def main(argv=None, scarica_fn=scarica, pausa_fn=None):
             continue
         dati = costruisci(game, region, division, righe, totale)
         sg = dati["soglia"]
-        print("Letti %d giocatori (totale dichiarato: %s). Posizione %d: %s CP." % (
+        print("Letti %d giocatori (totale dichiarato: %s). Posizione %d dell'elenco: %s CP." % (
             len(righe), totale if totale is not None else "?", sg["posizione"], sg["cp"] if sg["cp"] is not None else "non trovata"))
         for r in dati["righe"][:3]:
-            print("   %d  %-26s %-4s %5d CP  (storia: %d voci)" % (r["rank"], r["name"][:26], r["country"][:4], r["cp"], len(r["storia"])))
+            print("   pos %d (rank stampato %d)  %-26s %-4s %5d CP  (storia: %d voci)" % (r["pos"], r["rank"], r["name"][:26], r["country"][:4], r["cp"], len(r["storia"])))
+        ripetuti = len(dati["righe"]) - len(set(r["rank"] for r in dati["righe"]))
+        print("Posti stampati ripetuti (pari punti): %d su %d" % (ripetuti, len(dati["righe"])))
         if scrivi:
             print("Salvato." if salva(dati) else "Invariato: nessun file toccato.")
         else:
