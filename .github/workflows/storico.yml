@@ -35,6 +35,7 @@ jobs:
         run: |
           if [ "$SALVA" = "si" ]; then python3 vgc_stats.py --storico --write --max-events "$QUANTI"; else python3 vgc_stats.py --storico --max-events "$QUANTI"; fi
       - name: Pubblica su GitHub
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
