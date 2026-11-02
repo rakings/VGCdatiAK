@@ -1,0 +1,12 @@
+name: Prova 5 - tabella dei vecchi tornei Pokedata (solo lettura)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prova5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 prove5.py
