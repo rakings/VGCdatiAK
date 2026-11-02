@@ -520,6 +520,213 @@ def storico(write, quanti):
     return 0
 
 
+# ---------- modo VR: tornei del VR Circuit (Victory Road) ----------
+
+VR_CONF = "vr_tornei.json"          # tornei da seguire: [{"id": "vr-nov26", "alt": ["vr-nov26-1"], "nome": "...", "inizio": "2026-11-07T14:00:00Z"}]
+VR_OUT = "vr"
+VR_SITO = "https://circuit.victoryroad.pro"
+VR_POLL = 5 * 60                    # controllo a intervalli di 5 minuti mentre si aspettano i nuovi abbinamenti
+VR_PAUSA_ROUND = 20 * 60            # i round durano almeno 20 minuti: appena escono i nuovi abbinamenti si aspetta 20 minuti
+VR_PUBBLICA_OGNI = 10 * 60          # al massimo una pubblicazione ogni 10 minuti (GitHub Pages: circa 10 aggiornamenti all'ora)
+VR_ATTESA_FINALE = 20 * 60          # dopo la finale decisa: 20 minuti di controlli, poi ultimo salvataggio e stop
+VR_PRIMA = 3600                     # si comincia a guardare un'ora prima dell'inizio
+VR_DOPO = 18 * 3600                 # e si smette 18 ore dopo
+VR_ATTESA_PAGINA = 10 * 60          # pagina del torneo non ancora pubblicata: si riprova ogni 10 minuti
+VR_RINUNCIA = 3 * 3600              # se 3 ore dopo l'inizio la pagina non c'e', si rinuncia
+
+
+def vr_pausa():
+    time.sleep(random.uniform(2.0, 5.0))
+
+
+def vr_conf():
+    out = []
+    lista = load(VR_CONF, [])
+    for x in lista if isinstance(lista, list) else []:
+        try:
+            ts = calendar.timegm(time.strptime(x["inizio"], "%Y-%m-%dT%H:%M:%SZ"))
+            out.append({"id": x["id"], "alt": list(x.get("alt") or []), "nome": x.get("nome") or x["id"], "inizio": ts})
+        except (KeyError, ValueError, TypeError):
+            print("vr_tornei.json: voce da correggere (servono id e inizio, per esempio 2026-11-07T14:00:00Z): %s" % (x,))
+    return out
+
+
+def vr_scarica(url, cache):
+    """Una pagina del sito dei VR: compressa, e con la richiesta «e' cambiato qualcosa?» (se il sito risponde 304 non rimanda niente)."""
+    import gzip
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Encoding": "gzip"})
+    c = cache.get(url)
+    if c:
+        if c.get("etag"):
+            req.add_header("If-None-Match", c["etag"])
+        if c.get("lm"):
+            req.add_header("If-Modified-Since", c["lm"])
+    try:
+        r = urllib.request.urlopen(req, timeout=60)
+    except urllib.error.HTTPError as e:
+        if e.code == 304 and c:
+            return 304, c["text"]
+        if e.code == 404:
+            return 404, ""
+        if e.code in (403, 429) or e.code >= 500:
+            raise Stop("Il sito dei VR ha risposto %s: mi fermo senza insistere" % e.code)
+        raise
+    body = r.read()
+    if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
+        body = gzip.decompress(body)
+    testo = body.decode("utf-8", "replace")
+    cache[url] = {"text": testo, "etag": r.headers.get("ETag"), "lm": r.headers.get("Last-Modified")}
+    return 200, testo
+
+
+def vr_data(ts):
+    return time.strftime("%Y-%m-%d", time.gmtime(ts))
+
+
+def vr_evento(it, slug=None, nome=None, status="not started"):
+    inizio = vr_data(it["inizio"])
+    return {"id": slug or it["id"], "name": nome or it["nome"], "city": it["nome"], "kind": "VR Circuit", "start": inizio, "end": inizio,
+            "status": status, "players": 0, "decklists": 0, "rounds": 0, "reg": reg_of(inizio), "winner": None, "rk9": None,
+            "updated": "", "winners": {}, "players_div": {}, "vr": True, "fonte": "Victory Road Circuit (circuit.victoryroad.pro)"}
+
+
+def vr_ciclo(it, cache, write, finito="auto", slug_noto=None):
+    """Un controllo: legge abbinamenti e classifica, li converte e li passa al collettore. None = la pagina del torneo non c'e' ancora."""
+    import vr_lettura as L
+    slugs = [slug_noto] if slug_noto else [it["id"]] + it["alt"]
+    slug, abb = None, ""
+    for sl in slugs:
+        st, txt = vr_scarica("%s/tournament/%s/pairings" % (VR_SITO, sl), cache)
+        if st != 404:
+            slug, abb = sl, txt
+            break
+    if slug is None:
+        return None
+    vr_pausa()
+    st2, cla = vr_scarica("%s/tournament/%s" % (VR_SITO, slug), cache)
+    if st2 == 404:
+        return None
+    giocatori, meta = L.leggi_classifica(cla)
+    rounds, cut, _ = L.leggi_abbinamenti(abb)
+    if not giocatori:
+        raise ValueError("la classifica del torneo %s e' vuota o in un formato diverso dal previsto" % slug)
+    dich = meta.get("giocatori")
+    if dich and len(giocatori) < dich * 0.9:
+        raise ValueError("lette %d righe su %d giocatori dichiarati: non salvo" % (len(giocatori), dich))
+    fin = L.finale_decisa(cut)
+    stato_finito = fin if finito == "auto" else bool(finito)
+    nome = (meta.get("titolo") or "").split(" \u00b7 ")[0].strip() or it["nome"]
+    ev = vr_evento(it, slug, nome, "finished" if stato_finito else "running")
+    if stato_finito:
+        ev["end"] = vr_data(time.time())
+    data, doppi = L.converti(giocatori, rounds, cut, ev, finito=stato_finito)
+    if doppi:
+        print("Attenzione: nomi uguali nella classifica (%s): i loro avversari non si possono risolvere." % ", ".join(doppi))
+    ev["vr_data"] = data
+    cambiato = collect(ev, write)
+    return {"slug": slug, "ev": ev, "cambiato": cambiato, "round": len(rounds) + len(cut), "fin": fin, "giocatori": len(giocatori)}
+
+
+def vr_completo(it):
+    return any(load(os.path.join(OUT, sl, "meta.json"), {}).get("complete") for sl in [it["id"]] + it["alt"])
+
+
+def vr_indice(conf, evs, adesso=None):
+    """Elenco dei tornei VR per l'app: quelli con dati, quello in corso e quelli in arrivo nei prossimi 14 giorni (non i vecchi senza dati)."""
+    adesso = adesso if adesso is not None else time.time()
+    events = []
+    for it in conf:
+        e = evs.get(it["id"])
+        if e is None:
+            noto = next((sl for sl in [it["id"]] + it["alt"] if load(os.path.join(OUT, sl, "meta.json"), {})), None)
+            if not noto and not (it["inizio"] - VR_PRIMA <= adesso <= it["inizio"] + VR_DOPO or 0 <= it["inizio"] - adesso <= 14 * 86400):
+                continue
+            m = load(os.path.join(OUT, noto, "meta.json"), {}) if noto else {}
+            e = vr_evento(it, noto, m.get("name"), m.get("status") or "not started")
+            e["players"], e["rounds"] = m.get("players", 0), m.get("rounds", 0)
+        events.append(e)
+    return save_index(events)
+
+
+def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sleep=time.sleep, rnd=random.uniform):
+    global OUT
+    max_run = LIVE_MAX_RUN if max_run is None else max_run
+    OUT = VR_OUT
+    FONTE[0], FONTE[1] = "Victory Road Circuit", VR_SITO
+    conf = vr_conf()
+    if not conf:
+        print("Nessun torneo in %s: niente da fare." % VR_CONF)
+        return 0
+    cache, stato, evs, t0, giri = {}, {}, {}, now(), 0
+    rinunciati = set()
+
+    while True:
+        t = now()
+        attivi = [it for it in conf if it["id"] not in rinunciati and (not live or (it["inizio"] - VR_PRIMA <= t <= it["inizio"] + VR_DOPO and not vr_completo(it)))]
+        if not attivi:
+            print("Nessun torneo VR in corso: mi fermo.")
+            break
+        nuovo_round, gia_atteso = False, False
+        for it in attivi:
+            s = stato.setdefault(it["id"], {"round": 0, "fin_t": None, "slug": None, "ultima_pub": 0, "da_pubblicare": False})
+            t = now()
+            if live and t < it["inizio"] - 600:
+                sleep(min(it["inizio"] - 600 - t, 20 * 60))
+                gia_atteso = True
+                continue
+            finito = ("auto" if not live else bool(s["fin_t"] and t - s["fin_t"] >= VR_ATTESA_FINALE))
+            r = vr_ciclo(it, cache, write, finito, s["slug"])
+            if r is None:
+                if t > it["inizio"] + VR_RINUNCIA:
+                    print("La pagina di %s non e' comparsa nemmeno dopo 3 ore: rinuncio." % it["id"])
+                    rinunciati.add(it["id"])
+                else:
+                    print("La pagina di %s non c'e' ancora: riprovo tra 10 minuti." % it["id"])
+                    if live:
+                        sleep(VR_ATTESA_PAGINA)
+                        gia_atteso = True
+                continue
+            s["slug"] = r["slug"]
+            evs[it["id"]] = r["ev"]
+            nuovo = r["round"] > s["round"]
+            s["round"] = r["round"]
+            if r["fin"] and not s["fin_t"]:
+                s["fin_t"] = t
+            if write and r["cambiato"]:
+                s["da_pubblicare"] = True
+                vr_indice(conf, evs, t)
+            ultimo = (finito is True) or finito == "auto"
+            if write and commit and s["da_pubblicare"] and (nuovo or ultimo or t - s["ultima_pub"] >= VR_PUBBLICA_OGNI):
+                git_publish("VR: aggiornamento dati (live)")
+                s["ultima_pub"], s["da_pubblicare"] = t, False
+            nuovo_round = nuovo_round or nuovo
+            if finito is True:
+                print("Torneo %s finito: ultimo salvataggio fatto." % r["slug"])
+        if not live:
+            break
+        if gia_atteso:
+            continue
+        giri += 1
+        if max_cycles and giri >= max_cycles:
+            break
+        pausa = VR_PAUSA_ROUND if nuovo_round else VR_POLL + rnd(-30, 30)
+        if now() - t0 + pausa >= max_run:
+            for s in stato.values():
+                if write and commit and s["da_pubblicare"]:
+                    git_publish("VR: aggiornamento dati (live)")
+                    s["da_pubblicare"] = False
+            if any(not vr_completo(it) and it["inizio"] - VR_PRIMA <= now() <= it["inizio"] + VR_DOPO and it["id"] not in rinunciati for it in conf):
+                print("Il tempo di questo lavoro sta per finire ma il torneo continua: chiedo il turno successivo.")
+                segnala_rilancio()
+            return 0
+        sleep(pausa)
+    for s in stato.values():
+        if write and commit and s["da_pubblicare"]:
+            git_publish("VR: aggiornamento dati (live)")
+            s["da_pubblicare"] = False
+    return 0
+
+
 def current_reg(events):
     today = time.strftime("%Y-%m-%d", time.gmtime())
     for e in events:                       # il piu' recente gia' iniziato: decide il regolamento "attuale"
@@ -539,8 +746,11 @@ def save_winners(events):
         top = load(os.path.join(OUT, e["id"], "italiani.json"), [])
         out.append({"id": e["id"], "city": e["city"], "kind": e["kind"], "start": e["start"], "reg": e["reg"],
                     "players": e["players"], "winners": w, "italian_winners": it, "italians_top": top})
-    return dump_stamped(os.path.join(OUT, "vincitori.json"), {"source": "Pokedata", "source_url": "https://www.pokedata.ovh",
+    return dump_stamped(os.path.join(OUT, "vincitori.json"), {"source": FONTE[0], "source_url": FONTE[1],
                                                               "updated": time.strftime("%Y-%m-%d %H:%M", time.gmtime()), "events": out})
+
+
+FONTE = ["Pokedata", "https://www.pokedata.ovh"]    # nome e indirizzo della fonte scritti nei file; il modo VR li cambia
 
 
 def save_index(events):
@@ -549,7 +759,7 @@ def save_index(events):
     for e in events:
         e["collected"] = e["id"] in done
     a = dump_stamped(os.path.join(OUT, "index.json"), {"current": current_reg(events), "updated": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
-                                                         "source": "Pokedata", "events": [{k: v for k, v in e.items() if k not in ("winners", "players_div", "updated", "forzato", "storico", "fine_forzata")} for e in events]})
+                                                         "source": FONTE[0], "events": [{k: v for k, v in e.items() if k not in ("winners", "players_div", "updated", "forzato", "storico", "fine_forzata", "vr_data", "fonte")} for e in events]})
     return save_winners(events) or a
 
 
@@ -587,13 +797,16 @@ def finale_decisa(swiss):
 
 def collect(ev, write):
     tid = ev["id"]
-    if ev.get("storico"):
+    if ev.get("vr"):
+        data = ev["vr_data"]
+    elif ev.get("storico"):
         data = converti_storico(get_lista("%s%s/masters/%s_Masters.json" % (STORICO_URL, tid, tid)), ev)
     else:
         data = get_json("%s/vg/id/%s/division/masters" % (API, tid))
     info, players, teams, swiss, day1, swiss_total = process(data)
-    if ev.get("storico"):
-        controlla_torneo(ev, info)
+    if ev.get("storico") or ev.get("vr"):
+        if ev.get("storico"):
+            controlla_torneo(ev, info)
         ev["players"], ev["rounds"] = len(players), swiss_total
         ev["winners"] = {d: person((info.get("winners") or {}).get(d)) for d in ("masters", "seniors", "juniors")}
     names = {m["slug"]: m["name"] for t in teams.values() for m in t}
@@ -630,7 +843,7 @@ def collect(ev, write):
         turno_nuovo = True
     meta = {"id": tid, "name": ev["name"], "city": ev["city"], "date": ev["start"], "end": ev["end"], "reg": ev["reg"],
             "players": len(players), "rounds": swiss_total, "status": status, "complete": status == "finished", "finale_alle": finale_alle,
-            "teams": len(teams), "top": TOP, "day1_rounds": day1, "day2_players": day2, "cut_players": cut, "source": "Pokedata (apiv3), dati RK9",
+            "teams": len(teams), "top": TOP, "day1_rounds": day1, "day2_players": day2, "cut_players": cut, "source": ev.get("fonte") or "Pokedata (apiv3), dati RK9",
             "players_fields": ["id", "name", "country", "placement", "wins", "losses", "day2", "cut", "team"],
             "swiss": "per giocatore, una voce per round: id avversario + esito (W vinta, L persa, T pari, B bye; -1 = avversario non risolto)",
             "updated": time.strftime("%Y-%m-%d %H:%M", time.gmtime())}
@@ -1001,6 +1214,8 @@ def main():
     g.add_argument("--auto", action="store_true", help="regionali in corso + finiti non ancora raccolti")
     g.add_argument("--live", action="store_true", help="controlli ripetuti finche' un regionale e' in corso")
     g.add_argument("--storico", action="store_true", help="vecchi tornei (prima di settembre 2025) dalla pagina storica di Pokedata")
+    g.add_argument("--vr", action="store_true", help="tornei del VR Circuit (vr_tornei.json): un controllo solo")
+    g.add_argument("--vr-live", action="store_true", help="tornei del VR Circuit: controlli ripetuti finche' il torneo e' in corso")
     g.add_argument("--cf-test", action="store_true", help="prova di Cloudflare: carica i dati gia' presenti")
     ap.add_argument("--write", action="store_true", help="salva i file in vgcstats/ (senza: prova senza salvare nulla)")
     ap.add_argument("--commit", action="store_true", help="con --live --write: pubblica i dati con git dopo ogni salvataggio")
@@ -1008,11 +1223,13 @@ def main():
     ap.add_argument("--max-events", type=int, default=2, help="con --auto: quanti regionali finiti non raccolti per giro")
     a = ap.parse_args()
     budget = int(os.environ.get("VGC_BUDGET", "6"))
-    print("Versione del collettore: 2026-11-02v STORICO con giocatori e vincitori sempre nell'indice (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
+    print("Versione del collettore: 2026-11-02w con i tornei VR (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
     print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
     try:
         if a.cf_test:
             return cf_test()
+        if a.vr or a.vr_live:
+            return vr(a.write, a.commit, live=a.vr_live, max_cycles=a.max_cycles)
         if a.storico:
             return storico(a.write, a.max_events)
         if a.live:
