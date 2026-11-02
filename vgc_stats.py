@@ -470,14 +470,35 @@ def controlla_torneo(ev, info):
                    % (ev["id"], info.get("id"), info.get("name")))
 
 
+def riempi_da_salvati(e):
+    """L'elenco della pagina storica non ha ne' giocatori ne' vincitori: per i tornei gia' raccolti si prendono dai file salvati,
+    altrimenti l'index.json e vincitori.json li perderebbero a ogni giro. Ritorna il meta.json del torneo."""
+    m = load(os.path.join(OUT, e["id"], "meta.json"), {})
+    if m.get("players"):
+        e["players"], e["rounds"] = m["players"], m.get("rounds", 0)
+        if not any((e.get("winners") or {}).values()):
+            pl = load(os.path.join(OUT, e["id"], "players.json"), [])
+            primo = next((r for r in pl if isinstance(r, list) and len(r) > 3 and r[3] == 1), None)
+            if primo:
+                e["winners"] = {"masters": {"name": primo[1], "cc": primo[2]}, "seniors": None, "juniors": None}
+    return m
+
+
 def storico(write, quanti):
     events = list_events_storico()
+    for e in events:
+        riempi_da_salvati(e)
     meta_di = lambda e: load(os.path.join(OUT, e["id"], "meta.json"), {})
     fatti = [e for e in events if meta_di(e).get("complete")]
     todo = [e for e in events if not (meta_di(e).get("complete") or meta_di(e).get("skip"))][:quanti]
     print("Tornei nello storico (prima del %s): %d | gia' raccolti: %d | da raccogliere ora: %d" % (STORICO_FINO_A, len(events), len(fatti), len(todo)))
     for e in todo:
         print("-> %s  %s  (%s)" % (e["id"], e["name"], e["start"]))
+    saltati = [(e, meta_di(e).get("skip")) for e in events if meta_di(e).get("skip")]
+    if saltati:
+        print("Gia' saltati in giri precedenti (%d):" % len(saltati))
+        for e, motivo in saltati:
+            print("   %s  %s  (%s) - %s" % (e["id"], e["name"], e["start"], motivo))
     try:
         for e in todo:
             try:
@@ -491,6 +512,8 @@ def storico(write, quanti):
     except Budget:
         print("Raggiunto il massimo di richieste di questo giro: gli altri al prossimo.")
     if write:
+        for e in events:
+            riempi_da_salvati(e)
         mark(save_index(events))
     if not write:
         print("\nPROVA finita: non e' stato salvato nulla.")
@@ -985,7 +1008,7 @@ def main():
     ap.add_argument("--max-events", type=int, default=2, help="con --auto: quanti regionali finiti non raccolti per giro")
     a = ap.parse_args()
     budget = int(os.environ.get("VGC_BUDGET", "6"))
-    print("Versione del collettore: 2026-11-02u STORICO letto dai file json dei vecchi tornei (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
+    print("Versione del collettore: 2026-11-02v STORICO con giocatori e vincitori sempre nell'indice (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
     print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
     try:
         if a.cf_test:
