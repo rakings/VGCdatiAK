@@ -1,0 +1,42 @@
+name: Storico Pokedata - vecchi tornei
+on:
+  workflow_dispatch:
+    inputs:
+      salva:
+        description: "no = solo prova, non salva nulla - si = salva i file in vgcstats/"
+        required: true
+        default: "no"
+        type: choice
+        options:
+          - "no"
+          - "si"
+      quanti:
+        description: "Quanti tornei raccogliere in questo giro (1 richiesta ciascuno)"
+        required: true
+        default: "12"
+  schedule:
+    - cron: "23 */4 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: storico
+  cancel-in-progress: false
+jobs:
+  storico:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Raccolta dei vecchi tornei
+        env:
+          SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
+          QUANTI: ${{ inputs.quanti || '12' }}
+          VGC_BUDGET: ${{ inputs.quanti || '12' }}
+        run: |
+          if [ "$SALVA" = "si" ]; then python3 vgc_stats.py --storico --write --max-events "$QUANTI"; else python3 vgc_stats.py --storico --max-events "$QUANTI"; fi
+      - name: Pubblica su GitHub
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          if [ -d vgcstats ]; then git add vgcstats; fi
+          if git diff --cached --quiet; then echo "Niente da pubblicare."; else git commit -m "Storico: aggiornamento dati" && git pull --rebase && git push; fi
