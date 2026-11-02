@@ -416,6 +416,18 @@ def list_events_storico(testo=None):
     return out
 
 
+def controlla_torneo(ev, info):
+    """Per lo storico: Pokedata, se non conosce l'id chiesto, risponde con l'ULTIMO torneo invece di un errore. Si controlla che il torneo
+    ricevuto sia davvero quello chiesto, altrimenti ci si ferma prima di salvare qualsiasi cosa."""
+    def num(x):
+        d = re.sub(r"\D", "", str(x or ""))
+        return int(d) if d else None
+    ricevuto = num(info.get("id"))
+    if ricevuto is None or ricevuto != num(ev["id"]):
+        raise Stop("per l'id %s Pokedata ha risposto con un altro torneo (id %s, «%s»): l'id vecchio non si legge con questo indirizzo"
+                   % (ev["id"], info.get("id"), info.get("name")))
+
+
 def storico(write, quanti):
     events = list_events_storico()
     meta_di = lambda e: load(os.path.join(OUT, e["id"], "meta.json"), {})
@@ -513,6 +525,7 @@ def collect(ev, write):
     data = get_json("%s/vg/id/%s/division/masters" % (API, tid))
     info, players, teams, swiss, day1, swiss_total = process(data)
     if ev.get("storico"):
+        controlla_torneo(ev, info)
         ev["players"], ev["rounds"] = len(players), swiss_total
         ev["winners"] = {d: person((info.get("winners") or {}).get(d)) for d in ("masters", "seniors", "juniors")}
     names = {m["slug"]: m["name"] for t in teams.values() for m in t}
@@ -927,7 +940,7 @@ def main():
     ap.add_argument("--max-events", type=int, default=2, help="con --auto: quanti regionali finiti non raccolti per giro")
     a = ap.parse_args()
     budget = int(os.environ.get("VGC_BUDGET", "6"))
-    print("Versione del collettore: 2026-11-02s STORICO (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
+    print("Versione del collettore: 2026-11-02t STORICO con controllo del torneo ricevuto (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
     print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
     try:
         if a.cf_test:
