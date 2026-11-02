@@ -1,0 +1,26 @@
+name: Indice dei giocatori
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "11 4 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: giocatori
+  cancel-in-progress: false
+jobs:
+  giocatori:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Costruisci gli indici (storico e VR)
+        run: |
+          python3 build_giocatori.py vgcstats
+          if [ -d vr ]; then python3 build_giocatori.py vr; fi
+      - name: Pubblica su GitHub
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          for f in vgcstats/giocatori.json vr/giocatori.json; do if [ -f "$f" ]; then git add "$f"; fi; done
+          if git diff --cached --quiet; then echo "Niente da pubblicare."; else git commit -m "Indice dei giocatori" && git pull --rebase && git push; fi

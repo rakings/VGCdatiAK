@@ -1,0 +1,12 @@
+name: Prova 7 - home e calendario VR (solo lettura)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prova7:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 prove7.py

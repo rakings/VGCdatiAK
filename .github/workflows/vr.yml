@@ -1,0 +1,80 @@
+name: VR - raccolta dati (Victory Road)
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "live = segue il torneo VR in corso - prova = un solo controllo su tutti i tornei di vr_tornei.json, non salva niente"
+        required: true
+        default: "live"
+        type: choice
+        options:
+          - "live"
+          - "prova"
+      salva:
+        description: "no = non salva - si = salva i file in vr/ (solo per modo live)"
+        required: true
+        default: "si"
+        type: choice
+        options:
+          - "no"
+          - "si"
+  schedule:
+    # Orari in UTC. I tornei VR sono di sabato (14:00 UTC): un risveglio ogni 30 minuti da sabato 11:17 fino a domenica mattina.
+    # Se non c'e' un torneo in corso (o in arrivo nell'ora successiva) il lavoro si ferma subito.
+    - cron: "17,47 11-23 * * 6"
+    - cron: "17,47 0-5 * * 0"
+permissions:
+  contents: write
+  actions: write      # serve per lanciare da soli il turno successivo (gh workflow run)
+concurrency:
+  group: vr
+  cancel-in-progress: false
+jobs:
+  vr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    env:
+      MODO: ${{ inputs.modo || 'live' }}
+      SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Raccolta VR
+        run: |
+          if [ "$MODO" = "prova" ]; then
+            python3 -u vgc_stats.py --vr
+          elif [ "$SALVA" = "si" ]; then
+            python3 -u vgc_stats.py --vr-live --write --commit
+          else
+            python3 -u vgc_stats.py --vr-live --max-cycles 1
+          fi
+      - name: Salva i file nella repo
+        if: ${{ always() && env.MODO != 'prova' && (github.event_name == 'schedule' || inputs.salva == 'si') }}
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          [ -d vr ] && git add -A vr
+          if ! git diff --staged --quiet; then
+            git commit -m "VR: aggiornamento dati"
+            B=$(git rev-parse --abbrev-ref HEAD)
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash -X theirs && git push; then ok=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              rm -rf /tmp/dati && cp -a vr /tmp/dati
+              if git fetch origin "$B" && git reset --hard FETCH_HEAD && mkdir -p vr && cp -a /tmp/dati/. vr/ && git add -A vr; then
+                if git diff --staged --quiet || (git commit -m "VR: aggiornamento dati" && git push); then ok=1; break; fi
+              fi
+              sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "Salvataggio su GitHub non riuscito."; exit 1; }
+          fi
+      - name: Rilancia subito il turno successivo (solo se il torneo continua)
+        if: ${{ always() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f .vgc_rilancia ]; then
+            echo "Il torneo continua: lancio subito il turno successivo."
+            gh workflow run vr.yml --repo "$GITHUB_REPOSITORY" -f modo=live -f salva=si \
+              || echo "Rilancio non riuscito: ci pensa il programma di GitHub (ogni 30 minuti)."
+          fi
