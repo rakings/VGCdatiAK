@@ -1,0 +1,20 @@
+name: Prove di lettura (solo lettura, nessun file salvato)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: 1 - Pokedata, vecchi regionali
+        continue-on-error: true
+        run: python3 esplora.py
+      - name: 2 - Victory Road, classifica e abbinamenti
+        continue-on-error: true
+        run: python3 vr_prova.py
+      - name: 3 - Limitless, storico giocatori
+        continue-on-error: true
+        run: python3 limitless_prova.py
