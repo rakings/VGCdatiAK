@@ -14,8 +14,6 @@ on:
         description: "Quanti tornei raccogliere in questo giro (1 richiesta ciascuno)"
         required: true
         default: "12"
-  schedule:
-    - cron: "23 */4 * * *"
 permissions:
   contents: write
 concurrency:
@@ -29,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Raccolta dei vecchi tornei
         env:
-          SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
+          SALVA: ${{ inputs.salva }}
           QUANTI: ${{ inputs.quanti || '12' }}
           VGC_BUDGET: ${{ inputs.quanti || '12' }}
         run: |

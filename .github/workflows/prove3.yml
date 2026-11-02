@@ -1,0 +1,12 @@
+name: Prova 3 - vecchi tornei Pokedata (solo lettura)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prova3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 prove3.py
