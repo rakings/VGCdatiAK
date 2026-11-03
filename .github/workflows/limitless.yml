@@ -1,0 +1,49 @@
+name: Limitless - storico giocatori
+on:
+  workflow_dispatch:
+    inputs:
+      tornei:
+        description: "Quante pagine di tornei leggere in questo giro (ogni pagina ha una pausa di 6-14 secondi: 60 pagine = circa 10 minuti)"
+        required: true
+        default: "60"
+      cerca:
+        description: "Nome da cercare nel log alla fine (facoltativo)"
+        required: false
+        default: "Andrea Ciccone"
+  schedule:
+    # Ogni 6 ore (UTC): finche' c'e' da leggere continua da solo; quando ha finito controlla i tornei nuovi una volta ogni 6 giorni.
+    - cron: "23 1,7,13,19 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: limitless
+  cancel-in-progress: false
+jobs:
+  limitless:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TORNEI: ${{ inputs.tornei || '60' }}
+      CERCA: ${{ inputs.cerca || '' }}
+      AUTO: ${{ github.event_name == 'schedule' && '--auto' || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Leggi i tornei di Limitless
+        run: python3 -u limitless.py --write $AUTO --tornei "$TORNEI" --cerca "$CERCA"
+      - name: Salva i file nella repo
+        if: ${{ always() }}
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          [ -d limitless ] && git add -A limitless
+          [ -f vgcstats/limitless.json ] && git add vgcstats/limitless.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Limitless: aggiornamento storico giocatori"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash -X theirs && git push; then ok=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "Salvataggio su GitHub non riuscito."; exit 1; }
+          fi
