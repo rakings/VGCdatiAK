@@ -1,0 +1,12 @@
+name: Prova 8 - Limitless tornei vecchi (solo lettura)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prove8:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 prove8.py

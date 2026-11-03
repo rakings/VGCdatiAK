@@ -3,15 +3,16 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "live = segue il torneo VR in corso - prova = un solo controllo su tutti i tornei di vr_tornei.json, non salva niente"
+        description: "live = segue il torneo VR in corso - prova = un solo controllo su tutti i tornei di vr_tornei.json, non salva niente - una-volta = lo stesso controllo ma salva (con salva = si)"
         required: true
         default: "live"
         type: choice
         options:
           - "live"
           - "prova"
+          - "una-volta"
       salva:
-        description: "no = non salva - si = salva i file in vr/ (solo per modo live)"
+        description: "no = non salva - si = salva i file in vr/ (per i modi live e una-volta)"
         required: true
         default: "si"
         type: choice
@@ -42,6 +43,8 @@ jobs:
         run: |
           if [ "$MODO" = "prova" ]; then
             python3 -u vgc_stats.py --vr
+          elif [ "$MODO" = "una-volta" ]; then
+            if [ "$SALVA" = "si" ]; then python3 -u vgc_stats.py --vr --write; else python3 -u vgc_stats.py --vr; fi
           elif [ "$SALVA" = "si" ]; then
             python3 -u vgc_stats.py --vr-live --write --commit
           else
