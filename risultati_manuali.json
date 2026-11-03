@@ -1,4 +1,7 @@
 [
+  {"nome": "Andrea Ciccone", "paese": "IT", "torneo": "Roma Regional Championships", "tipo": "Regional Championships", "data": "2016-05-07", "esito": "Top 32"},
+  {"nome": "Andrea Ciccone", "paese": "IT", "torneo": "Campionato Nazionale Italia", "tipo": "National Championships", "anno": 2016, "esito": "Top 128"},
   {"nome": "Andrea Ciccone", "paese": "IT", "torneo": "Sheffield Regional Championships", "tipo": "Regional Championships", "data": "2017-03-05", "posto": 8, "esito": "Top 8"},
+  {"nome": "Andrea Ciccone", "paese": "IT", "torneo": "Frankfurt Regional Championships", "tipo": "Regional Championships", "data": "2018-09-30", "esito": "Top 64"},
   {"nome": "Andrea Ciccone", "paese": "IT", "torneo": "Mid Season Showdown Roma", "tipo": "Special Championships", "anno": 2019, "posto": 1, "esito": "Vincitore", "etichetta": "Mid Season"}
 ]
