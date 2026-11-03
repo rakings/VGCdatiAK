@@ -1,0 +1,5031 @@
+{
+ "controllo": 1793696280,
+ "fatte": [
+  "s:2526",
+  "s:2425",
+  "s:2324",
+  "s:2223",
+  "s:2122",
+  "s:2021",
+  "s:1920",
+  "s:1819",
+  "s:1718",
+  "s:1617",
+  "s:1516",
+  "s:1415",
+  "s:1314",
+  "s:1213",
+  "s:1112",
+  "t:regional:modern",
+  "t:regional:legacy",
+  "t:international:modern",
+  "t:international:legacy",
+  "t:worlds:modern",
+  "t:worlds:legacy",
+  "t:special:modern",
+  "t:special:legacy",
+  "t:national:modern",
+  "t:national:legacy",
+  "t:players_cup:modern",
+  "t:players_cup:legacy",
+  "t:mbl:modern",
+  "t:mbl:legacy"
+ ],
+ "t": {
+  "1": {
+   "data": "2016-11-05",
+   "formato": "vgc16",
+   "giocatori": 100,
+   "id": 1,
+   "nome": "Regional Liverpool",
+   "paese": "GB",
+   "vincitore": "GB-Jamie Boyt"
+  },
+  "10": {
+   "data": "2017-05-06",
+   "formato": "vgc17",
+   "giocatori": 74,
+   "id": 10,
+   "nome": "Special Event Treviso",
+   "paese": "IT",
+   "vincitore": "IT-Luca Lussignoli"
+  },
+  "100": {
+   "data": "2018-01-13",
+   "formato": "vgc18",
+   "giocatori": 80,
+   "id": 100,
+   "nome": "Special Event CL",
+   "paese": "CL",
+   "vincitore": "CL-Matias Roa"
+  },
+  "101": {
+   "data": "2018-01-20",
+   "formato": "vgc18",
+   "giocatori": 18,
+   "id": 101,
+   "nome": "Special Event EC",
+   "paese": "EC",
+   "vincitore": "EC-Paul Ruiz"
+  },
+  "102": {
+   "data": "2018-01-21",
+   "formato": "vgc18",
+   "giocatori": 22,
+   "id": 102,
+   "nome": "Special Event PY",
+   "paese": "PY",
+   "vincitore": "PY-Victor Vargas"
+  },
+  "103": {
+   "data": "2018-02-04",
+   "formato": "vgc18",
+   "giocatori": 37,
+   "id": 103,
+   "nome": "Special Event CR",
+   "paese": "CR",
+   "vincitore": "CO-Juan Pablo Naar"
+  },
+  "104": {
+   "data": "2018-02-10",
+   "formato": "vgc18",
+   "giocatori": 32,
+   "id": 104,
+   "nome": "Special Event CO",
+   "paese": "CO",
+   "vincitore": "CO-Mateo Arias"
+  },
+  "105": {
+   "data": "2018-02-13",
+   "formato": "vgc18",
+   "giocatori": 22,
+   "id": 105,
+   "nome": "Special Event AR",
+   "paese": "AR",
+   "vincitore": "AR-Federico Turano"
+  },
+  "106": {
+   "data": "2018-02-17",
+   "formato": "vgc18",
+   "giocatori": 70,
+   "id": 106,
+   "nome": "Special Event PE",
+   "paese": "PE",
+   "vincitore": "PE-Dorian Andre Quinones Vallejos"
+  },
+  "107": {
+   "data": "2018-02-24",
+   "formato": "vgc18",
+   "giocatori": 126,
+   "id": 107,
+   "nome": "Special Event CL",
+   "paese": "CL",
+   "vincitore": "CL-Felipe Mendez"
+  },
+  "108": {
+   "data": "2018-03-10",
+   "formato": "vgc18",
+   "giocatori": 24,
+   "id": 108,
+   "nome": "Special Event AR",
+   "paese": "AR",
+   "vincitore": "CL-Javier Valdes"
+  },
+  "109": {
+   "data": "2018-03-11",
+   "formato": "vgc18",
+   "giocatori": 26,
+   "id": 109,
+   "nome": "Special Event UY",
+   "paese": "UY",
+   "vincitore": "UY-Diego Dos Santos"
+  },
+  "11": {
+   "data": "2017-05-20",
+   "formato": "vgc17",
+   "giocatori": 110,
+   "id": 11,
+   "nome": "Grand Open Milan",
+   "paese": "IT",
+   "vincitore": "ES-Eric Rios"
+  },
+  "110": {
+   "data": "2016-05-21",
+   "formato": "vgc16",
+   "giocatori": 256,
+   "id": 110,
+   "nome": "German Nationals 2016",
+   "paese": "DE",
+   "vincitore": "IT-Arash Ommati"
+  },
+  "111": {
+   "data": "2016-06-12",
+   "formato": "vgc16",
+   "giocatori": 292,
+   "id": 111,
+   "nome": "Italian Nationals 2016",
+   "paese": "IT",
+   "vincitore": "ES-Javier Senorena"
+  },
+  "112": {
+   "data": "2016-05-15",
+   "formato": "vgc16",
+   "giocatori": 315,
+   "id": 112,
+   "nome": "UK Nationals 2016",
+   "paese": "GB",
+   "vincitore": "ES-Alex Gómez Berna"
+  },
+  "113": {
+   "data": "2016-07-01",
+   "formato": "vgc16",
+   "giocatori": 396,
+   "id": 113,
+   "nome": "US Nationals 2016",
+   "paese": "US",
+   "vincitore": "US-Chase Lybbert"
+  },
+  "114": {
+   "data": "2018-07-07",
+   "formato": "vgc18",
+   "giocatori": 334,
+   "id": 114,
+   "nome": "NAIC 2018, Columbus",
+   "paese": "US",
+   "vincitore": "US-Jeremy Rodrigues"
+  },
+  "115": {
+   "data": "2018-09-15",
+   "formato": "sun",
+   "giocatori": 185,
+   "id": 115,
+   "nome": "Regional Philadelphia, PA",
+   "paese": "US",
+   "vincitore": "US-Justin Burns"
+  },
+  "116": {
+   "data": "2018-10-06",
+   "formato": "sun",
+   "giocatori": 90,
+   "id": 116,
+   "nome": "Regional Memphis, TN",
+   "paese": "US",
+   "vincitore": "US-Ashton Cox"
+  },
+  "117": {
+   "data": "2018-10-27",
+   "formato": "sun",
+   "giocatori": 127,
+   "id": 117,
+   "nome": "Regional Portland, OR",
+   "paese": "US",
+   "vincitore": "US-Riley Factura"
+  },
+  "118": {
+   "data": "2018-11-24",
+   "formato": "sun",
+   "giocatori": 126,
+   "id": 118,
+   "nome": "Regional Roanoke, VA",
+   "paese": "US",
+   "vincitore": "US-James Baek"
+  },
+  "119": {
+   "data": "2018-12-15",
+   "formato": "sun",
+   "giocatori": 153,
+   "id": 119,
+   "nome": "Regional Anaheim, CA",
+   "paese": "US",
+   "vincitore": "US-Raghav Malaviya"
+  },
+  "12": {
+   "data": "2017-05-27",
+   "formato": "vgc17",
+   "giocatori": 15,
+   "id": 12,
+   "nome": "Austrian Open",
+   "paese": "AT",
+   "vincitore": "CZ-David Koutesh"
+  },
+  "120": {
+   "data": "2019-01-19",
+   "formato": "moon",
+   "giocatori": 174,
+   "id": 120,
+   "nome": "Regional Dallas, TX",
+   "paese": "US",
+   "vincitore": "US-Nick Navarre"
+  },
+  "121": {
+   "data": "2019-02-23",
+   "formato": "moon",
+   "giocatori": 111,
+   "id": 121,
+   "nome": "Regional Collinsville, IL",
+   "paese": "US",
+   "vincitore": "US-Jake Magier"
+  },
+  "122": {
+   "data": "2019-03-08",
+   "formato": "moon",
+   "giocatori": 84,
+   "id": 122,
+   "nome": "Regional Toronto, ON",
+   "paese": "CA",
+   "vincitore": "US-Stephen Mea"
+  },
+  "123": {
+   "data": "2019-03-15",
+   "formato": "moon",
+   "giocatori": 96,
+   "id": 123,
+   "nome": "Regional Greensboro, NC",
+   "paese": "US",
+   "vincitore": "US-Alexander Williams"
+  },
+  "125": {
+   "data": "2019-04-20",
+   "formato": "ultra",
+   "giocatori": 69,
+   "id": 125,
+   "nome": "Regional Daytona, FL",
+   "paese": "US",
+   "vincitore": "US-James Baek"
+  },
+  "126": {
+   "data": "2019-05-04",
+   "formato": "ultra",
+   "giocatori": 104,
+   "id": 126,
+   "nome": "Regional Hartford, CT",
+   "paese": "US",
+   "vincitore": "US-Tommy Cooleen"
+  },
+  "127": {
+   "data": "2019-05-18",
+   "formato": "ultra",
+   "giocatori": 104,
+   "id": 127,
+   "nome": "Regional Santa Clara, CA",
+   "paese": "US",
+   "vincitore": "US-Ashton Cox"
+  },
+  "128": {
+   "data": "2019-06-01",
+   "formato": "ultra",
+   "giocatori": 126,
+   "id": 128,
+   "nome": "Regional Madison, WI",
+   "paese": "US",
+   "vincitore": "US-Paul Chua"
+  },
+  "129": {
+   "data": "2018-09-29",
+   "formato": "sun",
+   "giocatori": 236,
+   "id": 129,
+   "nome": "Regional Offenbach",
+   "paese": "DE",
+   "vincitore": "IT-Matteo Agostini"
+  },
+  "13": {
+   "data": "2017-06-24",
+   "formato": "vgc17",
+   "giocatori": 129,
+   "id": 13,
+   "nome": "Regional Birmingham",
+   "paese": "GB",
+   "vincitore": "GB-Rachel Annand"
+  },
+  "130": {
+   "data": "2018-12-15",
+   "formato": "sun",
+   "giocatori": 132,
+   "id": 130,
+   "nome": "Regional Harrogate",
+   "paese": "GB",
+   "vincitore": "GB-Jonathan Marston"
+  },
+  "131": {
+   "data": "2019-05-11",
+   "formato": "ultra",
+   "giocatori": 65,
+   "id": 131,
+   "nome": "Regional Bristol",
+   "paese": "GB",
+   "vincitore": "GB-David Partington"
+  },
+  "132": {
+   "data": "2018-07-13",
+   "formato": "vgc18",
+   "giocatori": 158,
+   "id": 132,
+   "nome": "Dreamhack Valencia",
+   "paese": "ES",
+   "vincitore": "ES-Eric Rios"
+  },
+  "133": {
+   "data": "2018-11-03",
+   "formato": "sun",
+   "giocatori": 119,
+   "id": 133,
+   "nome": "Special Event Lille",
+   "paese": "FR",
+   "vincitore": "ES-Ismael Aarab Umpierrez"
+  },
+  "134": {
+   "data": "2019-02-23",
+   "formato": "moon",
+   "giocatori": 105,
+   "id": 134,
+   "nome": "Special Event Cannes",
+   "paese": "FR",
+   "vincitore": "FR-Forest Aurelien"
+  },
+  "135": {
+   "data": "2016-05-01",
+   "formato": "vgc16",
+   "giocatori": 71,
+   "id": 135,
+   "nome": "Regional Adelaide",
+   "paese": "AU",
+   "vincitore": "AU-Sam Pandelis"
+  },
+  "136": {
+   "data": "2016-05-14",
+   "formato": "vgc16",
+   "giocatori": 176,
+   "id": 136,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Martin Larumbe"
+  },
+  "137": {
+   "data": "2016-05-21",
+   "formato": "vgc16",
+   "giocatori": 157,
+   "id": 137,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Richard Buckley"
+  },
+  "138": {
+   "data": "2016-05-28",
+   "formato": "vgc16",
+   "giocatori": 185,
+   "id": 138,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Nihal Noor"
+  },
+  "139": {
+   "data": "2016-06-07",
+   "formato": "vgc16",
+   "giocatori": 125,
+   "id": 139,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Alister Sandover"
+  },
+  "14": {
+   "data": "2017-06-29",
+   "formato": "vgc17",
+   "giocatori": 187,
+   "id": 14,
+   "nome": "Special Event Madrid",
+   "paese": "ES",
+   "vincitore": "PT-Eduardo Cunha"
+  },
+  "140": {
+   "data": "2016-07-02",
+   "formato": "vgc16",
+   "giocatori": 267,
+   "id": 140,
+   "nome": "Australian Nationals 2016",
+   "paese": "AU",
+   "vincitore": "AU-Phil Nguyen"
+  },
+  "141": {
+   "data": "2017-06-10",
+   "formato": "vgc17",
+   "giocatori": 66,
+   "id": 141,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Liam Gilbert"
+  },
+  "142": {
+   "data": "2017-06-17",
+   "formato": "vgc17",
+   "giocatori": 27,
+   "id": 142,
+   "nome": "Regional Auckland",
+   "paese": "AU",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "143": {
+   "data": "2017-06-24",
+   "formato": "vgc17",
+   "giocatori": 49,
+   "id": 143,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "144": {
+   "data": "2017-12-16",
+   "formato": "vgc17",
+   "giocatori": 57,
+   "id": 144,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Tony Nguyen"
+  },
+  "145": {
+   "data": "2018-03-24",
+   "formato": "vgc18",
+   "giocatori": 51,
+   "id": 145,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Benjamin ONeill"
+  },
+  "146": {
+   "data": "2018-05-05",
+   "formato": "vgc18",
+   "giocatori": 11,
+   "id": 146,
+   "nome": "Special Event Hobart",
+   "paese": "AU",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "147": {
+   "data": "2018-05-26",
+   "formato": "vgc18",
+   "giocatori": 68,
+   "id": 147,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "ID-Guntur Prabowo"
+  },
+  "148": {
+   "data": "2018-06-23",
+   "formato": "vgc18",
+   "giocatori": 19,
+   "id": 148,
+   "nome": "Special Event Auckland",
+   "paese": "AU",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "149": {
+   "data": "2015-05-16",
+   "formato": "vgc15",
+   "giocatori": 418,
+   "id": 149,
+   "nome": "2015 German Nationals",
+   "paese": "DE",
+   "vincitore": "DE-Markus Stefan"
+  },
+  "15": {
+   "data": "2017-07-29",
+   "formato": "vgc17",
+   "giocatori": 160,
+   "id": 15,
+   "nome": "Regional Liverpool",
+   "paese": "GB",
+   "vincitore": "GB-Thomas Plater"
+  },
+  "150": {
+   "data": "2015-05-30",
+   "formato": "vgc15",
+   "giocatori": 425,
+   "id": 150,
+   "nome": "2015 UK Nationals",
+   "paese": "GB",
+   "vincitore": "DE-Markus Hamann"
+  },
+  "151": {
+   "data": "2015-06-13",
+   "formato": "vgc15",
+   "giocatori": 431,
+   "id": 151,
+   "nome": "2015 Italy Nationals",
+   "paese": "IT",
+   "vincitore": "IT-Francesco Luigi Pardini"
+  },
+  "152": {
+   "data": "2015-04-18",
+   "formato": "vgc15",
+   "giocatori": 153,
+   "id": 152,
+   "nome": "Regional Sutton Coldfield",
+   "paese": "GB",
+   "vincitore": "GB-Philip de Sousa"
+  },
+  "153": {
+   "data": "2015-05-19",
+   "formato": "vgc15",
+   "giocatori": 100,
+   "id": 153,
+   "nome": "Regional Rome",
+   "paese": "IT",
+   "vincitore": "IT-Giovanni Milani"
+  },
+  "154": {
+   "data": "2015-02-07",
+   "formato": "vgc15",
+   "giocatori": 102,
+   "id": 154,
+   "nome": "ECC 2015 VG Regionals",
+   "paese": "NL",
+   "vincitore": "GB-Barry Anderson"
+  },
+  "155": {
+   "data": "2018-03-17",
+   "formato": "vgc18",
+   "giocatori": 63,
+   "id": 155,
+   "nome": "Special Event Hong Kong",
+   "paese": "HK",
+   "vincitore": "SG-Melvin Keh"
+  },
+  "156": {
+   "data": "2018-04-07",
+   "formato": "vgc18",
+   "giocatori": 55,
+   "id": 156,
+   "nome": "Special Event MY",
+   "paese": "MY",
+   "vincitore": "SG-Benjamin Tan"
+  },
+  "157": {
+   "data": "2018-04-21",
+   "formato": "vgc18",
+   "giocatori": 80,
+   "id": 157,
+   "nome": "Special Event Taiwan",
+   "paese": "TW",
+   "vincitore": "TW-Wu Chen"
+  },
+  "158": {
+   "data": "2018-05-22",
+   "formato": "vgc18",
+   "giocatori": 53,
+   "id": 158,
+   "nome": "Regional Hong Kong",
+   "paese": "HK",
+   "vincitore": "HK-Marco Yuen"
+  },
+  "159": {
+   "data": "2018-05-27",
+   "formato": "vgc18",
+   "giocatori": 82,
+   "id": 159,
+   "nome": "Regional Taiwan",
+   "paese": "TW",
+   "vincitore": "TW-Chen Chih Chun"
+  },
+  "16": {
+   "data": "2017-09-16",
+   "formato": "vgc17",
+   "giocatori": 164,
+   "id": 16,
+   "nome": "Regional Bremen",
+   "paese": "DE",
+   "vincitore": "DE-Jonas Wiegel"
+  },
+  "160": {
+   "data": "2018-06-02",
+   "formato": "vgc18",
+   "giocatori": 52,
+   "id": 160,
+   "nome": "Regional Subang Jaya",
+   "paese": "MY",
+   "vincitore": "SG-Benjamin Tan"
+  },
+  "161": {
+   "data": "2018-06-09",
+   "formato": "vgc18",
+   "giocatori": 46,
+   "id": 161,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Benjamin Tan"
+  },
+  "162": {
+   "data": "2017-06-11",
+   "formato": "vgc17",
+   "giocatori": 40,
+   "id": 162,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Benjamin Tan"
+  },
+  "163": {
+   "data": "2015-04-11",
+   "formato": "vgc15",
+   "giocatori": 106,
+   "id": 163,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Chris Giagozoglou"
+  },
+  "164": {
+   "data": "2014-07-13",
+   "formato": "vgc14",
+   "giocatori": 442,
+   "id": 164,
+   "nome": "Australian Nationals 2014",
+   "paese": "AU",
+   "vincitore": "AU-Dayne O'Meara"
+  },
+  "165": {
+   "data": "2015-04-18",
+   "formato": "vgc15",
+   "giocatori": 180,
+   "id": 165,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Daniel Pol"
+  },
+  "166": {
+   "data": "2015-04-25",
+   "formato": "vgc15",
+   "giocatori": 115,
+   "id": 166,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Mustafaa Olomi"
+  },
+  "167": {
+   "data": "2015-05-03",
+   "formato": "vgc15",
+   "giocatori": 225,
+   "id": 167,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Chris Giagozoglou"
+  },
+  "168": {
+   "data": "2015-05-16",
+   "formato": "vgc15",
+   "giocatori": 68,
+   "id": 168,
+   "nome": "Regional Adelaide",
+   "paese": "AU",
+   "vincitore": "AU-Nihal Noor"
+  },
+  "169": {
+   "data": "2015-06-06",
+   "formato": "vgc15",
+   "giocatori": 321,
+   "id": 169,
+   "nome": "Australian Nationals 2015",
+   "paese": "AU",
+   "vincitore": "AU-Matthew Roe"
+  },
+  "17": {
+   "data": "2017-09-30",
+   "formato": "vgc17",
+   "giocatori": 196,
+   "id": 17,
+   "nome": "Special Event Bilbao",
+   "paese": "ES",
+   "vincitore": "IE-Piotr Kedziora"
+  },
+  "170": {
+   "data": "2017-05-14",
+   "formato": "vgc17",
+   "giocatori": 19,
+   "id": 170,
+   "nome": "Special Event Guatemala",
+   "paese": "GT",
+   "vincitore": "GT-Julio Fuentes"
+  },
+  "171": {
+   "data": "2017-05-28",
+   "formato": "vgc17",
+   "giocatori": 37,
+   "id": 171,
+   "nome": "Special Event San José",
+   "paese": "CR",
+   "vincitore": "CR-David Rodriguez"
+  },
+  "172": {
+   "data": "2017-06-03",
+   "formato": "vgc17",
+   "giocatori": 67,
+   "id": 172,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "CL-Javier Parada"
+  },
+  "173": {
+   "data": "2017-06-09",
+   "formato": "vgc17",
+   "giocatori": 131,
+   "id": 173,
+   "nome": "Regional Mexico",
+   "paese": "MX",
+   "vincitore": "MX-Alexis Pichardo"
+  },
+  "174": {
+   "data": "2017-06-23",
+   "formato": "vgc17",
+   "giocatori": 10,
+   "id": 174,
+   "nome": "Special Event Santa Tecla",
+   "paese": "SV",
+   "vincitore": "SV-René Alvarenga"
+  },
+  "175": {
+   "data": "2018-03-24",
+   "formato": "vgc18",
+   "giocatori": 102,
+   "id": 175,
+   "nome": "Special Event Mexico",
+   "paese": "MX",
+   "vincitore": "SV-René Alvarenga"
+  },
+  "176": {
+   "data": "2018-04-15",
+   "formato": "vgc18",
+   "giocatori": 34,
+   "id": 176,
+   "nome": "Special Event Chile",
+   "paese": "CL",
+   "vincitore": "CL-Sebastian Reyes"
+  },
+  "177": {
+   "data": "2018-04-15",
+   "formato": "vgc18",
+   "giocatori": 32,
+   "id": 177,
+   "nome": "Special Event Guatemale",
+   "paese": "GT",
+   "vincitore": "SV-René Alvarenga"
+  },
+  "178": {
+   "data": "2018-05-05",
+   "formato": "vgc18",
+   "giocatori": 19,
+   "id": 178,
+   "nome": "Special Event Trujillo",
+   "paese": "PE",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "179": {
+   "data": "2018-05-26",
+   "formato": "vgc18",
+   "giocatori": 32,
+   "id": 179,
+   "nome": "Special Event Cancun",
+   "paese": "MX",
+   "vincitore": "MX-Alberto Renero Pedrajas"
+  },
+  "18": {
+   "data": "2017-12-16",
+   "formato": "vgc17",
+   "giocatori": 145,
+   "id": 18,
+   "nome": "Special Event Torino",
+   "paese": "IT",
+   "vincitore": "IT-Luca Ceribelli"
+  },
+  "180": {
+   "data": "2018-06-03",
+   "formato": "vgc18",
+   "giocatori": 88,
+   "id": 180,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "181": {
+   "data": "2018-06-23",
+   "formato": "vgc18",
+   "giocatori": 25,
+   "id": 181,
+   "nome": "Special Event Chile",
+   "paese": "CL",
+   "vincitore": "CL-Javier Valdes"
+  },
+  "182": {
+   "data": "2018-03-18",
+   "formato": "vgc18",
+   "giocatori": 31,
+   "id": 182,
+   "nome": "Special Event El Salvador",
+   "paese": "SV",
+   "vincitore": "CR-David Rodriguez"
+  },
+  "183": {
+   "data": "2018-05-13",
+   "formato": "vgc18",
+   "giocatori": 18,
+   "id": 183,
+   "nome": "Special Event Guatemala",
+   "paese": "GT",
+   "vincitore": "GT-Julio Morales"
+  },
+  "184": {
+   "data": "2018-05-20",
+   "formato": "vgc18",
+   "giocatori": 22,
+   "id": 184,
+   "nome": "Special Event El Salvador",
+   "paese": "SV",
+   "vincitore": "GT-Pablo Aldana"
+  },
+  "185": {
+   "data": "2017-05-06",
+   "formato": "vgc17",
+   "giocatori": 120,
+   "id": 185,
+   "nome": "Korean Nationals 2017",
+   "paese": "KR",
+   "vincitore": "KR-Shin Junghoon"
+  },
+  "187": {
+   "data": "2018-05-05",
+   "formato": "vgc18",
+   "giocatori": 120,
+   "id": 187,
+   "nome": "Korean Nationals 2018",
+   "paese": "KR",
+   "vincitore": "KR-Suwoong Jung"
+  },
+  "188": {
+   "data": "2016-10-22",
+   "formato": "vgc16",
+   "giocatori": 81,
+   "id": 188,
+   "nome": "Korean Autumn League 2017",
+   "paese": "KR",
+   "vincitore": "KR-Sejun Park"
+  },
+  "189": {
+   "data": "2017-02-12",
+   "formato": "vgc17",
+   "giocatori": 180,
+   "id": 189,
+   "nome": "Korean Winter League 2017",
+   "paese": "KR",
+   "vincitore": "KR-Jooho Kim"
+  },
+  "19": {
+   "data": "2017-11-17",
+   "formato": "vgc17",
+   "giocatori": 456,
+   "id": 19,
+   "nome": "EUIC 2017–18, London",
+   "paese": "GB",
+   "vincitore": "IT-Simone Sanvito"
+  },
+  "190": {
+   "data": "2017-04-09",
+   "formato": "vgc17",
+   "giocatori": 181,
+   "id": 190,
+   "nome": "Korean Spring League 2017",
+   "paese": "KR",
+   "vincitore": "KR-Joongyu Baek"
+  },
+  "191": {
+   "data": "2017-10-08",
+   "formato": "vgc17",
+   "giocatori": 180,
+   "id": 191,
+   "nome": "Korean Autumn League 2018",
+   "paese": "KR",
+   "vincitore": "KR-Wonseok Jung"
+  },
+  "192": {
+   "data": "2018-01-28",
+   "formato": "vgc18",
+   "giocatori": 121,
+   "id": 192,
+   "nome": "Korean Winter League 2018",
+   "paese": "KR",
+   "vincitore": "KR-Sejun Park"
+  },
+  "193": {
+   "data": "2018-04-01",
+   "formato": "vgc18",
+   "giocatori": 131,
+   "id": 193,
+   "nome": "Korean Spring League 2018",
+   "paese": "KR",
+   "vincitore": "KR-Jihyun Ryu"
+  },
+  "194": {
+   "data": "2018-08-25",
+   "formato": "vgc18",
+   "giocatori": 75,
+   "id": 194,
+   "nome": "World Championships 2018",
+   "paese": "US",
+   "vincitore": "EC-Paul Ruiz"
+  },
+  "195": {
+   "data": "2020-01-11",
+   "formato": "swsh2",
+   "giocatori": 401,
+   "id": 195,
+   "nome": "Regional Bochum",
+   "paese": "DE",
+   "vincitore": "ES-Guillermo Castilla Diaz"
+  },
+  "196": {
+   "data": "2018-08-25",
+   "formato": "vgc18",
+   "giocatori": 371,
+   "id": 196,
+   "nome": "Nashville Open",
+   "paese": "US",
+   "vincitore": "IT-Gilberto Goracci"
+  },
+  "197": {
+   "data": "2018-11-16",
+   "formato": "sun",
+   "giocatori": 89,
+   "id": 197,
+   "nome": "LAIC 2018–19, São Paulo",
+   "paese": "BR",
+   "vincitore": "US-Ashton Cox"
+  },
+  "198": {
+   "data": "2019-02-15",
+   "formato": "moon",
+   "giocatori": 114,
+   "id": 198,
+   "nome": "OCIC 2019, Melbourne",
+   "paese": "AU",
+   "vincitore": "PT-Eduardo Cunha"
+  },
+  "199": {
+   "data": "2019-04-26",
+   "formato": "ultra",
+   "giocatori": 420,
+   "id": 199,
+   "nome": "EUIC 2019, Berlin",
+   "paese": "DE",
+   "vincitore": "IT-Flavio del Pidio"
+  },
+  "2": {
+   "data": "2016-11-19",
+   "formato": "vgc16",
+   "giocatori": 129,
+   "id": 2,
+   "nome": "Regional Dortmund",
+   "paese": "DE",
+   "vincitore": "DE-Matthias Suchodolski"
+  },
+  "20": {
+   "data": "2017-03-10",
+   "formato": "vgc17",
+   "giocatori": 260,
+   "id": 20,
+   "nome": "OCIC 2017, Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Zoe Lou"
+  },
+  "200": {
+   "data": "2019-06-21",
+   "formato": "ultra",
+   "giocatori": 265,
+   "id": 200,
+   "nome": "NAIC 2019, Columbus",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "201": {
+   "data": "2019-08-17",
+   "formato": "ultra",
+   "giocatori": 78,
+   "id": 201,
+   "nome": "World Championships 2019",
+   "paese": "US",
+   "vincitore": "JP-Naoto Mizobuchi"
+  },
+  "202": {
+   "data": "2019-03-23",
+   "formato": "moon",
+   "giocatori": 120,
+   "id": 202,
+   "nome": "Special Event Bolzano",
+   "paese": "IT",
+   "vincitore": "IT-Alessio Yuri Boschetto"
+  },
+  "203": {
+   "data": "2019-06-15",
+   "formato": "ultra",
+   "giocatori": 29,
+   "id": 203,
+   "nome": "Regional Jönköping",
+   "paese": "SE",
+   "vincitore": "IT-Marco Hemantha Kaladura Silva"
+  },
+  "204": {
+   "data": "2018-12-01",
+   "formato": "sun",
+   "giocatori": 50,
+   "id": 204,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-James Katsaros"
+  },
+  "205": {
+   "data": "2019-03-16",
+   "formato": "moon",
+   "giocatori": 37,
+   "id": 205,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Meaghan Rattle"
+  },
+  "206": {
+   "data": "2019-05-18",
+   "formato": "ultra",
+   "giocatori": 51,
+   "id": 206,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "207": {
+   "data": "2019-05-11",
+   "formato": "ultra",
+   "giocatori": 65,
+   "id": 207,
+   "nome": "Regional Hong Kong",
+   "paese": "HK",
+   "vincitore": "HK-Kei Yin Or"
+  },
+  "208": {
+   "data": "2019-06-08",
+   "formato": "ultra",
+   "giocatori": 53,
+   "id": 208,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "209": {
+   "data": "2019-11-15",
+   "formato": "ultra",
+   "giocatori": 93,
+   "id": 209,
+   "nome": "LAIC 2019–20, São Paulo",
+   "paese": "BR",
+   "vincitore": "US-James Baek"
+  },
+  "21": {
+   "data": "2017-04-21",
+   "formato": "vgc17",
+   "giocatori": 186,
+   "id": 21,
+   "nome": "LAIC 2017, São Paulo",
+   "paese": "BR",
+   "vincitore": "US-Ashton Cox"
+  },
+  "210": {
+   "data": "2020-02-21",
+   "formato": "swsh2",
+   "giocatori": 288,
+   "id": 210,
+   "nome": "OCIC 2020, Melbourne",
+   "paese": "AU",
+   "vincitore": "IT-Marco Hemantha Kaladura Silva"
+  },
+  "213": {
+   "data": "2019-09-07",
+   "formato": "ultra",
+   "giocatori": 122,
+   "id": 213,
+   "nome": "Regional Sheffield",
+   "paese": "GB",
+   "vincitore": "GB-Barry Anderson"
+  },
+  "214": {
+   "data": "2019-09-28",
+   "formato": "ultra",
+   "giocatori": 233,
+   "id": 214,
+   "nome": "Regional Cologne",
+   "paese": "DE",
+   "vincitore": "FR-Hippolyte Bernard"
+  },
+  "215": {
+   "data": "2019-11-02",
+   "formato": "ultra",
+   "giocatori": 102,
+   "id": 215,
+   "nome": "Special Event Paris",
+   "paese": "FR",
+   "vincitore": "GB-Calvin Foster"
+  },
+  "216": {
+   "data": "2020-03-07",
+   "formato": "swsh3",
+   "giocatori": 156,
+   "id": 216,
+   "nome": "Regional Malmö",
+   "paese": "SE",
+   "vincitore": "DE-Tobias Koschitzki"
+  },
+  "219": {
+   "data": "2019-09-28",
+   "formato": "ultra",
+   "giocatori": 120,
+   "id": 219,
+   "nome": "Regional Atlantic City, NJ",
+   "paese": "US",
+   "vincitore": "US-Paul Chua"
+  },
+  "220": {
+   "data": "2019-10-12",
+   "formato": "ultra",
+   "giocatori": 68,
+   "id": 220,
+   "nome": "Regional Knoxville, TN",
+   "paese": "US",
+   "vincitore": "US-Kyle Livinghouse"
+  },
+  "221": {
+   "data": "2019-11-02",
+   "formato": "ultra",
+   "giocatori": 99,
+   "id": 221,
+   "nome": "Regional Richmond, VA",
+   "paese": "US",
+   "vincitore": "SE-Nils Dunlop"
+  },
+  "222": {
+   "data": "2019-11-09",
+   "formato": "ultra",
+   "giocatori": 87,
+   "id": 222,
+   "nome": "Regional Portland, OR",
+   "paese": "US",
+   "vincitore": "US-Joseph Ugarte"
+  },
+  "223": {
+   "data": "2019-11-30",
+   "formato": "ultra",
+   "giocatori": 35,
+   "id": 223,
+   "nome": "Regional Daytona Beach, FL",
+   "paese": "US",
+   "vincitore": "US-Brady Smith"
+  },
+  "224": {
+   "data": "2019-12-07",
+   "formato": "ultra",
+   "giocatori": 80,
+   "id": 224,
+   "nome": "Regional San Diego, CA",
+   "paese": "US",
+   "vincitore": "US-Emilio Forbes"
+  },
+  "225": {
+   "data": "2020-01-18",
+   "formato": "swsh2",
+   "giocatori": 550,
+   "id": 225,
+   "nome": "Regional Dallas, TX",
+   "paese": "US",
+   "vincitore": "US-Aaron Traylor"
+  },
+  "226": {
+   "data": "2020-02-29",
+   "formato": "swsh2",
+   "giocatori": 369,
+   "id": 226,
+   "nome": "Regional Collinsville, IL",
+   "paese": "US",
+   "vincitore": "US-Andrew Ding"
+  },
+  "234": {
+   "data": "2019-12-07",
+   "formato": "ultra",
+   "giocatori": 40,
+   "id": 234,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Anubhav Biswas"
+  },
+  "235": {
+   "data": "2019-12-21",
+   "formato": "ultra",
+   "giocatori": 50,
+   "id": 235,
+   "nome": "Regional Kuala Lumpur",
+   "paese": "MY",
+   "vincitore": "MY-Ismat Myron Beg"
+  },
+  "236": {
+   "data": "2020-03-14",
+   "formato": "swsh3",
+   "giocatori": 67,
+   "id": 236,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Sky Konsti"
+  },
+  "238": {
+   "data": "2019-05-11",
+   "formato": "ultra",
+   "giocatori": 43,
+   "id": 238,
+   "nome": "Regional Kuala Lumpur",
+   "paese": "MY",
+   "vincitore": "SG-Yoko Taguma"
+  },
+  "239": {
+   "data": "2010-06-25",
+   "formato": "vgc10",
+   "giocatori": 100,
+   "id": 239,
+   "nome": "US Nationals 2010",
+   "paese": "US",
+   "vincitore": "US-Wesley Morioka"
+  },
+  "24": {
+   "data": "2018-04-14",
+   "formato": "vgc18",
+   "giocatori": 125,
+   "id": 24,
+   "nome": "Regional Sindelfingen",
+   "paese": "DE",
+   "vincitore": "IT-Guiseppe Musicco"
+  },
+  "240": {
+   "data": "2010-06-01",
+   "formato": "vgc10",
+   "giocatori": 32,
+   "id": 240,
+   "nome": "Japan Nationals 2010",
+   "paese": "JP",
+   "vincitore": "JP-Ryo Tajiri"
+  },
+  "241": {
+   "data": "2010-06-01",
+   "formato": "vgc10",
+   "giocatori": 100,
+   "id": 241,
+   "nome": "UK Nationals 2010",
+   "paese": "GB",
+   "vincitore": "GB-Rees Hamilton"
+  },
+  "242": {
+   "data": "2010-06-05",
+   "formato": "vgc10",
+   "giocatori": 256,
+   "id": 242,
+   "nome": "German Nationals 2010",
+   "paese": "DE",
+   "vincitore": "DE-Robert Wein"
+  },
+  "243": {
+   "data": "2010-06-12",
+   "formato": "vgc10",
+   "giocatori": 256,
+   "id": 243,
+   "nome": "France Nationals 2010",
+   "paese": "FR",
+   "vincitore": "FR-f roggy"
+  },
+  "244": {
+   "data": "2010-06-19",
+   "formato": "vgc10",
+   "giocatori": 256,
+   "id": 244,
+   "nome": "Spain Nationals 2010",
+   "paese": "ES",
+   "vincitore": "ES-Mario Diaz de Cerio Beltran"
+  },
+  "245": {
+   "data": "2011-07-01",
+   "formato": "vgc11",
+   "giocatori": 100,
+   "id": 245,
+   "nome": "US Nationals 2011",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "246": {
+   "data": "2011-07-01",
+   "formato": "vgc11",
+   "giocatori": 32,
+   "id": 246,
+   "nome": "Korea Nationals 2011",
+   "paese": "KR",
+   "vincitore": "KR-Sejun Park"
+  },
+  "247": {
+   "data": "2011-06-01",
+   "formato": "vgc11",
+   "giocatori": 100,
+   "id": 247,
+   "nome": "German Nationals 2011",
+   "paese": "DE",
+   "vincitore": "DE-Jennifer Giwanski"
+  },
+  "248": {
+   "data": "2011-06-01",
+   "formato": "vgc11",
+   "giocatori": 100,
+   "id": 248,
+   "nome": "French Nationals 2011",
+   "paese": "FR",
+   "vincitore": "FR-Lionel Fey"
+  },
+  "249": {
+   "data": "2011-06-01",
+   "formato": "vgc11",
+   "giocatori": 100,
+   "id": 249,
+   "nome": "Spain Nationals 2011",
+   "paese": "ES",
+   "vincitore": "ES-Guillermo Castilla Diaz"
+  },
+  "25": {
+   "data": "2018-06-16",
+   "formato": "vgc18",
+   "giocatori": 131,
+   "id": 25,
+   "nome": "Regional Sheffield",
+   "paese": "GB",
+   "vincitore": "IT-Michele Gavelli"
+  },
+  "251": {
+   "data": "2011-06-04",
+   "formato": "vgc11",
+   "giocatori": 100,
+   "id": 251,
+   "nome": "UK Nationals 2011",
+   "paese": "GB",
+   "vincitore": "ES-Ruben Puig Lecegui"
+  },
+  "252": {
+   "data": "2012-07-01",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 252,
+   "nome": "US Nationals 2012",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "253": {
+   "data": "2012-06-01",
+   "formato": "vgc12",
+   "giocatori": 32,
+   "id": 253,
+   "nome": "Japan Nationals 2012",
+   "paese": "JP",
+   "vincitore": "JP-Satoru Masukata"
+  },
+  "254": {
+   "data": "2012-06-01",
+   "formato": "vgc12",
+   "giocatori": 32,
+   "id": 254,
+   "nome": "Korea Nationals 2012",
+   "paese": "KR",
+   "vincitore": "KR-Wonseok Jang"
+  },
+  "255": {
+   "data": "2012-06-01",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 255,
+   "nome": "Canada Nationals 2012",
+   "paese": "CA",
+   "vincitore": "CA-Tony Cheung"
+  },
+  "256": {
+   "data": "2012-06-01",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 256,
+   "nome": "Italy Nationals 2012",
+   "paese": "IT",
+   "vincitore": "ES-Guillermo Castilla Diaz"
+  },
+  "257": {
+   "data": "2012-03-24",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 257,
+   "nome": "Spain Nationals 2012",
+   "paese": "ES",
+   "vincitore": "ES-Jose Garcia Mejia"
+  },
+  "258": {
+   "data": "2012-03-17",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 258,
+   "nome": "France Nationals 2012",
+   "paese": "FR",
+   "vincitore": "DE-Martin Meisel"
+  },
+  "259": {
+   "data": "2012-03-10",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 259,
+   "nome": "German Nationals 2012",
+   "paese": "DE",
+   "vincitore": "DE-Stefan Mahrla"
+  },
+  "26": {
+   "data": "2018-03-17",
+   "formato": "vgc18",
+   "giocatori": 105,
+   "id": 26,
+   "nome": "Special Event Prague",
+   "paese": "CZ",
+   "vincitore": "CZ-David Koutesh"
+  },
+  "260": {
+   "data": "2012-03-03",
+   "formato": "vgc12",
+   "giocatori": 100,
+   "id": 260,
+   "nome": "UK Nationals 2012",
+   "paese": "GB",
+   "vincitore": "ES-Ruben Puig Lecegui"
+  },
+  "261": {
+   "data": "2013-05-01",
+   "formato": "vgc13",
+   "giocatori": 32,
+   "id": 261,
+   "nome": "Korea Nationals 2013",
+   "paese": "KR",
+   "vincitore": "KR-Sejun Park"
+  },
+  "262": {
+   "data": "2013-03-11",
+   "formato": "vgc13",
+   "giocatori": 300,
+   "id": 262,
+   "nome": "Italy Nationals 2013",
+   "paese": "IT",
+   "vincitore": "IT-Matteo Gini"
+  },
+  "263": {
+   "data": "2013-05-26",
+   "formato": "vgc13",
+   "giocatori": 215,
+   "id": 263,
+   "nome": "German Nationals 2013",
+   "paese": "DE",
+   "vincitore": "IT-Alberto Gini"
+  },
+  "264": {
+   "data": "2013-06-02",
+   "formato": "vgc13",
+   "giocatori": 333,
+   "id": 264,
+   "nome": "UK Nationals 2013",
+   "paese": "GB",
+   "vincitore": "GB-Ben Kyriakou"
+  },
+  "265": {
+   "data": "2013-07-01",
+   "formato": "vgc13",
+   "giocatori": 410,
+   "id": 265,
+   "nome": "US Nationals 2013",
+   "paese": "US",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "266": {
+   "data": "2014-07-05",
+   "formato": "vgc14",
+   "giocatori": 500,
+   "id": 266,
+   "nome": "US Nationals 2014",
+   "paese": "US",
+   "vincitore": "US-Alex Ogloza"
+  },
+  "267": {
+   "data": "2014-05-03",
+   "formato": "vgc14",
+   "giocatori": 403,
+   "id": 267,
+   "nome": "German Nationals 2014",
+   "paese": "DE",
+   "vincitore": "DE-Markus Hamann"
+  },
+  "269": {
+   "data": "2014-05-24",
+   "formato": "vgc14",
+   "giocatori": 437,
+   "id": 269,
+   "nome": "UK Nationals 2014",
+   "paese": "GB",
+   "vincitore": "ES-Albert Banares"
+  },
+  "27": {
+   "data": "2018-05-19",
+   "formato": "vgc18",
+   "giocatori": 42,
+   "id": 27,
+   "nome": "Dreamhack France",
+   "paese": "FR",
+   "vincitore": "FR-Alekso Letexier"
+  },
+  "270": {
+   "data": "2014-05-31",
+   "formato": "vgc14",
+   "giocatori": 295,
+   "id": 270,
+   "nome": "Italy Nationals 2014",
+   "paese": "IT",
+   "vincitore": "DE-Florian Wurdack"
+  },
+  "271": {
+   "data": "2016-05-13",
+   "formato": "vgc16",
+   "giocatori": 22,
+   "id": 271,
+   "nome": "South African Nationals 2016",
+   "paese": "ZA",
+   "vincitore": "DE-Michael Riechert"
+  },
+  "272": {
+   "data": "2019-08-17",
+   "formato": "ultra",
+   "giocatori": 300,
+   "id": 272,
+   "nome": "D.C. Open",
+   "paese": "US",
+   "vincitore": "US-Jeremy Odena"
+  },
+  "273": {
+   "data": "2019-09-01",
+   "formato": "ultra",
+   "giocatori": 60,
+   "id": 273,
+   "nome": "Melbourne Open",
+   "paese": "AU",
+   "vincitore": "AU-Alfredo Chang"
+  },
+  "274": {
+   "data": "2018-09-12",
+   "formato": "sun",
+   "giocatori": 41,
+   "id": 274,
+   "nome": "Melbourne Open",
+   "paese": "AU",
+   "vincitore": "AU-Mitch Kendrick"
+  },
+  "276": {
+   "data": "2022-03-12",
+   "formato": "vgc22",
+   "giocatori": 71,
+   "id": 276,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Henry Rich"
+  },
+  "278": {
+   "data": "2022-03-26",
+   "formato": "vgc22",
+   "giocatori": 185,
+   "id": 278,
+   "nome": "Regional Liverpool",
+   "paese": "GB",
+   "vincitore": "ES-Eric Rios"
+  },
+  "279": {
+   "data": "2022-04-22",
+   "formato": "vgc22",
+   "giocatori": 290,
+   "id": 279,
+   "nome": "EUIC 2022, Frankfurt",
+   "paese": "DE",
+   "vincitore": "ES-Eric Rios"
+  },
+  "28": {
+   "data": "2018-02-09",
+   "formato": "vgc18",
+   "giocatori": 212,
+   "id": 28,
+   "nome": "OCIC 2018, Sydney",
+   "paese": "AU",
+   "vincitore": "IT-Alessio Yuri Boschetto"
+  },
+  "280": {
+   "data": "2022-05-07",
+   "formato": "vgc22",
+   "giocatori": 260,
+   "id": 280,
+   "nome": "Regional Indianapolis, IN",
+   "paese": "US",
+   "vincitore": "US-Stefan Mott"
+  },
+  "281": {
+   "data": "2022-05-07",
+   "formato": "vgc22",
+   "giocatori": 206,
+   "id": 281,
+   "nome": "Special Event Bilbao",
+   "paese": "ES",
+   "vincitore": "DE-Jonas Wiegel"
+  },
+  "282": {
+   "data": "2022-05-21",
+   "formato": "vgc22",
+   "giocatori": 138,
+   "id": 282,
+   "nome": "Regional Secaucus, NJ",
+   "paese": "US",
+   "vincitore": "US-Emilio Forbes"
+  },
+  "283": {
+   "data": "2022-05-21",
+   "formato": "vgc22",
+   "giocatori": 126,
+   "id": 283,
+   "nome": "Regional Lille",
+   "paese": "FR",
+   "vincitore": "FR-Thomas Gravouille"
+  },
+  "284": {
+   "data": "2022-05-21",
+   "formato": "vgc22",
+   "giocatori": 57,
+   "id": 284,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Alister Sandover"
+  },
+  "285": {
+   "data": "2022-05-28",
+   "formato": "vgc22",
+   "giocatori": 117,
+   "id": 285,
+   "nome": "Regional Vancouver",
+   "paese": "CA",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "286": {
+   "data": "2022-05-28",
+   "formato": "vgc22",
+   "giocatori": 135,
+   "id": 286,
+   "nome": "Regional Bremen",
+   "paese": "DE",
+   "vincitore": "DE-Maurice Uteg"
+  },
+  "287": {
+   "data": "2022-06-04",
+   "formato": "vgc22",
+   "giocatori": 280,
+   "id": 287,
+   "nome": "Special Event Milan",
+   "paese": "IT",
+   "vincitore": "IT-Flavio del Pidio"
+  },
+  "288": {
+   "data": "2022-06-11",
+   "formato": "vgc22",
+   "giocatori": 87,
+   "id": 288,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Sam Pandelis"
+  },
+  "289": {
+   "data": "2022-06-18",
+   "formato": "vgc22",
+   "giocatori": 180,
+   "id": 289,
+   "nome": "Regional Milwaukee, WI",
+   "paese": "US",
+   "vincitore": "CN-Zhang Zhe"
+  },
+  "29": {
+   "data": "2018-04-27",
+   "formato": "vgc18",
+   "giocatori": 134,
+   "id": 29,
+   "nome": "LAIC 2018, São Paulo",
+   "paese": "BR",
+   "vincitore": "US-Carson Confer"
+  },
+  "290": {
+   "data": "2022-06-24",
+   "formato": "vgc22",
+   "giocatori": 318,
+   "id": 290,
+   "nome": "NAIC 2022, Columbus",
+   "paese": "US",
+   "vincitore": "US-James Evans"
+  },
+  "291": {
+   "data": "2022-06-04",
+   "formato": "vgc22",
+   "giocatori": 54,
+   "id": 291,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "PE-Diego Gutierrez"
+  },
+  "292": {
+   "data": "2022-04-09",
+   "formato": "vgc22",
+   "giocatori": 123,
+   "id": 292,
+   "nome": "Special Event Taichung",
+   "paese": "TW",
+   "vincitore": "TW-Chien Tsai"
+  },
+  "293": {
+   "data": "2022-03-19",
+   "formato": "vgc22",
+   "giocatori": 163,
+   "id": 293,
+   "nome": "Regional Salt Lake City, UT",
+   "paese": "US",
+   "vincitore": "US-Chongjun Peng"
+  },
+  "294": {
+   "data": "2022-08-20",
+   "formato": "vgc22",
+   "giocatori": 307,
+   "id": 294,
+   "nome": "World Championships 2022",
+   "paese": "GB",
+   "vincitore": "PT-Eduardo Cunha"
+  },
+  "295": {
+   "data": "2022-08-21",
+   "formato": "vgc22",
+   "giocatori": 364,
+   "id": 295,
+   "nome": "London Open",
+   "paese": "GB",
+   "vincitore": "CH-Andrea Olea"
+  },
+  "296": {
+   "data": "2023-01-07",
+   "formato": "sva",
+   "giocatori": 531,
+   "id": 296,
+   "nome": "Regional San Diego, CA",
+   "paese": "US",
+   "vincitore": "KR-Jiseok Lee"
+  },
+  "297": {
+   "data": "2023-01-21",
+   "formato": "sva",
+   "giocatori": 487,
+   "id": 297,
+   "nome": "Regional Liverpool",
+   "paese": "GB",
+   "vincitore": "US-Luca Paz"
+  },
+  "298": {
+   "data": "2023-02-04",
+   "formato": "svb",
+   "giocatori": 782,
+   "id": 298,
+   "nome": "Regional Orlando, FL",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "299": {
+   "data": "2023-02-25",
+   "formato": "svb",
+   "giocatori": 622,
+   "id": 299,
+   "nome": "Regional Knoxville, TN",
+   "paese": "US",
+   "vincitore": "US-Justin Tang"
+  },
+  "3": {
+   "data": "2016-12-09",
+   "formato": "vgc17",
+   "giocatori": 565,
+   "id": 3,
+   "nome": "EUIC 2016–17, London",
+   "paese": "GB",
+   "vincitore": "ES-Miguel Marti de La Torre"
+  },
+  "30": {
+   "data": "2017-06-30",
+   "formato": "vgc17",
+   "giocatori": 399,
+   "id": 30,
+   "nome": "NAIC 2017, Indianapolis",
+   "paese": "US",
+   "vincitore": "AU-Christopher Kan"
+  },
+  "300": {
+   "data": "2023-03-11",
+   "formato": "svb",
+   "giocatori": 309,
+   "id": 300,
+   "nome": "Regional Vancouver, BC",
+   "paese": "CA",
+   "vincitore": "CA-Abdullah Mohayyuddin"
+  },
+  "302": {
+   "data": "2023-04-01",
+   "formato": "svc",
+   "giocatori": 535,
+   "id": 302,
+   "nome": "Regional Fort Wayne, IN",
+   "paese": "US",
+   "vincitore": "US-Justin Tang"
+  },
+  "303": {
+   "data": "2023-05-06",
+   "formato": "svc",
+   "giocatori": 469,
+   "id": 303,
+   "nome": "Regional Portland, OR",
+   "paese": "US",
+   "vincitore": "US-Joseph Ugarte"
+  },
+  "304": {
+   "data": "2023-05-20",
+   "formato": "svc",
+   "giocatori": 675,
+   "id": 304,
+   "nome": "Regional Hartford, CT",
+   "paese": "US",
+   "vincitore": "CN-Tang Shiliang"
+  },
+  "305": {
+   "data": "2023-06-03",
+   "formato": "svc",
+   "giocatori": 563,
+   "id": 305,
+   "nome": "Regional Milwaukee, WI",
+   "paese": "US",
+   "vincitore": "US-Brian Youm"
+  },
+  "306": {
+   "data": "2023-02-25",
+   "formato": "svb",
+   "giocatori": 573,
+   "id": 306,
+   "nome": "Regional Bochum",
+   "paese": "DE",
+   "vincitore": "DE-Markus Hamann"
+  },
+  "307": {
+   "data": "2023-05-20",
+   "formato": "svc",
+   "giocatori": 275,
+   "id": 307,
+   "nome": "Regional Malmö",
+   "paese": "SE",
+   "vincitore": "IE-Mattie Morgan"
+  },
+  "308": {
+   "data": "2023-03-04",
+   "formato": "svb",
+   "giocatori": 113,
+   "id": 308,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "GB-Taran Birdee"
+  },
+  "309": {
+   "data": "2023-04-01",
+   "formato": "svc",
+   "giocatori": 190,
+   "id": 309,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Liam Gilbert"
+  },
+  "31": {
+   "data": "2017-08-19",
+   "formato": "vgc17",
+   "giocatori": 81,
+   "id": 31,
+   "nome": "World Championships 2017",
+   "paese": "US",
+   "vincitore": "JP-Ryota Otsubo"
+  },
+  "310": {
+   "data": "2023-03-18",
+   "formato": "svb",
+   "giocatori": 460,
+   "id": 310,
+   "nome": "Special Event Utrecht",
+   "paese": "NL",
+   "vincitore": "ES-Eric Rios"
+  },
+  "311": {
+   "data": "2023-06-03",
+   "formato": "svc",
+   "giocatori": 582,
+   "id": 311,
+   "nome": "Special Event Torino",
+   "paese": "IT",
+   "vincitore": "IT-Nico Davide Cognetta"
+  },
+  "312": {
+   "data": "2023-02-17",
+   "formato": "svb",
+   "giocatori": 282,
+   "id": 312,
+   "nome": "OCIC 2023, Melbourne",
+   "paese": "AU",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "313": {
+   "data": "2023-04-14",
+   "formato": "svc",
+   "giocatori": 773,
+   "id": 313,
+   "nome": "EUIC 2023, London",
+   "paese": "GB",
+   "vincitore": "US-Paul Chua"
+  },
+  "315": {
+   "data": "2023-03-25",
+   "formato": "svb",
+   "giocatori": 730,
+   "id": 315,
+   "nome": "Regional Charlotte, NC",
+   "paese": "US",
+   "vincitore": "US-Justin Carris"
+  },
+  "316": {
+   "data": "2023-06-10",
+   "formato": "svc",
+   "giocatori": 285,
+   "id": 316,
+   "nome": "Regional Fresno, CA",
+   "paese": "US",
+   "vincitore": "US-Emilio Forbes"
+  },
+  "317": {
+   "data": "2023-06-24",
+   "formato": "svc",
+   "giocatori": 37,
+   "id": 317,
+   "nome": "Special Event Caguas",
+   "paese": "PR",
+   "vincitore": "US-Zackary Thornberg"
+  },
+  "319": {
+   "data": "2023-08-11",
+   "formato": "svd",
+   "giocatori": 336,
+   "id": 319,
+   "nome": "World Championships 2023",
+   "paese": "JP",
+   "vincitore": "JP-Shohei Kimura"
+  },
+  "32": {
+   "data": "2016-10-01",
+   "formato": "vgc16",
+   "giocatori": 137,
+   "id": 32,
+   "nome": "Regional Phoenix, AZ",
+   "paese": "US",
+   "vincitore": "US-Riley Factura"
+  },
+  "321": {
+   "data": "2023-06-30",
+   "formato": "svc",
+   "giocatori": 777,
+   "id": 321,
+   "nome": "NAIC 2023, Columbus",
+   "paese": "US",
+   "vincitore": "ES-Alex Gómez Berna"
+  },
+  "322": {
+   "data": "2023-09-09",
+   "formato": "svd",
+   "giocatori": 424,
+   "id": 322,
+   "nome": "Regional Pittsburgh",
+   "paese": "US",
+   "vincitore": "US-Riley Factura"
+  },
+  "323": {
+   "data": "2020-08-22",
+   "formato": "swsh5",
+   "giocatori": 16,
+   "id": 323,
+   "nome": "Players Cup 1 Global Finals",
+   "paese": "ns",
+   "vincitore": "US-Santino Tarquinio"
+  },
+  "325": {
+   "data": "2023-10-14",
+   "formato": "sve",
+   "giocatori": 409,
+   "id": 325,
+   "nome": "Regional Sacramento",
+   "paese": "US",
+   "vincitore": "US-Michael Zhang"
+  },
+  "326": {
+   "data": "2023-10-28",
+   "formato": "sve",
+   "giocatori": 543,
+   "id": 326,
+   "nome": "Regional Toronto",
+   "paese": "CA",
+   "vincitore": "US-Chuppa Cross IV"
+  },
+  "327": {
+   "data": "2023-12-16",
+   "formato": "sve",
+   "giocatori": 523,
+   "id": 327,
+   "nome": "Regional San Antonio",
+   "paese": "US",
+   "vincitore": "US-Giovanni Costa"
+  },
+  "328": {
+   "data": "2024-01-06",
+   "formato": "svf",
+   "giocatori": 502,
+   "id": 328,
+   "nome": "Regional Portland",
+   "paese": "US",
+   "vincitore": "US-Alex Underhill"
+  },
+  "329": {
+   "data": "2024-01-20",
+   "formato": "svf",
+   "giocatori": 845,
+   "id": 329,
+   "nome": "Regional Charlotte",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "33": {
+   "data": "2016-10-15",
+   "formato": "vgc16",
+   "giocatori": 150,
+   "id": 33,
+   "nome": "Regional Orlando, FL",
+   "paese": "US",
+   "vincitore": "US-Ian McLaughlin"
+  },
+  "330": {
+   "data": "2024-02-03",
+   "formato": "svf",
+   "giocatori": 467,
+   "id": 330,
+   "nome": "Regional Knoxville",
+   "paese": "US",
+   "vincitore": "US-Toler Webb"
+  },
+  "331": {
+   "data": "2024-03-23",
+   "formato": "svf",
+   "giocatori": 401,
+   "id": 331,
+   "nome": "Regional Vancouver",
+   "paese": "CA",
+   "vincitore": "US-James Evans"
+  },
+  "332": {
+   "data": "2024-04-13",
+   "formato": "svf",
+   "giocatori": 824,
+   "id": 332,
+   "nome": "Regional Orlando",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "333": {
+   "data": "2024-05-04",
+   "formato": "svg",
+   "giocatori": 688,
+   "id": 333,
+   "nome": "Regional Indianapolis",
+   "paese": "US",
+   "vincitore": "US-Rajan Bal"
+  },
+  "334": {
+   "data": "2024-05-25",
+   "formato": "svg",
+   "giocatori": 612,
+   "id": 334,
+   "nome": "Regional Los Angeles",
+   "paese": "US",
+   "vincitore": "US-Montana Mott"
+  },
+  "336": {
+   "data": "2023-10-21",
+   "formato": "sve",
+   "giocatori": 532,
+   "id": 336,
+   "nome": "Regional Lille",
+   "paese": "FR",
+   "vincitore": "IT-Simone Sanvito"
+  },
+  "337": {
+   "data": "2023-11-25",
+   "formato": "sve",
+   "giocatori": 328,
+   "id": 337,
+   "nome": "Regional Gdańsk",
+   "paese": "PL",
+   "vincitore": "FI-Oliver Eskolin"
+  },
+  "338": {
+   "data": "2023-12-09",
+   "formato": "sve",
+   "giocatori": 466,
+   "id": 338,
+   "nome": "Regional Stuttgart",
+   "paese": "DE",
+   "vincitore": "IT-Lorenzo Silvestrini"
+  },
+  "34": {
+   "data": "2016-11-06",
+   "formato": "vgc16",
+   "giocatori": 250,
+   "id": 34,
+   "nome": "Regional Philadelphia, PA",
+   "paese": "US",
+   "vincitore": "US-Zheyuan Huang"
+  },
+  "340": {
+   "data": "2024-02-10",
+   "formato": "svf",
+   "giocatori": 551,
+   "id": 340,
+   "nome": "Regional Dortmund",
+   "paese": "DE",
+   "vincitore": "DE-Florian Temme"
+  },
+  "341": {
+   "data": "2024-03-02",
+   "formato": "svf",
+   "giocatori": 658,
+   "id": 341,
+   "nome": "Special Event Utrecht",
+   "paese": "NL",
+   "vincitore": "NL-Nikhil Reddy"
+  },
+  "343": {
+   "data": "2024-01-27",
+   "formato": "svf",
+   "giocatori": 664,
+   "id": 343,
+   "nome": "Regional Liverpool",
+   "paese": "GB",
+   "vincitore": "ES-Antonio Sánchez"
+  },
+  "344": {
+   "data": "2023-09-23",
+   "formato": "svd",
+   "giocatori": 93,
+   "id": 344,
+   "nome": "Regional Curitiba",
+   "paese": "BR",
+   "vincitore": "BR-Nader El bacha"
+  },
+  "345": {
+   "data": "2023-11-25",
+   "formato": "sve",
+   "giocatori": 189,
+   "id": 345,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Nicholas Kan"
+  },
+  "346": {
+   "data": "2024-02-03",
+   "formato": "svf",
+   "giocatori": 263,
+   "id": 346,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Kiran Singh"
+  },
+  "347": {
+   "data": "2024-04-13",
+   "formato": "svf",
+   "giocatori": 158,
+   "id": 347,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-James Katsaros"
+  },
+  "35": {
+   "data": "2016-11-26",
+   "formato": "vgc16",
+   "giocatori": 103,
+   "id": 35,
+   "nome": "Regional Fort Wayne, IN",
+   "paese": "US",
+   "vincitore": "US-Dane Zieman"
+  },
+  "350": {
+   "data": "2021-07-17",
+   "formato": "swsh9",
+   "giocatori": 16,
+   "id": 350,
+   "nome": "Players Cup 4 Global Finals",
+   "paese": "ns",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "351": {
+   "data": "2020-12-05",
+   "formato": "swsh7",
+   "giocatori": 16,
+   "id": 351,
+   "nome": "Players Cup 2 Global Finals",
+   "paese": "ns",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "352": {
+   "data": "2021-04-10",
+   "formato": "swsh8",
+   "giocatori": 16,
+   "id": 352,
+   "nome": "Players Cup 3 Global Finals",
+   "paese": "ns",
+   "vincitore": "US-Jonathan Evans"
+  },
+  "353": {
+   "data": "2023-09-16",
+   "formato": "svd",
+   "giocatori": 314,
+   "id": 353,
+   "nome": "Special Event Barcelona",
+   "paese": "ES",
+   "vincitore": "PT-Eduardo Cunha"
+  },
+  "354": {
+   "data": "2023-10-07",
+   "formato": "sve",
+   "giocatori": 448,
+   "id": 354,
+   "nome": "Regional Peoria",
+   "paese": "US",
+   "vincitore": "US-James Baek"
+  },
+  "355": {
+   "data": "2024-06-07",
+   "formato": "svg",
+   "giocatori": 921,
+   "id": 355,
+   "nome": "NAIC 2024, New Orleans",
+   "paese": "US",
+   "vincitore": "US-Patrick Connors"
+  },
+  "356": {
+   "data": "2024-04-05",
+   "formato": "svf",
+   "giocatori": 975,
+   "id": 356,
+   "nome": "EUIC 2024, London",
+   "paese": "GB",
+   "vincitore": "SE-Nils Dunlop"
+  },
+  "357": {
+   "data": "2023-11-17",
+   "formato": "sve",
+   "giocatori": 393,
+   "id": 357,
+   "nome": "LAIC 2023–24, São Paulo",
+   "paese": "BR",
+   "vincitore": "IT-Marco Hemantha Kaludura Silva"
+  },
+  "358": {
+   "data": "2024-08-17",
+   "formato": "svg",
+   "giocatori": 694,
+   "id": 358,
+   "nome": "World Championships 2024",
+   "paese": "US",
+   "vincitore": "IT-Luca Ceribelli"
+  },
+  "359": {
+   "data": "2024-06-01",
+   "formato": "svg",
+   "giocatori": 898,
+   "id": 359,
+   "nome": "Special Event Bologna",
+   "paese": "IT",
+   "vincitore": "IT-Ruben Gianzini"
+  },
+  "36": {
+   "data": "2017-08-19",
+   "formato": "vgc17",
+   "giocatori": 350,
+   "id": 36,
+   "nome": "Anaheim Open",
+   "paese": "US",
+   "vincitore": "JP-Tomoya Kimura"
+  },
+  "360": {
+   "data": "2024-05-18",
+   "formato": "svg",
+   "giocatori": 153,
+   "id": 360,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "PE-Hanns Pizarro"
+  },
+  "361": {
+   "data": "2024-05-11",
+   "formato": "svg",
+   "giocatori": 256,
+   "id": 361,
+   "nome": "Regional Stockholm",
+   "paese": "SE",
+   "vincitore": "DE-Michael Kelsch"
+  },
+  "362": {
+   "data": "2024-04-20",
+   "formato": "svf",
+   "giocatori": 223,
+   "id": 362,
+   "nome": "Regional São Paulo",
+   "paese": "BR",
+   "vincitore": "BR-Cristhian Andrade"
+  },
+  "363": {
+   "data": "2024-03-09",
+   "formato": "svf",
+   "giocatori": 102,
+   "id": 363,
+   "nome": "Regional Goiânia",
+   "paese": "BR",
+   "vincitore": "BR-Pedro Soares Fialdini"
+  },
+  "364": {
+   "data": "2024-10-12",
+   "formato": "svh",
+   "giocatori": 753,
+   "id": 364,
+   "nome": "Regional Louisville",
+   "paese": "US",
+   "vincitore": "US-Andrew Zheng"
+  },
+  "365": {
+   "data": "2024-11-23",
+   "formato": "svh",
+   "giocatori": 590,
+   "id": 365,
+   "nome": "Regional Sacramento",
+   "paese": "US",
+   "vincitore": "US-Carson Confer"
+  },
+  "366": {
+   "data": "2024-12-14",
+   "formato": "svh",
+   "giocatori": 735,
+   "id": 366,
+   "nome": "Regional Toronto",
+   "paese": "CA",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "367": {
+   "data": "2025-03-08",
+   "formato": "svg",
+   "giocatori": 426,
+   "id": 367,
+   "nome": "Regional Vancouver",
+   "paese": "CA",
+   "vincitore": "US-Behzad Muntazir"
+  },
+  "368": {
+   "data": "2025-05-03",
+   "formato": "svi",
+   "giocatori": 743,
+   "id": 368,
+   "nome": "Regional Milwaukee",
+   "paese": "US",
+   "vincitore": "US-Andrew Ding"
+  },
+  "37": {
+   "data": "2016-12-11",
+   "formato": "vgc17",
+   "giocatori": 67,
+   "id": 37,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Nelson Lim"
+  },
+  "370": {
+   "data": "2024-10-19",
+   "formato": "svh",
+   "giocatori": 638,
+   "id": 370,
+   "nome": "Regional Lille",
+   "paese": "FR",
+   "vincitore": "SE-Nils Dunlop"
+  },
+  "371": {
+   "data": "2024-11-02",
+   "formato": "svh",
+   "giocatori": 478,
+   "id": 371,
+   "nome": "Regional Gdańsk",
+   "paese": "PL",
+   "vincitore": "IT-Federico Camporesi"
+  },
+  "372": {
+   "data": "2024-11-30",
+   "formato": "svh",
+   "giocatori": 670,
+   "id": 372,
+   "nome": "Regional Stuttgart",
+   "paese": "DE",
+   "vincitore": "GB-Eden Batchelor"
+  },
+  "373": {
+   "data": "2025-01-18",
+   "formato": "svg",
+   "giocatori": 571,
+   "id": 373,
+   "nome": "Regional Birmingham",
+   "paese": "GB",
+   "vincitore": "IT-William Bassolino"
+  },
+  "374": {
+   "data": "2025-03-22",
+   "formato": "svg",
+   "giocatori": 344,
+   "id": 374,
+   "nome": "Regional Stockholm",
+   "paese": "SE",
+   "vincitore": "DE-Michael Kelsch"
+  },
+  "375": {
+   "data": "2025-04-26",
+   "formato": "svg",
+   "giocatori": 467,
+   "id": 375,
+   "nome": "Special Event Seville",
+   "paese": "ES",
+   "vincitore": "ES-Iker Rodrigo"
+  },
+  "376": {
+   "data": "2025-05-17",
+   "formato": "svi",
+   "giocatori": 619,
+   "id": 376,
+   "nome": "Special Event Utrecht",
+   "paese": "NL",
+   "vincitore": "DE-Michael Kelsch"
+  },
+  "377": {
+   "data": "2025-05-31",
+   "formato": "svi",
+   "giocatori": 684,
+   "id": 377,
+   "nome": "Special Event Bologna",
+   "paese": "IT",
+   "vincitore": "IT-Matteo Velata"
+  },
+  "378": {
+   "data": "2024-09-28",
+   "formato": "svh",
+   "giocatori": 111,
+   "id": 378,
+   "nome": "Regional Joinville",
+   "paese": "BR",
+   "vincitore": "BR-Gabriel Agati"
+  },
+  "379": {
+   "data": "2024-10-05",
+   "formato": "svh",
+   "giocatori": 109,
+   "id": 379,
+   "nome": "Special Event Lima",
+   "paese": "PE",
+   "vincitore": "PE-Sebastian Rodriguez"
+  },
+  "38": {
+   "data": "2016-12-18",
+   "formato": "vgc17",
+   "giocatori": 105,
+   "id": 38,
+   "nome": "Special Event Kuala Lumpur",
+   "paese": "MY",
+   "vincitore": "SG-Melvin Keh"
+  },
+  "380": {
+   "data": "2024-11-09",
+   "formato": "svh",
+   "giocatori": 60,
+   "id": 380,
+   "nome": "Special Event Buenos Aires",
+   "paese": "AR",
+   "vincitore": "CL-Javier Nain"
+  },
+  "381": {
+   "data": "2024-12-07",
+   "formato": "svh",
+   "giocatori": 61,
+   "id": 381,
+   "nome": "Special Event Bogota",
+   "paese": "CO",
+   "vincitore": "CR-Max Morales"
+  },
+  "382": {
+   "data": "2025-01-18",
+   "formato": "svg",
+   "giocatori": 155,
+   "id": 382,
+   "nome": "Regional Rio de Janeiro",
+   "paese": "BR",
+   "vincitore": "AR-Juan Francisco Salerno"
+  },
+  "383": {
+   "data": "2025-02-08",
+   "formato": "svg",
+   "giocatori": 182,
+   "id": 383,
+   "nome": "Regional Mérida",
+   "paese": "MX",
+   "vincitore": "MX-Daniel Núñez"
+  },
+  "384": {
+   "data": "2025-03-08",
+   "formato": "svg",
+   "giocatori": 117,
+   "id": 384,
+   "nome": "Regional Fortaleza",
+   "paese": "BR",
+   "vincitore": "BR-Bruno Rebello"
+  },
+  "385": {
+   "data": "2025-04-19",
+   "formato": "svg",
+   "giocatori": 226,
+   "id": 385,
+   "nome": "Regional Monterrey",
+   "paese": "MX",
+   "vincitore": "US-Riley Factura"
+  },
+  "386": {
+   "data": "2025-05-17",
+   "formato": "svi",
+   "giocatori": 131,
+   "id": 386,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "CR-Max Morales"
+  },
+  "387": {
+   "data": "2024-12-07",
+   "formato": "svh",
+   "giocatori": 173,
+   "id": 387,
+   "nome": "Regional Perth",
+   "paese": "AU",
+   "vincitore": "AU-Oliver Ramsay"
+  },
+  "388": {
+   "data": "2025-03-29",
+   "formato": "svg",
+   "giocatori": 217,
+   "id": 388,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "CL-Diego Ferreira"
+  },
+  "389": {
+   "data": "2024-09-28",
+   "formato": "svh",
+   "giocatori": 710,
+   "id": 389,
+   "nome": "Regional Dortmund",
+   "paese": "DE",
+   "vincitore": "IT-Davide Miraglia"
+  },
+  "39": {
+   "data": "2017-05-07",
+   "formato": "vgc17",
+   "giocatori": 69,
+   "id": 39,
+   "nome": "Regional Kuala Lumpur",
+   "paese": "MY",
+   "vincitore": "SG-Justin Lok"
+  },
+  "390": {
+   "data": "2024-09-14",
+   "formato": "svh",
+   "giocatori": 647,
+   "id": 390,
+   "nome": "Regional Baltimore",
+   "paese": "US",
+   "vincitore": "US-Nicholas Morales"
+  },
+  "391": {
+   "data": "2024-11-15",
+   "formato": "svh",
+   "giocatori": 455,
+   "id": 391,
+   "nome": "LAIC 2024–25, São Paulo",
+   "paese": "BR",
+   "vincitore": "IT-Marco Hemantha Kaludura Silva"
+  },
+  "392": {
+   "data": "2025-01-25",
+   "formato": "svg",
+   "giocatori": 602,
+   "id": 392,
+   "nome": "Regional San Antonio",
+   "paese": "US",
+   "vincitore": "US-Justin Tang"
+  },
+  "393": {
+   "data": "2025-02-21",
+   "formato": "svg",
+   "giocatori": 1257,
+   "id": 393,
+   "nome": "EUIC 2025, London",
+   "paese": "GB",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "394": {
+   "data": "2025-04-12",
+   "formato": "svg",
+   "giocatori": 783,
+   "id": 394,
+   "nome": "Regional Atlanta",
+   "paese": "US",
+   "vincitore": "US-Daniel Yu"
+  },
+  "395": {
+   "data": "2025-05-17",
+   "formato": "svi",
+   "giocatori": 258,
+   "id": 395,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "JP-Masayoshi Kuroo"
+  },
+  "396": {
+   "data": "2025-05-24",
+   "formato": "svi",
+   "giocatori": 466,
+   "id": 396,
+   "nome": "Regional Portland",
+   "paese": "US",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "397": {
+   "data": "2025-06-13",
+   "formato": "svi",
+   "giocatori": 1129,
+   "id": 397,
+   "nome": "NAIC 2025, New Orleans",
+   "paese": "US",
+   "vincitore": "IT-Federico Camporesi"
+  },
+  "398": {
+   "data": "2025-02-15",
+   "formato": "svg",
+   "giocatori": 98,
+   "id": 398,
+   "nome": "Special Event San Juan",
+   "paese": "PR",
+   "vincitore": "US-Hunter Braum"
+  },
+  "399": {
+   "data": "2025-08-15",
+   "formato": "svi",
+   "giocatori": 371,
+   "id": 399,
+   "nome": "World Championships 2025",
+   "paese": "US",
+   "vincitore": "US-Giovanni Cischke"
+  },
+  "4": {
+   "data": "2017-01-07",
+   "formato": "vgc17",
+   "giocatori": 54,
+   "id": 4,
+   "nome": "Dutch Open",
+   "paese": "NL",
+   "vincitore": "NL-Rob Akershoek"
+  },
+  "40": {
+   "data": "2017-05-27",
+   "formato": "vgc17",
+   "giocatori": 50,
+   "id": 40,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Nelson Lim"
+  },
+  "400": {
+   "data": "2025-09-13",
+   "formato": "svh",
+   "giocatori": 742,
+   "id": 400,
+   "nome": "Regional Frankfurt",
+   "paese": "DE",
+   "vincitore": "IT-Emanuele Briganti"
+  },
+  "401": {
+   "data": "2025-09-13",
+   "formato": "svh",
+   "giocatori": 282,
+   "id": 401,
+   "nome": "Regional Monterrey",
+   "paese": "MX",
+   "vincitore": "US-Stefan Mott"
+  },
+  "402": {
+   "data": "2025-09-20",
+   "formato": "svh",
+   "giocatori": 746,
+   "id": 402,
+   "nome": "Regional Pittsburgh, PA",
+   "paese": "US",
+   "vincitore": "US-Chuppa Cross IV"
+  },
+  "403": {
+   "data": "2025-10-11",
+   "formato": "svh",
+   "giocatori": 185,
+   "id": 403,
+   "nome": "Regional Belo Horizonte",
+   "paese": "BR",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "404": {
+   "data": "2025-10-11",
+   "formato": "svh",
+   "giocatori": 709,
+   "id": 404,
+   "nome": "Regional Milwaukee, WI",
+   "paese": "US",
+   "vincitore": "US-Michael Alex Arand"
+  },
+  "405": {
+   "data": "2025-10-25",
+   "formato": "svh",
+   "giocatori": 679,
+   "id": 405,
+   "nome": "Regional Lille",
+   "paese": "FR",
+   "vincitore": "IT-Marco Hemantha Kaludura Silva"
+  },
+  "406": {
+   "data": "2025-11-01",
+   "formato": "svh",
+   "giocatori": 210,
+   "id": 406,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "JP-Kaito Arii"
+  },
+  "407": {
+   "data": "2025-11-01",
+   "formato": "svh",
+   "giocatori": 418,
+   "id": 407,
+   "nome": "Regional Gdańsk",
+   "paese": "PL",
+   "vincitore": "IT-Simone Sanvito"
+  },
+  "408": {
+   "data": "2025-11-15",
+   "formato": "svh",
+   "giocatori": 705,
+   "id": 408,
+   "nome": "Regional Las Vegas, NV",
+   "paese": "US",
+   "vincitore": "US-Dylan Salvanera"
+  },
+  "409": {
+   "data": "2025-11-21",
+   "formato": "svh",
+   "giocatori": 518,
+   "id": 409,
+   "nome": "LAIC 2025–26, São Paulo",
+   "paese": "BR",
+   "vincitore": "JP-Yuma Kinugawa"
+  },
+  "41": {
+   "data": "2017-06-11",
+   "formato": "vgc17",
+   "giocatori": 50,
+   "id": 41,
+   "nome": "Special Event Hong Kong",
+   "paese": "HK",
+   "vincitore": "HK-Yuen Nga Hin"
+  },
+  "410": {
+   "data": "2025-11-29",
+   "formato": "svh",
+   "giocatori": 661,
+   "id": 410,
+   "nome": "Regional Stuttgart",
+   "paese": "DE",
+   "vincitore": "IT-Luca Ceribelli"
+  },
+  "411": {
+   "data": "2023-03-11",
+   "formato": "svb",
+   "giocatori": 83,
+   "id": 411,
+   "nome": "Regional Natal",
+   "paese": "BR",
+   "vincitore": "BR-Gabriel Agati"
+  },
+  "412": {
+   "data": "2023-05-06",
+   "formato": "svc",
+   "giocatori": 275,
+   "id": 412,
+   "nome": "Regional São Paulo",
+   "paese": "BR",
+   "vincitore": "AR-Joaquín Salerno"
+  },
+  "413": {
+   "data": "2023-06-03",
+   "formato": "svc",
+   "giocatori": 131,
+   "id": 413,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "CL-Javier Valdes"
+  },
+  "414": {
+   "data": "2026-01-17",
+   "formato": "svf",
+   "giocatori": 750,
+   "id": 414,
+   "nome": "Regional Toronto",
+   "paese": "CA",
+   "vincitore": "US-Cary D'Ortona"
+  },
+  "415": {
+   "data": "2026-01-24",
+   "formato": "svf",
+   "giocatori": 688,
+   "id": 415,
+   "nome": "Regional Birmingham",
+   "paese": "GB",
+   "vincitore": "IT-Stefano Greppi"
+  },
+  "416": {
+   "data": "2026-01-24",
+   "formato": "svf",
+   "giocatori": 234,
+   "id": 416,
+   "nome": "Regional Mérida",
+   "paese": "MX",
+   "vincitore": "CR-Max Morales"
+  },
+  "417": {
+   "data": "2026-01-25",
+   "formato": "svf",
+   "giocatori": 43,
+   "id": 417,
+   "nome": "Special Event Auckland",
+   "paese": "NZ",
+   "vincitore": "AU-Yoav Reuven"
+  },
+  "418": {
+   "data": "2026-02-07",
+   "formato": "svf",
+   "giocatori": 278,
+   "id": 418,
+   "nome": "Regional Sydney",
+   "paese": "AU",
+   "vincitore": "AU-Drew Bliss"
+  },
+  "419": {
+   "data": "2026-02-07",
+   "formato": "svf",
+   "giocatori": 214,
+   "id": 419,
+   "nome": "Regional Santiago",
+   "paese": "CL",
+   "vincitore": "AR-Juan Francisco Salerno"
+  },
+  "42": {
+   "data": "2017-06-17",
+   "formato": "vgc17",
+   "giocatori": 66,
+   "id": 42,
+   "nome": "Regional Hong Kong",
+   "paese": "HK",
+   "vincitore": "HK-Esmond Leung"
+  },
+  "420": {
+   "data": "2026-02-13",
+   "formato": "svf",
+   "giocatori": 1455,
+   "id": 420,
+   "nome": "EUIC 2026, London",
+   "paese": "GB",
+   "vincitore": "US-Paul Chua"
+  },
+  "421": {
+   "data": "2026-02-28",
+   "formato": "svf",
+   "giocatori": 822,
+   "id": 421,
+   "nome": "Regional Seattle, WA",
+   "paese": "US",
+   "vincitore": "US-Carson St Denis"
+  },
+  "422": {
+   "data": "2026-03-07",
+   "formato": "svf",
+   "giocatori": 99,
+   "id": 422,
+   "nome": "Special Event San Juan",
+   "paese": "PR",
+   "vincitore": "US-Ben Grissmer"
+  },
+  "423": {
+   "data": "2026-03-14",
+   "formato": "svf",
+   "giocatori": 180,
+   "id": 423,
+   "nome": "Regional Curitiba",
+   "paese": "BR",
+   "vincitore": "BR-Leonardo Ritter"
+  },
+  "424": {
+   "data": "2026-03-21",
+   "formato": "svf",
+   "giocatori": 625,
+   "id": 424,
+   "nome": "Regional Houston, TX",
+   "paese": "US",
+   "vincitore": "US-Dylan Matthews"
+  },
+  "425": {
+   "data": "2026-03-28",
+   "formato": "svf",
+   "giocatori": 595,
+   "id": 425,
+   "nome": "Special Event Seville",
+   "paese": "ES",
+   "vincitore": "ES-Juan Núñez Moreno"
+  },
+  "426": {
+   "data": "2026-04-04",
+   "formato": "svi",
+   "giocatori": 676,
+   "id": 426,
+   "nome": "Regional Orlando, FL",
+   "paese": "US",
+   "vincitore": "US-Bhushan Thumsi"
+  },
+  "427": {
+   "data": "2026-04-04",
+   "formato": "svi",
+   "giocatori": 270,
+   "id": 427,
+   "nome": "Regional Querétaro",
+   "paese": "MX",
+   "vincitore": "MX-Alexander Canseco"
+  },
+  "428": {
+   "data": "2026-04-25",
+   "formato": "svi",
+   "giocatori": 558,
+   "id": 428,
+   "nome": "Regional Prague",
+   "paese": "CZ",
+   "vincitore": "FR-Louis Fontvieille"
+  },
+  "429": {
+   "data": "2026-05-09",
+   "formato": "svi",
+   "giocatori": 542,
+   "id": 429,
+   "nome": "Regional Los Angeles, CA",
+   "paese": "US",
+   "vincitore": "US-Emilio Forbes"
+  },
+  "43": {
+   "data": "2017-11-18",
+   "formato": "vgc17",
+   "giocatori": 57,
+   "id": 43,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Chelsea Tan"
+  },
+  "430": {
+   "data": "2026-05-16",
+   "formato": "svi",
+   "giocatori": 220,
+   "id": 430,
+   "nome": "Regional Campinas",
+   "paese": "BR",
+   "vincitore": "AR-Sebastian Escalante"
+  },
+  "431": {
+   "data": "2026-05-16",
+   "formato": "svi",
+   "giocatori": 415,
+   "id": 431,
+   "nome": "Regional Utrecht",
+   "paese": "NL",
+   "vincitore": "FR-Aurélien Soula"
+  },
+  "432": {
+   "data": "2026-05-23",
+   "formato": "svi",
+   "giocatori": 291,
+   "id": 432,
+   "nome": "Regional Melbourne",
+   "paese": "AU",
+   "vincitore": "AU-Nicholas Kan"
+  },
+  "433": {
+   "data": "2026-05-23",
+   "formato": "svi",
+   "giocatori": 77,
+   "id": 433,
+   "nome": "Special Event Lima",
+   "paese": "PE",
+   "vincitore": "BR-Cristhian Andrade"
+  },
+  "434": {
+   "data": "2026-05-30",
+   "formato": "m-a",
+   "giocatori": 1013,
+   "id": 434,
+   "nome": "Regional Indianapolis, IN",
+   "paese": "US",
+   "vincitore": "US-Arsal Puri"
+  },
+  "435": {
+   "data": "2026-06-06",
+   "formato": "m-a",
+   "giocatori": 940,
+   "id": 435,
+   "nome": "Special Event Turin",
+   "paese": "IT",
+   "vincitore": "IT-Marco Hemantha Kaludura Silva"
+  },
+  "436": {
+   "data": "2026-06-11",
+   "formato": "m-a",
+   "giocatori": 1096,
+   "id": 436,
+   "nome": "NAIC 2026, New Orleans",
+   "paese": "US",
+   "vincitore": "IT-Francesco Pio Pero"
+  },
+  "437": {
+   "data": "2026-08-27",
+   "formato": "m-b",
+   "giocatori": 395,
+   "id": 437,
+   "nome": "World Championships 2026",
+   "paese": "US",
+   "vincitore": "JP-Takuma Yamazaki"
+  },
+  "438": {
+   "data": "2025-11-15",
+   "formato": "svh",
+   "giocatori": 93,
+   "id": 438,
+   "nome": "Special Event Buenos Aires",
+   "paese": "AR",
+   "vincitore": "MX-Kenneth Gamboa"
+  },
+  "439": {
+   "data": "2015-11-21",
+   "formato": "vgc15",
+   "giocatori": 124,
+   "id": 439,
+   "nome": "Regional London",
+   "paese": "GB",
+   "vincitore": "GB-Joseph Richardson"
+  },
+  "44": {
+   "data": "2017-12-16",
+   "formato": "vgc17",
+   "giocatori": 101,
+   "id": 44,
+   "nome": "Special Event Kuala Lumpur",
+   "paese": "MY",
+   "vincitore": "MY-Ng Yeong Jiang"
+  },
+  "440": {
+   "data": "2024-05-11",
+   "formato": "svg",
+   "giocatori": 55,
+   "id": 440,
+   "nome": "Special Event Bogota",
+   "paese": "CO",
+   "vincitore": "CR-Max Morales"
+  },
+  "441": {
+   "data": "2026-09-19",
+   "formato": "m-c",
+   "giocatori": 1081,
+   "id": 441,
+   "nome": "Regional Baltimore, MD",
+   "paese": "US",
+   "vincitore": "US-Joseph Ugarte"
+  },
+  "442": {
+   "data": "2026-09-26",
+   "formato": "m-c",
+   "giocatori": 327,
+   "id": 442,
+   "nome": "Regional Brisbane",
+   "paese": "AU",
+   "vincitore": "AU-Kiran Singh"
+  },
+  "443": {
+   "data": "2026-09-26",
+   "formato": "m-c",
+   "giocatori": 1129,
+   "id": 443,
+   "nome": "Regional Frankfurt",
+   "paese": "DE",
+   "vincitore": "ES-Eric Rios"
+  },
+  "444": {
+   "data": "2026-10-03",
+   "formato": "m-c",
+   "giocatori": 222,
+   "id": 444,
+   "nome": "Regional Recife",
+   "paese": "BR",
+   "vincitore": "AR-Juan Francisco Salerno"
+  },
+  "445": {
+   "data": "2026-10-10",
+   "formato": "m-c",
+   "giocatori": 1013,
+   "id": 445,
+   "nome": "Regional Louisville, KY",
+   "paese": "US",
+   "vincitore": "US-Joseph Ugarte"
+  },
+  "446": {
+   "data": "2026-10-17",
+   "formato": "m-c",
+   "giocatori": 862,
+   "id": 446,
+   "nome": "Regional Nice",
+   "paese": "FR",
+   "vincitore": "FR-Louis Fontvieille"
+  },
+  "447": {
+   "data": "2026-10-24",
+   "formato": "m-c",
+   "giocatori": 333,
+   "id": 447,
+   "nome": "Regional Puebla",
+   "paese": "MX",
+   "vincitore": "US-Kyle Livinghouse"
+  },
+  "448": {
+   "data": "2026-10-31",
+   "formato": "m-c",
+   "giocatori": 758,
+   "id": 448,
+   "nome": "Regional Gdańsk",
+   "paese": "PL",
+   "vincitore": "ES-Javier Varela"
+  },
+  "45": {
+   "data": "2018-01-20",
+   "formato": "vgc18",
+   "giocatori": 57,
+   "id": 45,
+   "nome": "Special Event Singapore",
+   "paese": "SG",
+   "vincitore": "SG-Chelsea Tan"
+  },
+  "46": {
+   "data": "2016-08-19",
+   "formato": "vgc16",
+   "giocatori": 107,
+   "id": 46,
+   "nome": "World Championships 2016",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "47": {
+   "data": "2015-08-16",
+   "formato": "vgc15",
+   "giocatori": 77,
+   "id": 47,
+   "nome": "World Championships 2015",
+   "paese": "US",
+   "vincitore": "JP-Shoma Honami"
+  },
+  "48": {
+   "data": "2017-06-03",
+   "formato": "vgc17",
+   "giocatori": 150,
+   "id": 48,
+   "nome": "Regional Madison, WI",
+   "paese": "US",
+   "vincitore": "US-Andrew Nowak"
+  },
+  "49": {
+   "data": "2010-08-13",
+   "formato": "vgc10",
+   "giocatori": 30,
+   "id": 49,
+   "nome": "World Championships 2010",
+   "paese": "US",
+   "vincitore": "US-Ray Rizzo"
+  },
+  "5": {
+   "data": "2017-01-14",
+   "formato": "vgc17",
+   "giocatori": 129,
+   "id": 5,
+   "nome": "Dreamhack Regionals 2017",
+   "paese": "DE",
+   "vincitore": "DE-Markus Hamann"
+  },
+  "50": {
+   "data": "2011-08-14",
+   "formato": "vgc11",
+   "giocatori": 30,
+   "id": 50,
+   "nome": "World Championships 2011",
+   "paese": "US",
+   "vincitore": "US-Ray Rizzo"
+  },
+  "51": {
+   "data": "2012-08-15",
+   "formato": "vgc12",
+   "giocatori": 40,
+   "id": 51,
+   "nome": "World Championships 2012",
+   "paese": "US",
+   "vincitore": "US-Ray Rizzo"
+  },
+  "52": {
+   "data": "2013-08-11",
+   "formato": "vgc13",
+   "giocatori": 60,
+   "id": 52,
+   "nome": "World Championships 2013",
+   "paese": "CA",
+   "vincitore": "IT-Arash Ommati"
+  },
+  "53": {
+   "data": "2014-08-17",
+   "formato": "vgc14",
+   "giocatori": 60,
+   "id": 53,
+   "nome": "World Championships 2014",
+   "paese": "US",
+   "vincitore": "KR-Sejun Park"
+  },
+  "54": {
+   "data": "2016-12-19",
+   "formato": "vgc17",
+   "giocatori": 244,
+   "id": 54,
+   "nome": "Regional San Jose, CA",
+   "paese": "US",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "55": {
+   "data": "2016-12-31",
+   "formato": "vgc17",
+   "giocatori": 250,
+   "id": 55,
+   "nome": "Regional Dallas, TX",
+   "paese": "US",
+   "vincitore": "US-Andrew Nowak"
+  },
+  "56": {
+   "data": "2017-01-14",
+   "formato": "vgc17",
+   "giocatori": 358,
+   "id": 56,
+   "nome": "Regional Athens, GA",
+   "paese": "US",
+   "vincitore": "US-Paul Chua"
+  },
+  "57": {
+   "data": "2017-02-18",
+   "formato": "vgc17",
+   "giocatori": 324,
+   "id": 57,
+   "nome": "Regional Anaheim, CA",
+   "paese": "US",
+   "vincitore": "US-Gavin Michaels"
+  },
+  "58": {
+   "data": "2017-03-04",
+   "formato": "vgc17",
+   "giocatori": 287,
+   "id": 58,
+   "nome": "Regional Collinsville, IL",
+   "paese": "US",
+   "vincitore": "US-Alex Underhill"
+  },
+  "59": {
+   "data": "2017-03-25",
+   "formato": "vgc17",
+   "giocatori": 130,
+   "id": 59,
+   "nome": "Regional Portland, OR",
+   "paese": "US",
+   "vincitore": "US-Aaron Zheng"
+  },
+  "6": {
+   "data": "2017-03-04",
+   "formato": "vgc17",
+   "giocatori": 154,
+   "id": 6,
+   "nome": "Regional Sheffield",
+   "paese": "GB",
+   "vincitore": "ES-Albert Bos"
+  },
+  "60": {
+   "data": "2017-04-08",
+   "formato": "vgc17",
+   "giocatori": 150,
+   "id": 60,
+   "nome": "Regional Salt Lake City, UT",
+   "paese": "US",
+   "vincitore": "US-Preston Clark"
+  },
+  "62": {
+   "data": "2017-05-06",
+   "formato": "vgc17",
+   "giocatori": 178,
+   "id": 62,
+   "nome": "Regional Roanoke, VA",
+   "paese": "US",
+   "vincitore": "US-Nick Navarre"
+  },
+  "63": {
+   "data": "2017-05-13",
+   "formato": "vgc17",
+   "giocatori": 114,
+   "id": 63,
+   "nome": "Regional Toronto",
+   "paese": "CA",
+   "vincitore": "CA-Martin Gajdosz"
+  },
+  "64": {
+   "data": "2017-05-27",
+   "formato": "vgc17",
+   "giocatori": 150,
+   "id": 64,
+   "nome": "Regional Seattle, WA",
+   "paese": "US",
+   "vincitore": "US-Justin Burns"
+  },
+  "65": {
+   "data": "2017-09-03",
+   "formato": "vgc17",
+   "giocatori": 170,
+   "id": 65,
+   "nome": "Regional Fort Wayne, IN",
+   "paese": "US",
+   "vincitore": "US-Alex Underhill"
+  },
+  "66": {
+   "data": "2017-09-30",
+   "formato": "vgc17",
+   "giocatori": 222,
+   "id": 66,
+   "nome": "Regional Hartford, CT",
+   "paese": "US",
+   "vincitore": "US-Alberto Lara"
+  },
+  "67": {
+   "data": "2017-10-15",
+   "formato": "vgc17",
+   "giocatori": 87,
+   "id": 67,
+   "nome": "Regional Vancouver",
+   "paese": "CA",
+   "vincitore": "US-River Davis"
+  },
+  "68": {
+   "data": "2017-10-08",
+   "formato": "vgc17",
+   "giocatori": 85,
+   "id": 68,
+   "nome": "Regional Daytona Beach, FL",
+   "paese": "US",
+   "vincitore": "US-Jeremy Rodrigues"
+  },
+  "69": {
+   "data": "2017-12-17",
+   "formato": "vgc17",
+   "giocatori": 130,
+   "id": 69,
+   "nome": "Regional Memphis, TN",
+   "paese": "US",
+   "vincitore": "US-Brady Smith"
+  },
+  "7": {
+   "data": "2017-03-18",
+   "formato": "vgc17",
+   "giocatori": 100,
+   "id": 7,
+   "nome": "Regional Malmö",
+   "paese": "SE",
+   "vincitore": "SE-Nils Dunlop"
+  },
+  "70": {
+   "data": "2017-11-25",
+   "formato": "vgc17",
+   "giocatori": 142,
+   "id": 70,
+   "nome": "Regional San Jose, CA",
+   "paese": "US",
+   "vincitore": "TH-Jirawiwat Thitasiri"
+  },
+  "71": {
+   "data": "2018-01-28",
+   "formato": "vgc18",
+   "giocatori": 349,
+   "id": 71,
+   "nome": "Regional Dallas, TX",
+   "paese": "US",
+   "vincitore": "US-Cedric Bernier"
+  },
+  "72": {
+   "data": "2018-02-17",
+   "formato": "vgc18",
+   "giocatori": 190,
+   "id": 72,
+   "nome": "Regional Collinsville, IL",
+   "paese": "US",
+   "vincitore": "US-Alvin Hidayat"
+  },
+  "73": {
+   "data": "2018-03-04",
+   "formato": "vgc18",
+   "giocatori": 177,
+   "id": 73,
+   "nome": "Regional Costa Mesa, CA",
+   "paese": "US",
+   "vincitore": "US-Brandon Meckley"
+  },
+  "74": {
+   "data": "2018-03-18",
+   "formato": "vgc18",
+   "giocatori": 105,
+   "id": 74,
+   "nome": "Regional Charlotte, NC",
+   "paese": "US",
+   "vincitore": "US-Wolfe Glick"
+  },
+  "75": {
+   "data": "2018-03-25",
+   "formato": "vgc18",
+   "giocatori": 89,
+   "id": 75,
+   "nome": "Regional Portland, OR",
+   "paese": "US",
+   "vincitore": "US-Adrian Sigler"
+  },
+  "76": {
+   "data": "2018-05-06",
+   "formato": "vgc18",
+   "giocatori": 89,
+   "id": 76,
+   "nome": "Regional Salt Lake City, UT",
+   "paese": "US",
+   "vincitore": "US-Matthew Greaves"
+  },
+  "77": {
+   "data": "2018-05-13",
+   "formato": "vgc18",
+   "giocatori": 120,
+   "id": 77,
+   "nome": "Regional Toronto",
+   "paese": "CA",
+   "vincitore": "US-James Baek"
+  },
+  "78": {
+   "data": "2018-05-26",
+   "formato": "vgc18",
+   "giocatori": 110,
+   "id": 78,
+   "nome": "Regional Roanoke, VA",
+   "paese": "US",
+   "vincitore": "US-Dylan Salvanera"
+  },
+  "79": {
+   "data": "2018-06-03",
+   "formato": "vgc18",
+   "giocatori": 101,
+   "id": 79,
+   "nome": "Regional Madison, WI",
+   "paese": "US",
+   "vincitore": "US-Paul Chua"
+  },
+  "8": {
+   "data": "2017-04-22",
+   "formato": "vgc17",
+   "giocatori": 64,
+   "id": 8,
+   "nome": "Special Event Lyon",
+   "paese": "FR",
+   "vincitore": "IT-Leonardo Bonanomi"
+  },
+  "80": {
+   "data": "2018-01-27",
+   "formato": "vgc18",
+   "giocatori": 155,
+   "id": 80,
+   "nome": "Dreamhack Regionals 2018",
+   "paese": "DE",
+   "vincitore": "IT-Flavio del Pidio"
+  },
+  "81": {
+   "data": "2018-02-17",
+   "formato": "vgc18",
+   "giocatori": 93,
+   "id": 81,
+   "nome": "Regional Malmö",
+   "paese": "SE",
+   "vincitore": "GB-Jamie Boyt"
+  },
+  "82": {
+   "data": "2017-03-25",
+   "formato": "vgc17",
+   "giocatori": 125,
+   "id": 82,
+   "nome": "Regional Buenos Aires",
+   "paese": "AR",
+   "vincitore": "AR-Sebastian Escalante"
+  },
+  "83": {
+   "data": "2017-04-08",
+   "formato": "vgc17",
+   "giocatori": 36,
+   "id": 83,
+   "nome": "Special Event Bogota",
+   "paese": "CO",
+   "vincitore": "CO-Fredy Vanegas"
+  },
+  "84": {
+   "data": "2017-04-08",
+   "formato": "vgc17",
+   "giocatori": 45,
+   "id": 84,
+   "nome": "Special Event Santiago",
+   "paese": "CL",
+   "vincitore": "CL-Fabi Vergara"
+  },
+  "85": {
+   "data": "2017-04-09",
+   "formato": "vgc17",
+   "giocatori": 22,
+   "id": 85,
+   "nome": "Special Event Asuncion",
+   "paese": "PY",
+   "vincitore": "PY-Arnaldo Maidana"
+  },
+  "86": {
+   "data": "2017-04-09",
+   "formato": "vgc17",
+   "giocatori": 45,
+   "id": 86,
+   "nome": "Special Event Buenos Aires",
+   "paese": "AR",
+   "vincitore": "AR-Federico Turano"
+  },
+  "87": {
+   "data": "2017-05-21",
+   "formato": "vgc17",
+   "giocatori": 23,
+   "id": 87,
+   "nome": "Special Event Guayaquil",
+   "paese": "EC",
+   "vincitore": "EC-Kelvin Quishpe"
+  },
+  "88": {
+   "data": "2017-05-21",
+   "formato": "vgc17",
+   "giocatori": 37,
+   "id": 88,
+   "nome": "Special Event La Libertad",
+   "paese": "SV",
+   "vincitore": "GT-Julio Fuentes"
+  },
+  "89": {
+   "data": "2017-05-28",
+   "formato": "vgc17",
+   "giocatori": 50,
+   "id": 89,
+   "nome": "Special Event Sao Paulo",
+   "paese": "BR",
+   "vincitore": "BR-Daniel dos Santos"
+  },
+  "9": {
+   "data": "2017-04-29",
+   "formato": "vgc17",
+   "giocatori": 22,
+   "id": 9,
+   "nome": "Danish Open",
+   "paese": "DK",
+   "vincitore": "DE-Baris Akcos"
+  },
+  "90": {
+   "data": "2017-06-03",
+   "formato": "vgc17",
+   "giocatori": 41,
+   "id": 90,
+   "nome": "Special Event Lima",
+   "paese": "PE",
+   "vincitore": "PE-Sebastian Bisbal"
+  },
+  "91": {
+   "data": "2017-06-10",
+   "formato": "vgc17",
+   "giocatori": 12,
+   "id": 91,
+   "nome": "Special Event Guayaquil",
+   "paese": "EC",
+   "vincitore": "EC-Paul Ruiz"
+  },
+  "92": {
+   "data": "2017-06-17",
+   "formato": "vgc17",
+   "giocatori": 12,
+   "id": 92,
+   "nome": "Special Event Quito",
+   "paese": "EC",
+   "vincitore": "EC-Paul Ruiz"
+  },
+  "93": {
+   "data": "2017-06-24",
+   "formato": "vgc17",
+   "giocatori": 12,
+   "id": 93,
+   "nome": "Special Event Guayaquil",
+   "paese": "EC",
+   "vincitore": "EC-Juan C Ortiz"
+  },
+  "94": {
+   "data": "2017-06-24",
+   "formato": "vgc17",
+   "giocatori": 32,
+   "id": 94,
+   "nome": "Special Event Lince",
+   "paese": "PE",
+   "vincitore": "PE-Renzo Navarro"
+  },
+  "95": {
+   "data": "2017-06-24",
+   "formato": "vgc17",
+   "giocatori": 24,
+   "id": 95,
+   "nome": "Special Event San Jose",
+   "paese": "CR",
+   "vincitore": "CR-Leonardo Chinchilla"
+  },
+  "96": {
+   "data": "2017-06-25",
+   "formato": "vgc17",
+   "giocatori": 17,
+   "id": 96,
+   "nome": "Special Event San Pedro",
+   "paese": "CR",
+   "vincitore": "CR-Place David Rodr"
+  },
+  "97": {
+   "data": "2017-06-25",
+   "formato": "vgc17",
+   "giocatori": 10,
+   "id": 97,
+   "nome": "Special Event Quito",
+   "paese": "EC",
+   "vincitore": "EC-Alexandre Savona"
+  },
+  "98": {
+   "data": "2017-03-25",
+   "formato": "vgc17",
+   "giocatori": 47,
+   "id": 98,
+   "nome": "Special Event Lima",
+   "paese": "PE",
+   "vincitore": "PE-Jose Luis Pando"
+  },
+  "99": {
+   "data": "2017-05-08",
+   "formato": "vgc17",
+   "giocatori": 39,
+   "id": 99,
+   "nome": "Special Event Lima",
+   "paese": "PE",
+   "vincitore": "PE-Renzo Navarro"
+  }
+ },
+ "tipi_validi": true,
+ "tipo": {
+  "1": [
+   "regional"
+  ],
+  "10": [
+   "special"
+  ],
+  "100": [
+   "special"
+  ],
+  "101": [
+   "special"
+  ],
+  "102": [
+   "special"
+  ],
+  "103": [
+   "special"
+  ],
+  "104": [
+   "special"
+  ],
+  "105": [
+   "special"
+  ],
+  "106": [
+   "special"
+  ],
+  "107": [
+   "special"
+  ],
+  "108": [
+   "special"
+  ],
+  "109": [
+   "special"
+  ],
+  "11": [
+   "special"
+  ],
+  "110": [
+   "national"
+  ],
+  "111": [
+   "national"
+  ],
+  "112": [
+   "national"
+  ],
+  "113": [
+   "national"
+  ],
+  "114": [
+   "international"
+  ],
+  "115": [
+   "regional"
+  ],
+  "116": [
+   "regional"
+  ],
+  "117": [
+   "regional"
+  ],
+  "118": [
+   "regional"
+  ],
+  "119": [
+   "regional"
+  ],
+  "12": [
+   "special"
+  ],
+  "120": [
+   "regional"
+  ],
+  "121": [
+   "regional"
+  ],
+  "122": [
+   "regional"
+  ],
+  "123": [
+   "regional"
+  ],
+  "125": [
+   "regional"
+  ],
+  "126": [
+   "regional"
+  ],
+  "127": [
+   "regional"
+  ],
+  "128": [
+   "regional"
+  ],
+  "129": [
+   "regional"
+  ],
+  "13": [
+   "regional"
+  ],
+  "130": [
+   "regional"
+  ],
+  "131": [
+   "regional"
+  ],
+  "132": [
+   "special"
+  ],
+  "133": [
+   "special"
+  ],
+  "134": [
+   "special"
+  ],
+  "135": [
+   "regional"
+  ],
+  "136": [
+   "regional"
+  ],
+  "137": [
+   "regional"
+  ],
+  "138": [
+   "regional"
+  ],
+  "139": [
+   "regional"
+  ],
+  "14": [
+   "special"
+  ],
+  "140": [
+   "national"
+  ],
+  "141": [
+   "regional"
+  ],
+  "142": [
+   "regional"
+  ],
+  "143": [
+   "regional"
+  ],
+  "144": [
+   "regional"
+  ],
+  "145": [
+   "regional"
+  ],
+  "146": [
+   "special"
+  ],
+  "147": [
+   "regional"
+  ],
+  "148": [
+   "special"
+  ],
+  "149": [
+   "national"
+  ],
+  "15": [
+   "regional"
+  ],
+  "150": [
+   "national"
+  ],
+  "151": [
+   "national"
+  ],
+  "152": [
+   "regional"
+  ],
+  "153": [
+   "regional"
+  ],
+  "154": [
+   "regional"
+  ],
+  "155": [
+   "special"
+  ],
+  "156": [
+   "special"
+  ],
+  "157": [
+   "special"
+  ],
+  "158": [
+   "regional"
+  ],
+  "159": [
+   "regional"
+  ],
+  "16": [
+   "regional"
+  ],
+  "160": [
+   "regional"
+  ],
+  "161": [
+   "special"
+  ],
+  "162": [
+   "special"
+  ],
+  "163": [
+   "regional"
+  ],
+  "164": [
+   "national"
+  ],
+  "165": [
+   "regional"
+  ],
+  "166": [
+   "regional"
+  ],
+  "167": [
+   "regional"
+  ],
+  "168": [
+   "regional"
+  ],
+  "169": [
+   "national"
+  ],
+  "17": [
+   "special"
+  ],
+  "170": [
+   "special"
+  ],
+  "171": [
+   "special"
+  ],
+  "172": [
+   "regional"
+  ],
+  "173": [
+   "regional"
+  ],
+  "174": [
+   "special"
+  ],
+  "175": [
+   "special"
+  ],
+  "176": [
+   "special"
+  ],
+  "177": [
+   "special"
+  ],
+  "178": [
+   "special"
+  ],
+  "179": [
+   "special"
+  ],
+  "18": [
+   "special"
+  ],
+  "180": [
+   "regional"
+  ],
+  "181": [
+   "special"
+  ],
+  "182": [
+   "special"
+  ],
+  "183": [
+   "special"
+  ],
+  "184": [
+   "special"
+  ],
+  "185": [
+   "national"
+  ],
+  "187": [
+   "national"
+  ],
+  "188": [
+   "special"
+  ],
+  "189": [
+   "special"
+  ],
+  "19": [
+   "international"
+  ],
+  "190": [
+   "special"
+  ],
+  "191": [
+   "special"
+  ],
+  "192": [
+   "special"
+  ],
+  "193": [
+   "special"
+  ],
+  "194": [
+   "worlds"
+  ],
+  "195": [
+   "regional"
+  ],
+  "196": [
+   "special"
+  ],
+  "197": [
+   "international"
+  ],
+  "198": [
+   "international"
+  ],
+  "199": [
+   "international"
+  ],
+  "2": [
+   "regional"
+  ],
+  "20": [
+   "international"
+  ],
+  "200": [
+   "international"
+  ],
+  "201": [
+   "worlds"
+  ],
+  "202": [
+   "special"
+  ],
+  "203": [
+   "regional"
+  ],
+  "204": [
+   "regional"
+  ],
+  "205": [
+   "regional"
+  ],
+  "206": [
+   "regional"
+  ],
+  "207": [
+   "regional"
+  ],
+  "208": [
+   "regional"
+  ],
+  "209": [
+   "international"
+  ],
+  "21": [
+   "international"
+  ],
+  "210": [
+   "international"
+  ],
+  "213": [
+   "regional"
+  ],
+  "214": [
+   "regional"
+  ],
+  "215": [
+   "special"
+  ],
+  "216": [
+   "regional"
+  ],
+  "219": [
+   "regional"
+  ],
+  "220": [
+   "regional"
+  ],
+  "221": [
+   "regional"
+  ],
+  "222": [
+   "regional"
+  ],
+  "223": [
+   "regional"
+  ],
+  "224": [
+   "regional"
+  ],
+  "225": [
+   "regional"
+  ],
+  "226": [
+   "regional"
+  ],
+  "234": [
+   "regional"
+  ],
+  "235": [
+   "regional"
+  ],
+  "236": [
+   "regional"
+  ],
+  "238": [
+   "regional"
+  ],
+  "239": [
+   "national"
+  ],
+  "24": [
+   "regional"
+  ],
+  "240": [
+   "national"
+  ],
+  "241": [
+   "national"
+  ],
+  "242": [
+   "national"
+  ],
+  "243": [
+   "national"
+  ],
+  "244": [
+   "national"
+  ],
+  "245": [
+   "national"
+  ],
+  "246": [
+   "national"
+  ],
+  "247": [
+   "national"
+  ],
+  "248": [
+   "national"
+  ],
+  "249": [
+   "national"
+  ],
+  "25": [
+   "regional"
+  ],
+  "251": [
+   "national"
+  ],
+  "252": [
+   "national"
+  ],
+  "253": [
+   "national"
+  ],
+  "254": [
+   "national"
+  ],
+  "255": [
+   "national"
+  ],
+  "256": [
+   "national"
+  ],
+  "257": [
+   "national"
+  ],
+  "258": [
+   "national"
+  ],
+  "259": [
+   "national"
+  ],
+  "26": [
+   "special"
+  ],
+  "260": [
+   "national"
+  ],
+  "261": [
+   "national"
+  ],
+  "262": [
+   "national"
+  ],
+  "263": [
+   "national"
+  ],
+  "264": [
+   "national"
+  ],
+  "265": [
+   "national"
+  ],
+  "266": [
+   "national"
+  ],
+  "267": [
+   "national"
+  ],
+  "269": [
+   "national"
+  ],
+  "27": [
+   "special"
+  ],
+  "270": [
+   "national"
+  ],
+  "271": [
+   "national"
+  ],
+  "272": [
+   "special"
+  ],
+  "273": [
+   "special"
+  ],
+  "274": [
+   "special"
+  ],
+  "276": [
+   "regional"
+  ],
+  "278": [
+   "regional"
+  ],
+  "279": [
+   "international"
+  ],
+  "28": [
+   "international"
+  ],
+  "280": [
+   "regional"
+  ],
+  "281": [
+   "special"
+  ],
+  "282": [
+   "regional"
+  ],
+  "283": [
+   "regional"
+  ],
+  "284": [
+   "regional"
+  ],
+  "285": [
+   "regional"
+  ],
+  "286": [
+   "regional"
+  ],
+  "287": [
+   "special"
+  ],
+  "288": [
+   "regional"
+  ],
+  "289": [
+   "regional"
+  ],
+  "29": [
+   "international"
+  ],
+  "290": [
+   "international"
+  ],
+  "291": [
+   "regional"
+  ],
+  "292": [
+   "special"
+  ],
+  "293": [
+   "regional"
+  ],
+  "294": [
+   "worlds"
+  ],
+  "295": [
+   "special"
+  ],
+  "296": [
+   "regional"
+  ],
+  "297": [
+   "regional"
+  ],
+  "298": [
+   "regional"
+  ],
+  "299": [
+   "regional"
+  ],
+  "3": [
+   "international"
+  ],
+  "30": [
+   "international"
+  ],
+  "300": [
+   "regional"
+  ],
+  "302": [
+   "regional"
+  ],
+  "303": [
+   "regional"
+  ],
+  "304": [
+   "regional"
+  ],
+  "305": [
+   "regional"
+  ],
+  "306": [
+   "regional"
+  ],
+  "307": [
+   "regional"
+  ],
+  "308": [
+   "regional"
+  ],
+  "309": [
+   "regional"
+  ],
+  "31": [
+   "worlds"
+  ],
+  "310": [
+   "special"
+  ],
+  "311": [
+   "special"
+  ],
+  "312": [
+   "international"
+  ],
+  "313": [
+   "international"
+  ],
+  "315": [
+   "regional"
+  ],
+  "316": [
+   "regional"
+  ],
+  "317": [
+   "special"
+  ],
+  "319": [
+   "worlds"
+  ],
+  "32": [
+   "regional"
+  ],
+  "321": [
+   "international"
+  ],
+  "322": [
+   "regional"
+  ],
+  "323": [
+   "players_cup"
+  ],
+  "325": [
+   "regional"
+  ],
+  "326": [
+   "regional"
+  ],
+  "327": [
+   "regional"
+  ],
+  "328": [
+   "regional"
+  ],
+  "329": [
+   "regional"
+  ],
+  "33": [
+   "regional"
+  ],
+  "330": [
+   "regional"
+  ],
+  "331": [
+   "regional"
+  ],
+  "332": [
+   "regional"
+  ],
+  "333": [
+   "regional"
+  ],
+  "334": [
+   "regional"
+  ],
+  "336": [
+   "regional"
+  ],
+  "337": [
+   "regional"
+  ],
+  "338": [
+   "regional"
+  ],
+  "34": [
+   "regional"
+  ],
+  "340": [
+   "regional"
+  ],
+  "341": [
+   "special"
+  ],
+  "343": [
+   "regional"
+  ],
+  "344": [
+   "regional"
+  ],
+  "345": [
+   "regional"
+  ],
+  "346": [
+   "regional"
+  ],
+  "347": [
+   "regional"
+  ],
+  "35": [
+   "regional"
+  ],
+  "350": [
+   "players_cup"
+  ],
+  "351": [
+   "players_cup"
+  ],
+  "352": [
+   "players_cup"
+  ],
+  "353": [
+   "special"
+  ],
+  "354": [
+   "regional"
+  ],
+  "355": [
+   "international"
+  ],
+  "356": [
+   "international"
+  ],
+  "357": [
+   "international"
+  ],
+  "358": [
+   "worlds"
+  ],
+  "359": [
+   "special"
+  ],
+  "36": [
+   "special"
+  ],
+  "360": [
+   "regional"
+  ],
+  "361": [
+   "regional"
+  ],
+  "362": [
+   "regional"
+  ],
+  "363": [
+   "regional"
+  ],
+  "364": [
+   "regional"
+  ],
+  "365": [
+   "regional"
+  ],
+  "366": [
+   "regional"
+  ],
+  "367": [
+   "regional"
+  ],
+  "368": [
+   "regional"
+  ],
+  "37": [
+   "special"
+  ],
+  "370": [
+   "regional"
+  ],
+  "371": [
+   "regional"
+  ],
+  "372": [
+   "regional"
+  ],
+  "373": [
+   "regional"
+  ],
+  "374": [
+   "regional"
+  ],
+  "375": [
+   "special"
+  ],
+  "376": [
+   "special"
+  ],
+  "377": [
+   "special"
+  ],
+  "378": [
+   "regional"
+  ],
+  "379": [
+   "special"
+  ],
+  "38": [
+   "special"
+  ],
+  "380": [
+   "special"
+  ],
+  "381": [
+   "special"
+  ],
+  "382": [
+   "regional"
+  ],
+  "383": [
+   "regional"
+  ],
+  "384": [
+   "regional"
+  ],
+  "385": [
+   "regional"
+  ],
+  "386": [
+   "regional"
+  ],
+  "387": [
+   "regional"
+  ],
+  "388": [
+   "regional"
+  ],
+  "389": [
+   "regional"
+  ],
+  "39": [
+   "regional"
+  ],
+  "390": [
+   "regional"
+  ],
+  "391": [
+   "international"
+  ],
+  "392": [
+   "regional"
+  ],
+  "393": [
+   "international"
+  ],
+  "394": [
+   "regional"
+  ],
+  "395": [
+   "regional"
+  ],
+  "396": [
+   "regional"
+  ],
+  "397": [
+   "international"
+  ],
+  "398": [
+   "special"
+  ],
+  "399": [
+   "worlds"
+  ],
+  "4": [
+   "special"
+  ],
+  "40": [
+   "special"
+  ],
+  "400": [
+   "regional"
+  ],
+  "401": [
+   "regional"
+  ],
+  "402": [
+   "regional"
+  ],
+  "403": [
+   "regional"
+  ],
+  "404": [
+   "regional"
+  ],
+  "405": [
+   "regional"
+  ],
+  "406": [
+   "regional"
+  ],
+  "407": [
+   "regional"
+  ],
+  "408": [
+   "regional"
+  ],
+  "409": [
+   "international"
+  ],
+  "41": [
+   "special"
+  ],
+  "410": [
+   "regional"
+  ],
+  "411": [
+   "regional"
+  ],
+  "412": [
+   "regional"
+  ],
+  "413": [
+   "regional"
+  ],
+  "414": [
+   "regional"
+  ],
+  "415": [
+   "regional"
+  ],
+  "416": [
+   "regional"
+  ],
+  "417": [
+   "special"
+  ],
+  "418": [
+   "regional"
+  ],
+  "419": [
+   "regional"
+  ],
+  "42": [
+   "regional"
+  ],
+  "420": [
+   "international"
+  ],
+  "421": [
+   "regional"
+  ],
+  "422": [
+   "special"
+  ],
+  "423": [
+   "regional"
+  ],
+  "424": [
+   "regional"
+  ],
+  "425": [
+   "special"
+  ],
+  "426": [
+   "regional"
+  ],
+  "427": [
+   "regional"
+  ],
+  "428": [
+   "regional"
+  ],
+  "429": [
+   "regional"
+  ],
+  "43": [
+   "special"
+  ],
+  "430": [
+   "regional"
+  ],
+  "431": [
+   "regional"
+  ],
+  "432": [
+   "regional"
+  ],
+  "433": [
+   "special"
+  ],
+  "434": [
+   "regional"
+  ],
+  "435": [
+   "special"
+  ],
+  "436": [
+   "international"
+  ],
+  "437": [
+   "worlds"
+  ],
+  "438": [
+   "special"
+  ],
+  "439": [
+   "regional"
+  ],
+  "44": [
+   "special"
+  ],
+  "440": [
+   "special"
+  ],
+  "441": [
+   "regional"
+  ],
+  "442": [
+   "regional"
+  ],
+  "443": [
+   "regional"
+  ],
+  "444": [
+   "regional"
+  ],
+  "445": [
+   "regional"
+  ],
+  "446": [
+   "regional"
+  ],
+  "447": [
+   "regional"
+  ],
+  "448": [
+   "regional"
+  ],
+  "45": [
+   "special"
+  ],
+  "46": [
+   "worlds"
+  ],
+  "47": [
+   "worlds"
+  ],
+  "48": [
+   "regional"
+  ],
+  "49": [
+   "worlds"
+  ],
+  "5": [
+   "regional"
+  ],
+  "50": [
+   "worlds"
+  ],
+  "51": [
+   "worlds"
+  ],
+  "52": [
+   "worlds"
+  ],
+  "53": [
+   "worlds"
+  ],
+  "54": [
+   "regional"
+  ],
+  "55": [
+   "regional"
+  ],
+  "56": [
+   "regional"
+  ],
+  "57": [
+   "regional"
+  ],
+  "58": [
+   "regional"
+  ],
+  "59": [
+   "regional"
+  ],
+  "6": [
+   "regional"
+  ],
+  "60": [
+   "regional"
+  ],
+  "62": [
+   "regional"
+  ],
+  "63": [
+   "regional"
+  ],
+  "64": [
+   "regional"
+  ],
+  "65": [
+   "regional"
+  ],
+  "66": [
+   "regional"
+  ],
+  "67": [
+   "regional"
+  ],
+  "68": [
+   "regional"
+  ],
+  "69": [
+   "regional"
+  ],
+  "7": [
+   "regional"
+  ],
+  "70": [
+   "regional"
+  ],
+  "71": [
+   "regional"
+  ],
+  "72": [
+   "regional"
+  ],
+  "73": [
+   "regional"
+  ],
+  "74": [
+   "regional"
+  ],
+  "75": [
+   "regional"
+  ],
+  "76": [
+   "regional"
+  ],
+  "77": [
+   "regional"
+  ],
+  "78": [
+   "regional"
+  ],
+  "79": [
+   "regional"
+  ],
+  "8": [
+   "special"
+  ],
+  "80": [
+   "regional"
+  ],
+  "81": [
+   "regional"
+  ],
+  "82": [
+   "regional"
+  ],
+  "83": [
+   "special"
+  ],
+  "84": [
+   "special"
+  ],
+  "85": [
+   "special"
+  ],
+  "86": [
+   "special"
+  ],
+  "87": [
+   "special"
+  ],
+  "88": [
+   "special"
+  ],
+  "89": [
+   "special"
+  ],
+  "9": [
+   "special"
+  ],
+  "90": [
+   "special"
+  ],
+  "91": [
+   "special"
+  ],
+  "92": [
+   "special"
+  ],
+  "93": [
+   "special"
+  ],
+  "94": [
+   "special"
+  ],
+  "95": [
+   "special"
+  ],
+  "96": [
+   "special"
+  ],
+  "97": [
+   "special"
+  ],
+  "98": [
+   "special"
+  ],
+  "99": [
+   "special"
+  ]
+ }
+}
