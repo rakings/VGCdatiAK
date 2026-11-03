@@ -585,7 +585,7 @@ def vr_data(ts):
 
 def vr_evento(it, slug=None, nome=None, status="not started"):
     inizio = vr_data(it["inizio"])
-    return {"id": slug or it["id"], "name": nome or it["nome"], "city": it["nome"], "kind": "VR Circuit", "start": inizio, "end": inizio,
+    return {"id": slug or it["id"], "name": nome or it["nome"], "city": nome or it["nome"], "kind": "VR Circuit", "start": inizio, "end": inizio,
             "status": status, "players": 0, "decklists": 0, "rounds": 0, "reg": reg_of(inizio), "winner": None, "rk9": None,
             "updated": "", "winners": {}, "players_div": {}, "vr": True, "fonte": "Victory Road Circuit (circuit.victoryroad.pro)"}
 
