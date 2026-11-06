@@ -57,6 +57,14 @@ class Stop(Exception):
     """Pokedata ci ha chiesto di fermarci: ci fermiamo subito."""
 
 
+class Rallenta(Stop):
+    """Rifiuto passeggero (troppe richieste, errore del sito): si aspetta il tempo indicato e si riprova, poche volte."""
+
+    def __init__(self, msg, attesa=600):
+        super().__init__(msg)
+        self.attesa = attesa
+
+
 class Budget(Exception):
     pass
 
@@ -539,16 +547,95 @@ def vr_pausa():
     time.sleep(random.uniform(2.0, 5.0))
 
 
-def vr_conf():
+VR_SCOPERTI = "scoperti.json"      # (dentro la cartella vr) i tornei gia' scoperti dalla home, per non perderli quando la home passa al torneo dopo
+
+
+def vr_voci(lista, etichetta):
     out = []
-    lista = load(VR_CONF, [])
     for x in lista if isinstance(lista, list) else []:
         try:
             ts = calendar.timegm(time.strptime(x["inizio"], "%Y-%m-%dT%H:%M:%SZ"))
             out.append({"id": x["id"], "alt": list(x.get("alt") or []), "nome": x.get("nome") or x["id"], "inizio": ts})
         except (KeyError, ValueError, TypeError):
-            print("vr_tornei.json: voce da correggere (servono id e inizio, per esempio 2026-11-07T14:00:00Z): %s" % (x,))
+            print("%s: voce da correggere (servono id e inizio, per esempio 2026-11-07T14:00:00Z): %s" % (etichetta, x))
     return out
+
+
+def vr_conf(home=None):
+    """Tornei da seguire: quello scoperto dalla home (ha l'orario esatto), quelli scoperti prima, e quelli scritti a mano in vr_tornei.json."""
+    voci = vr_voci(load(VR_CONF, []), VR_CONF)
+    voci += [v for v in vr_voci(load(os.path.join(VR_OUT, VR_SCOPERTI), []), VR_SCOPERTI) if all(v["id"] != x["id"] for x in voci)]
+    if home and home.get("slug") and home.get("inizio_ts"):
+        for v in voci:
+            if v["id"] == home["slug"] or home["slug"] in v["alt"]:
+                v["inizio"] = home["inizio_ts"]
+                break
+        else:
+            voci.append({"id": home["slug"], "alt": [], "nome": home.get("nome") or home["slug"], "inizio": home["inizio_ts"]})
+    return voci
+
+
+def vr_home(cache, sleep=None):
+    """Legge la home del circuito (una pagina leggera). E' facoltativa: se non si riesce (anche per un rifiuto), si continua con i tornei
+    gia' noti. Dopo un «troppe richieste» aspetta e riprova (al massimo 3 volte, solo nel lavoro continuo); dopo un «vietato» non la richiede piu'."""
+    import vr_lettura as L
+    if cache.get("_home_vietata"):
+        return {}
+    h = {}
+    for tentativo in range(3):
+        try:
+            st, txt = vr_scarica(VR_SITO + "/", cache)
+            h = L.leggi_home(txt) if st in (200, 304) else {}
+            break
+        except Rallenta as e:
+            if sleep is not None and tentativo < 2:
+                print("Home del circuito: %s. Aspetto %d minuti e riprovo (%d/3)." % (e, e.attesa // 60, tentativo + 2))
+                sleep(e.attesa)
+                continue
+            print("Home del circuito non raggiungibile (%s): vado avanti con i tornei gia' noti." % e)
+            return {}
+        except Stop as e:
+            cache["_home_vietata"] = True
+            print("Home del circuito: %s. Vado avanti con i tornei gia' noti, senza richiederla ancora." % e)
+            return {}
+        except Exception as e:
+            print("Home del circuito non leggibile (%s): uso solo vr_tornei.json." % e)
+            return {}
+    if not h:
+        print("Home del circuito: non ho trovato il prossimo torneo (uso solo vr_tornei.json).")
+    return h
+
+
+def vr_scrivi_info(home):
+    """vr/info.json (per il riquadro «Prossimo VR» dell'app) e vr/scoperti.json (tornei scoperti). Si riscrivono solo se cambia qualcosa."""
+    if not home:
+        return
+    pros = {k: home[k] for k in ("nome", "slug", "inizio", "regolamento", "iscrizioni", "info") if home.get(k)}
+    info = {"source": "Victory Road Circuit", "source_url": VR_SITO, "prossimo": pros}
+    for k in ("pot", "giocati", "nel_circuito"):
+        if home.get(k) is not None:
+            info[k] = home[k]
+    dump_stamped(os.path.join(VR_OUT, "info.json"), info)
+    if home.get("slug") and home.get("inizio"):
+        lista = load(os.path.join(VR_OUT, VR_SCOPERTI), [])
+        lista = [x for x in lista if isinstance(x, dict) and x.get("id") != home["slug"]] if isinstance(lista, list) else []
+        lista.append({"id": home["slug"], "alt": [], "nome": home.get("nome") or home["slug"], "inizio": home["inizio"]})
+        dump(os.path.join(VR_OUT, VR_SCOPERTI), sorted(lista, key=lambda x: x["inizio"]))
+
+
+def vr_attesa(valore):
+    """Quanto aspettare dopo un rifiuto passeggero: quello che dice il sito (Retry-After), da 1 a 15 minuti; altrimenti 10."""
+    try:
+        sec = int(str(valore).strip())
+    except (TypeError, ValueError):
+        sec = 600
+        try:
+            import datetime as _dt
+            from email.utils import parsedate_to_datetime
+            sec = int((parsedate_to_datetime(str(valore)) - _dt.datetime.now(_dt.timezone.utc)).total_seconds())
+        except Exception:
+            pass
+    return max(60, min(900, sec))
 
 
 def vr_scarica(url, cache):
@@ -568,8 +655,10 @@ def vr_scarica(url, cache):
             return 304, c["text"]
         if e.code == 404:
             return 404, ""
-        if e.code in (403, 429) or e.code >= 500:
-            raise Stop("Il sito dei VR ha risposto %s: mi fermo senza insistere" % e.code)
+        if e.code == 403:
+            raise Stop("Il sito dei VR ha risposto 403 (vietato): non insisto")
+        if e.code == 429 or e.code >= 500:
+            raise Rallenta("Il sito dei VR ha risposto %s" % e.code, vr_attesa(e.headers.get("Retry-After") if e.headers else None))
         raise
     body = r.read()
     if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
@@ -617,14 +706,20 @@ def vr_ciclo(it, cache, write, finito="auto", slug_noto=None):
     stato_finito = fin if finito == "auto" else bool(finito)
     nome = (meta.get("titolo") or "").split(" \u00b7 ")[0].strip() or it["nome"]
     ev = vr_evento(it, slug, nome, "finished" if stato_finito else "running")
-    if stato_finito:
-        ev["end"] = vr_data(time.time())
     data, doppi = L.converti(giocatori, rounds, cut, ev, finito=stato_finito)
     if doppi:
         print("Attenzione: nomi uguali nella classifica (%s): i loro avversari non si possono risolvere." % ", ".join(doppi))
     ev["vr_data"] = data
     cambiato = collect(ev, write)
     return {"slug": slug, "ev": ev, "cambiato": cambiato, "round": len(rounds) + len(cut), "fin": fin, "giocatori": len(giocatori)}
+
+
+def vr_round_salvati(it):
+    for sl in [it["id"]] + it["alt"]:
+        m = load(os.path.join(OUT, sl, "meta.json"), {})
+        if m:
+            return m.get("rounds", 0) or 0
+    return 0
 
 
 def vr_completo(it):
@@ -653,29 +748,56 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
     max_run = LIVE_MAX_RUN if max_run is None else max_run
     OUT = VR_OUT
     FONTE[0], FONTE[1] = "Victory Road Circuit", VR_SITO
-    conf = vr_conf()
-    if not conf:
-        print("Nessun torneo in %s: niente da fare." % VR_CONF)
-        return 0
     cache, stato, evs, t0, giri = {}, {}, {}, now(), 0
     rinunciati = set()
+    home = vr_home(cache, sleep if live else None)
+    conf = vr_conf(home)
+    if write and home:
+        vr_scrivi_info(home)
+    if not conf:
+        print("Nessun torneo VR noto (ne' dalla home ne' in %s): niente da fare." % VR_CONF)
+        return 0
+    if write:
+        vr_indice(conf, {}, now())
+    ultima_home = now()
 
     while True:
         t = now()
+        if live and t - ultima_home >= 600 and any(t < it["inizio"] for it in conf):
+            home2 = vr_home(cache, sleep)   # prima dell'inizio l'orario puo' cambiare: si ricontrolla ogni 10 minuti
+            ultima_home = t
+            if home2:
+                home = home2
+                conf = vr_conf(home)
+                if write:
+                    vr_scrivi_info(home)
+                    vr_indice(conf, evs, t)
         attivi = [it for it in conf if it["id"] not in rinunciati and (not live or (it["inizio"] - VR_PRIMA <= t <= it["inizio"] + VR_DOPO and not vr_completo(it)))]
         if not attivi:
             print("Nessun torneo VR in corso: mi fermo.")
             break
         nuovo_round, gia_atteso = False, False
         for it in attivi:
-            s = stato.setdefault(it["id"], {"round": 0, "fin_t": None, "slug": None, "ultima_pub": 0, "da_pubblicare": False})
+            s = stato.setdefault(it["id"], {"round": vr_round_salvati(it), "fin_t": None, "slug": None, "ultima_pub": 0, "da_pubblicare": False})
             t = now()
             if live and t < it["inizio"] - 600:
                 sleep(min(it["inizio"] - 600 - t, 20 * 60))
                 gia_atteso = True
                 continue
             finito = ("auto" if not live else bool(s["fin_t"] and t - s["fin_t"] >= VR_ATTESA_FINALE))
-            r = vr_ciclo(it, cache, write, finito, s["slug"])
+            try:
+                r = vr_ciclo(it, cache, write, finito, s["slug"])
+                s["lenti"] = 0
+            except Rallenta as e:
+                if not live:
+                    raise Stop(str(e))
+                s["lenti"] = s.get("lenti", 0) + 1
+                if s["lenti"] >= 3:
+                    raise Stop("Il sito dei VR continua a rallentarci (%s): mi fermo; si riprova al prossimo risveglio." % e)
+                print("%s. Aspetto %d minuti e riprovo (%d/3)." % (e, e.attesa // 60, s["lenti"] + 1))
+                sleep(e.attesa)
+                gia_atteso = True
+                continue
             if r is None:
                 if t > it["inizio"] + VR_RINUNCIA:
                     print("La pagina di %s non e' comparsa nemmeno dopo 3 ore: rinuncio." % it["id"])
@@ -720,6 +842,14 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
                 segnala_rilancio()
             return 0
         sleep(pausa)
+    if write:
+        if now() - ultima_home >= 600:       # a fine torneo la home mostra gia' il prossimo: elenco e riquadro si aggiornano subito
+            home2 = vr_home(cache, None)
+            if home2:
+                home = home2
+                conf = vr_conf(home)
+                vr_scrivi_info(home)
+        vr_indice(conf, evs, now())
     for s in stato.values():
         if write and commit and s["da_pubblicare"]:
             git_publish("VR: aggiornamento dati (live)")

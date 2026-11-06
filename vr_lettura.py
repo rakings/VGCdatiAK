@@ -228,6 +228,61 @@ def finale_decisa(cut):
     return any(len(m["j"]) == 2 and any(x["win"] for x in m["j"]) for m in ultima)
 
 
+# ------------------------------------------------------------------ home del circuito
+
+def _numero(t):
+    t = re.sub(r"[^\d.]", "", t or "")
+    try:
+        return int(float(t)) if t else None
+    except ValueError:
+        return None
+
+
+def leggi_home(pagina):
+    """Dalla home del VR Circuit: il PROSSIMO torneo (nome, orario esatto in UTC dal conto alla rovescia, indirizzo, link) e il montepremi.
+    Ritorna un dict (le chiavi che non si trovano mancano)."""
+    import calendar
+    import time as _t
+    radice = albero(pagina)
+    out = {}
+    sec = primo(radice, "section", "next")
+    if sec is not None:
+        h3 = primo(sec, "h3")
+        if h3 is not None and testo(h3):
+            out["nome"] = testo(h3)
+        cd = primo(sec, "div", "countdown")
+        iso = cd.attrs.get("data-countdown", "") if cd is not None else ""
+        m = re.match(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})", iso)
+        if m:
+            out["inizio"] = m.group(1) + "Z"
+            out["inizio_ts"] = calendar.timegm(_t.strptime(m.group(1), "%Y-%m-%dT%H:%M:%S"))
+        b = primo(sec, "span", "badge")
+        if b is not None:
+            out["regolamento"] = testo(b)
+        for a in trova_ord(sec, "a"):
+            t, href = testo(a).lower(), a.attrs.get("href", "")
+            if t == "sign up" and "iscrizioni" not in out:
+                out["iscrizioni"] = href
+            elif t == "more info" and "info" not in out:
+                out["info"] = href
+                mm = re.search(r"victoryroad\.pro/([^/?#]+)/?", href)
+                if mm:
+                    out["slug"] = mm.group(1)
+    pot = primo(radice, "div", "jackpot-amount")
+    if pot is not None and _numero(testo(pot)) is not None:
+        out["pot"] = _numero(testo(pot))
+    st = primo(radice, "div", "jackpot-stats")
+    if st is not None:
+        for blocco in [f for f in st.figli if isinstance(f, Nodo)]:
+            n, l = primo(blocco, "div", "n"), primo(blocco, "div", "l")
+            if n is None or l is None:
+                continue
+            chiave = {"played": "giocati", "in the circuit": "nel_circuito"}.get(testo(l).lower())
+            if chiave and _numero(testo(n)) is not None:
+                out[chiave] = _numero(testo(n))
+    return out
+
+
 # --------------------------------------------------------------- conversione
 
 def _chiave(s):
