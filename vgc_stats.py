@@ -569,6 +569,7 @@ def vr_conf(home=None):
         for v in voci:
             if v["id"] == home["slug"] or home["slug"] in v["alt"]:
                 v["inizio"] = home["inizio_ts"]
+                v["nome"] = home.get("nome") or v["nome"]
                 break
         else:
             voci.append({"id": home["slug"], "alt": [], "nome": home.get("nome") or home["slug"], "inizio": home["inizio_ts"]})
@@ -752,6 +753,10 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
     rinunciati = set()
     home = vr_home(cache, sleep if live else None)
     conf = vr_conf(home)
+    if home.get("slug"):
+        print("Prossimo VR letto dalla home di Victory Road: %s (%s), %s." % (home.get("nome", "?"), home["slug"], (home.get("inizio") or "orario non trovato").replace("T", " ").replace("Z", " UTC")))
+    else:
+        print("Home di Victory Road non letta: uso i tornei scritti in vr_tornei.json (%d)." % len(conf))
     if write and home:
         vr_scrivi_info(home)
     if not conf:
@@ -774,13 +779,18 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
                     vr_indice(conf, evs, t)
         attivi = [it for it in conf if it["id"] not in rinunciati and (not live or (it["inizio"] - VR_PRIMA <= t <= it["inizio"] + VR_DOPO and not vr_completo(it)))]
         if not attivi:
-            print("Nessun torneo VR in corso: mi fermo.")
+            futuri = sorted((it for it in conf if it["inizio"] > t), key=lambda it: it["inizio"])
+            if futuri:
+                print("Nessun torneo VR in corso: mi fermo. Il prossimo, %s, comincia il %s UTC: la raccolta parte un'ora prima." % (futuri[0]["nome"], time.strftime("%Y-%m-%d alle %H:%M", time.gmtime(futuri[0]["inizio"]))))
+            else:
+                print("Nessun torneo VR in corso: mi fermo.")
             break
         nuovo_round, gia_atteso = False, False
         for it in attivi:
             s = stato.setdefault(it["id"], {"round": vr_round_salvati(it), "fin_t": None, "slug": None, "ultima_pub": 0, "da_pubblicare": False})
             t = now()
             if live and t < it["inizio"] - 600:
+                print("In attesa dell'inizio di %s: mancano %d minuti." % (it["nome"], (it["inizio"] - t) // 60))
                 sleep(min(it["inizio"] - 600 - t, 20 * 60))
                 gia_atteso = True
                 continue
@@ -1353,8 +1363,11 @@ def main():
     ap.add_argument("--max-events", type=int, default=2, help="con --auto: quanti regionali finiti non raccolti per giro")
     a = ap.parse_args()
     budget = int(os.environ.get("VGC_BUDGET", "6"))
-    print("Versione del collettore: 2026-11-02w con i tornei VR (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
-    print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
+    if a.vr or a.vr_live:
+        print("VR Circuit: raccolta dei dati dal sito di Victory Road (collettore 2026-11-06x). %s" % ("Salvo i file in vr/." if a.write else "PROVA: non salvo nulla."))
+    else:
+        print("Versione del collettore: 2026-11-06x con i tornei VR (mette da solo la data di partenza se Pokedata non la da' (file date_manuali.json per le eccezioni), rilancio automatico: cambio turno al primo round nuovo dopo 4 ore e 52, segue il regionale anche se Pokedata lo segna «finito» troppo presto o se scrivi il suo id in forza_live.txt, si ferma 1 ora dopo la finale della Top 8, salvataggio su GitHub robusto, pausa 10 minuti (12 dal 4° torneo del mese), Top 8 ogni 5 minuti)")
+        print("%s - massimo %d richieste" % ("SALVATAGGIO" if a.write else "PROVA (non salva nulla)", budget))
     try:
         if a.cf_test:
             return cf_test()
