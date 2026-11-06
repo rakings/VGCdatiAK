@@ -11,9 +11,14 @@ on:
           - "no"
           - "si"
   schedule:
+    # Due volte al giorno, a 12 ore e 28 minuti l'una dall'altra (orari UTC): 05:17 e 17:45.
     - cron: "17 5 * * *"
+    - cron: "45 17 * * *"
 permissions:
   contents: write
+concurrency:
+  group: cp
+  cancel-in-progress: false
 jobs:
   cp:
     runs-on: ubuntu-latest
@@ -30,4 +35,13 @@ jobs:
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
           if [ -d dati ]; then git add dati; fi
-          if git diff --cached --quiet; then echo "Niente da pubblicare."; else git commit -m "CP: aggiornamento classifica" && git pull --rebase && git push; fi
+          if git diff --cached --quiet; then echo "Niente da pubblicare."; else
+            git commit -m "CP: aggiornamento classifica"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash -X theirs && git push; then ok=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "Salvataggio su GitHub non riuscito."; exit 1; }
+          fi
