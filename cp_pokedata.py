@@ -3,6 +3,7 @@
 Poche richieste (3 pagine), lente e a tempi irregolari, con un'identificazione onesta e senza dati personali.
 Senza --write e' una PROVA: legge e stampa quello che trova, ma non salva nulla.
 Con --write salva in dati/cp/ (ultima classifica + una copia per giorno, solo se e' cambiata)."""
+import datetime
 import hashlib
 import html as _html
 import json
@@ -29,10 +30,19 @@ class Stop(Exception):
     pass
 
 
-def url_pagina(game, region, division, n):
+class Assente(Stop):
+    """La pagina non esiste (404): per una stagione nuova vuol dire «la classifica non e' ancora partita»."""
+
+
+def stagione_di(oggi):
+    """La stagione di Pokedata cambia a settembre: da settembre 2026 ad agosto 2027 e' la «2027»."""
+    return str(oggi.year + 1 if oggi.month >= 9 else oggi.year)
+
+
+def url_pagina(game, region, division, n, stagione=None):
     q = "game=%s&region=%s&division=%s&search=&country=&page=%d" % (
         urllib.parse.quote(game), urllib.parse.quote(region), urllib.parse.quote(division), n)
-    return BASE + "?" + q
+    return "https://www.pokedata.ovh/%s/" % (stagione or STAGIONE) + "?" + q
 
 
 def scarica(url):
@@ -43,6 +53,8 @@ def scarica(url):
     except urllib.error.HTTPError as e:
         if e.code in (403, 429) or e.code >= 500:
             raise Stop("Pokedata ha risposto %s: mi fermo senza insistere" % e.code)
+        if e.code == 404:
+            raise Assente("Pokedata: pagina non trovata (%s)" % url)
         raise Stop("Pokedata ha risposto %s per %s" % (e.code, url))
     except Exception as e:
         raise Stop("pagina non raggiungibile (%s)" % e)
@@ -91,11 +103,29 @@ def totale_giocatori(pagina):
     return num(m.group(1)) if m else None
 
 
-def leggi_classifica(game, region, division, scarica_fn=scarica, pausa_fn=None):
+def scegli_stagione(game, region, division, scarica_fn=scarica, oggi=None):
+    """Prova la stagione di oggi; se la sua classifica non e' ancora partita (pagina assente, vuota o a zero punti) resta la precedente.
+    Ritorna (stagione, prima_pagina_html) oppure (None, None). Costo normale: la prima pagina, che serve comunque."""
+    oggi = oggi or datetime.date.today()
+    nuova = stagione_di(oggi)
+    for st in (nuova, str(int(nuova) - 1)):
+        try:
+            pag = scarica_fn(url_pagina(game, region, division, 1, st))
+        except Assente:
+            print("  stagione %s: la classifica non c'e' ancora" % st)
+            continue
+        r = righe_da_html(pag)
+        if r and r[0]["cp"] > 0:
+            return st, pag
+        print("  stagione %s: classifica vuota o senza punti" % st)
+    return None, None
+
+
+def leggi_classifica(game, region, division, scarica_fn=scarica, pausa_fn=None, stagione=None, prima=None):
     pausa_fn = pausa_fn or (lambda: time.sleep(random.uniform(*PAUSA)))
     righe, totale = [], None
     for n in range(1, PAGINE + 1):
-        pag = scarica_fn(url_pagina(game, region, division, n))
+        pag = prima if (n == 1 and prima is not None) else scarica_fn(url_pagina(game, region, division, n, stagione))
         r = righe_da_html(pag)
         if n == 1:
             totale = totale_giocatori(pag)
@@ -124,11 +154,11 @@ def controlla(righe):
     return p
 
 
-def costruisci(game, region, division, righe, totale, adesso=None):
+def costruisci(game, region, division, righe, totale, adesso=None, stagione=None):
     adesso = adesso or time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
     righe = [dict(r, pos=i + 1) for i, r in enumerate(righe)]     # pos = posto nell'elenco (a pari punti il «rank» stampato si ripete)
     sg = righe[SOGLIA_POSIZIONE - 1] if len(righe) >= SOGLIA_POSIZIONE else None
-    return {"fonte": "Pokedata", "url": url_pagina(game, region, division, 1), "stagione": STAGIONE,
+    return {"fonte": "Pokedata", "url": url_pagina(game, region, division, 1, stagione), "stagione": stagione or STAGIONE,
             "game": game, "region": region, "division": division, "aggiornato": adesso, "giocatori_totali": totale,
             "soglia": {"posizione": SOGLIA_POSIZIONE, "cp": sg["cp"] if sg else None, "rank_stampato": sg["rank"] if sg else None,
                        "nota": "posizione stimata, non ufficiale"},
@@ -140,27 +170,69 @@ def nome_file(game, region, division):
 
 
 def salva(dati, out=OUT, oggi=None):
-    """Scrive l'ultima classifica e una copia del giorno, ma solo se i punti sono cambiati. Ritorna True se ha scritto."""
+    """Scrive sempre l'ultima classifica con la data del CONTROLLO e il totale dei giocatori; la data «aggiornato» (ultima variazione dei punti) e la
+    copia del giorno in storico/ cambiano solo se i punti dei primi 150 sono cambiati. Ritorna "cambiata" oppure "controllata"."""
     oggi = oggi or time.strftime("%Y-%m-%d", time.gmtime())
     base = nome_file(dati["game"], dati["region"], dati["division"])
     os.makedirs(os.path.join(out, "storico", base), exist_ok=True)
     firma = hashlib.sha1(json.dumps([[r["pos"], r["name"], r["cp"]] for r in dati["righe"]]).encode()).hexdigest()
     ultimo = os.path.join(out, base + ".json")
+    vecchio = None
     try:
         with open(ultimo, encoding="utf-8") as f:
             vecchio = json.load(f)
-        if vecchio.get("firma") == firma:
-            return False
     except (OSError, ValueError):
         pass
-    dati = dict(dati, firma=firma)
-    for p in (ultimo, os.path.join(out, "storico", base, oggi + ".json")):
+    cambiata = not vecchio or vecchio.get("firma") != firma
+    controllato = dati["aggiornato"]
+    if not cambiata:
+        dati = dict(dati, aggiornato=vecchio.get("aggiornato", dati["aggiornato"]))
+    dati = dict(dati, firma=firma, controllato=controllato)
+    cartella_st = os.path.join(out, "stagioni", dati["stagione"])
+    os.makedirs(cartella_st, exist_ok=True)
+    percorsi = [ultimo, os.path.join(cartella_st, base + ".json")] + ([os.path.join(out, "storico", base, oggi + ".json")] if cambiata else [])
+    for p in percorsi:
         with open(p, "w", encoding="utf-8") as f:
             json.dump(dati, f, ensure_ascii=False, separators=(",", ":"))
-    return True
+    aggiorna_indice(out, base, dati["stagione"], oggi)
+    return "cambiata" if cambiata else "controllata"
 
 
-def main(argv=None, scarica_fn=scarica, pausa_fn=None):
+def aggiorna_indice(out, base, corrente, oggi):
+    """Archivio per stagione (solo da quando esiste): ogni stagione ha il suo file in stagioni/<anno>/. Quella in corso si aggiorna a ogni controllo;
+    quando parte la classifica della stagione dopo, le precedenti si CHIUDONO (finale = true, con la data) e non si toccano piu'.
+    indice.json elenca le stagioni, dalla piu' recente, per l'app."""
+    elenco = []
+    base_st = os.path.join(out, "stagioni")
+    for st in sorted(os.listdir(base_st), reverse=True) if os.path.isdir(base_st) else []:
+        p = os.path.join(base_st, st, base + ".json")
+        try:
+            with open(p, encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            continue
+        if st != corrente and not d.get("finale"):
+            d = dict(d, finale=True, chiusa=oggi)
+            with open(p, "w", encoding="utf-8") as f:
+                json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
+        voce = {"stagione": st, "stato": "in corso" if st == corrente else "finale", "file": "stagioni/%s/%s.json" % (st, base),
+                "soglia": (d.get("soglia") or {}).get("cp"), "aggiornato": d.get("aggiornato")}
+        if st != corrente:
+            voce["chiusa"] = d.get("chiusa")
+        elenco.append(voce)
+    nuovo = {"corrente": corrente, "stagioni": elenco}
+    p = os.path.join(out, "indice.json")
+    try:
+        with open(p, encoding="utf-8") as f:
+            if json.load(f) == nuovo:
+                return
+    except (OSError, ValueError):
+        pass
+    with open(p, "w", encoding="utf-8") as f:
+        json.dump(nuovo, f, ensure_ascii=False, separators=(",", ":"))
+
+
+def main(argv=None, scarica_fn=scarica, pausa_fn=None, oggi_fn=datetime.date.today):
     argv = sys.argv[1:] if argv is None else argv
     scrivi = "--write" in argv
     print("%s - CP Pokedata %s (%d classifiche, massimo %d richieste)" % (
@@ -169,7 +241,13 @@ def main(argv=None, scarica_fn=scarica, pausa_fn=None):
     for game, region, division in COMBOS:
         print("\n%s %s %s" % (game, region, division))
         try:
-            righe, totale = leggi_classifica(game, region, division, scarica_fn, pausa_fn)
+            stagione, prima = scegli_stagione(game, region, division, scarica_fn, oggi_fn())
+            if not stagione:
+                print("Nessuna classifica trovata (ne' per la stagione nuova ne' per la precedente): non salvo.")
+                errori += 1
+                continue
+            print("  stagione in corso: %s" % stagione)
+            righe, totale = leggi_classifica(game, region, division, scarica_fn, pausa_fn, stagione, prima)
         except Stop as e:
             print("STOP:", e)
             return 1
@@ -180,7 +258,7 @@ def main(argv=None, scarica_fn=scarica, pausa_fn=None):
                 print("  -", p)
             errori += 1
             continue
-        dati = costruisci(game, region, division, righe, totale)
+        dati = costruisci(game, region, division, righe, totale, stagione=stagione)
         sg = dati["soglia"]
         print("Letti %d giocatori (totale dichiarato: %s). Posizione %d dell'elenco: %s CP." % (
             len(righe), totale if totale is not None else "?", sg["posizione"], sg["cp"] if sg["cp"] is not None else "non trovata"))
@@ -189,7 +267,8 @@ def main(argv=None, scarica_fn=scarica, pausa_fn=None):
         ripetuti = len(dati["righe"]) - len(set(r["rank"] for r in dati["righe"]))
         print("Posti stampati ripetuti (pari punti): %d su %d" % (ripetuti, len(dati["righe"])))
         if scrivi:
-            print("Salvato." if salva(dati) else "Invariato: nessun file toccato.")
+            esito = salva(dati, oggi=oggi_fn().isoformat())
+            print("Classifica cambiata: salvata." if esito == "cambiata" else "Classifica invariata: aggiornati solo la data del controllo e il totale dei giocatori.")
         else:
             print("PROVA finita: non e' stato salvato nulla.")
     return 1 if errori else 0
