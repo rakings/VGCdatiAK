@@ -24,6 +24,8 @@ on:
     # Se non c'e' un torneo in corso (o in arrivo nell'ora successiva) il lavoro si ferma subito.
     - cron: "17,47 11-23 * * 6"
     - cron: "17,47 0-5 * * 0"
+    # Ogni giorno alle 06:07 UTC: aggiorna il riquadro «Prossimo VR» (orario, montepremi) e l'elenco dei tornei in arrivo. Costa una richiesta.
+    - cron: "7 6 * * *"
 permissions:
   contents: write
   actions: write      # serve per lanciare da soli il turno successivo (gh workflow run)
