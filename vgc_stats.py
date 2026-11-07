@@ -797,7 +797,17 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
             finito = ("auto" if not live else bool(s["fin_t"] and t - s["fin_t"] >= VR_ATTESA_FINALE))
             try:
                 r = vr_ciclo(it, cache, write, finito, s["slug"])
-                s["lenti"] = 0
+                s["lenti"], s["errori"] = 0, 0
+            except ValueError as e:
+                if not live:
+                    raise
+                s["errori"] = s.get("errori", 0) + 1
+                print("Lettura di %s non valida (%s): non salvo niente. Riprovo al prossimo controllo (%d/12)." % (it["id"], e, s["errori"]))
+                if s["errori"] >= 12:
+                    raise Stop("La lettura di %s non e' valida da 12 controlli di fila: mi fermo; si riprova al prossimo risveglio." % it["id"])
+                sleep(VR_POLL)
+                gia_atteso = True
+                continue
             except Rallenta as e:
                 if not live:
                     raise Stop(str(e))

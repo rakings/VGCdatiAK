@@ -142,7 +142,7 @@ def leggi_classifica(pagina):
         try:
             pos = int(testo(td_pos))
         except ValueError:
-            continue
+            pos = None   # «—»: nessun risultato ancora (0-0), in classifica non ha una posizione. NON si scarta: e' un giocatore del torneo
         pais = primo(tr, "span", "jug-pais")
         flag = primo(pais, "img") if pais else None
         w, l, t = _record(testo(td_rec) if td_rec else "")
@@ -157,6 +157,12 @@ def leggi_classifica(pagina):
         giocatori.append({"id": tr.attrs.get("data-id", ""), "pos": pos, "name": testo_diretto(jug), "cc": (tr.attrs.get("data-c") or "").upper(),
                           "country": flag.attrs.get("title", "") if flag else "", "w": w, "l": l, "t": t,
                           "cut": tr.attrs.get("data-cut") == "1", "team": team, "team_url": a.attrs.get("href", "") if a else ""})
+    # chi non ha ancora una posizione si mette dopo quelli classificati (nell'ordine della pagina): posizione provvisoria, si corregge da sola quando ha un risultato
+    ultima = max([g["pos"] for g in giocatori if g["pos"] is not None] or [0])
+    for g in giocatori:
+        if g["pos"] is None:
+            ultima += 1
+            g["pos"], g["senza_pos"] = ultima, True
     plain = testo(radice)
     meta = {}
     t = primo(radice, "title")
