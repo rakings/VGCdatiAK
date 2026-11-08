@@ -723,6 +723,16 @@ def vr_round_salvati(it):
     return 0
 
 
+def vr_finale_salvata(it):
+    """Momento (gia' salvato in meta.json) in cui si e' vista la finale decisa: cosi' anche un lavoro appena ripartito sa da quanto e' finita
+    e chiude subito il torneo (status finished), senza rifare i 20 minuti di attesa da capo."""
+    for sl in [it["id"]] + it["alt"]:
+        fa = load(os.path.join(OUT, sl, "meta.json"), {}).get("finale_alle")
+        if isinstance(fa, (int, float)) and fa > 0:
+            return fa
+    return None
+
+
 def vr_completo(it):
     return any(load(os.path.join(OUT, sl, "meta.json"), {}).get("complete") for sl in [it["id"]] + it["alt"])
 
@@ -787,7 +797,7 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
             break
         nuovo_round, gia_atteso = False, False
         for it in attivi:
-            s = stato.setdefault(it["id"], {"round": vr_round_salvati(it), "fin_t": None, "slug": None, "ultima_pub": 0, "da_pubblicare": False})
+            s = stato.setdefault(it["id"], {"round": vr_round_salvati(it), "fin_t": vr_finale_salvata(it), "slug": None, "ultima_pub": 0, "da_pubblicare": False})
             t = now()
             if live and t < it["inizio"] - 600:
                 print("In attesa dell'inizio di %s: mancano %d minuti." % (it["nome"], (it["inizio"] - t) // 60))
