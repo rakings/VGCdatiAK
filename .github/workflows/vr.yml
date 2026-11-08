@@ -1,5 +1,8 @@
 name: VR - raccolta dati (Victory Road)
 on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/vr.yml"]   # caricando questo file la raccolta riparte da sola (niente da lanciare a mano)
   workflow_dispatch:
     inputs:
       modo:
@@ -24,6 +27,9 @@ on:
     # Se non c'e' un torneo in corso (o in arrivo nell'ora successiva) il lavoro si ferma subito.
     - cron: "17,47 11-23 * * 6"
     - cron: "17,47 0-5 * * 0"
+    # Giorno 2 dei VR lunghi (domenica) e finale: ancora un risveglio ogni 30 minuti da domenica 06:17 fino a lunedi' 04:47.
+    - cron: "17,47 6-23 * * 0"
+    - cron: "17,47 0-4 * * 1"
     # Ogni giorno alle 06:07 UTC: aggiorna il riquadro «Prossimo VR» (orario, montepremi) e l'elenco dei tornei in arrivo. Costa una richiesta.
     - cron: "7 6 * * *"
 permissions:
@@ -38,7 +44,7 @@ jobs:
     timeout-minutes: 355
     env:
       MODO: ${{ inputs.modo || 'live' }}
-      SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
+      SALVA: ${{ (github.event_name == 'schedule' || github.event_name == 'push') && 'si' || inputs.salva }}
     steps:
       - uses: actions/checkout@v4
       - name: Raccolta VR
@@ -53,7 +59,7 @@ jobs:
             python3 -u vgc_stats.py --vr-live --max-cycles 1
           fi
       - name: Salva i file nella repo
-        if: ${{ always() && env.MODO != 'prova' && (github.event_name == 'schedule' || inputs.salva == 'si') }}
+        if: ${{ always() && env.MODO != 'prova' && (github.event_name == 'schedule' || github.event_name == 'push' || inputs.salva == 'si') }}
         run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
