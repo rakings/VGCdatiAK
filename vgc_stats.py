@@ -538,7 +538,7 @@ VR_PAUSA_ROUND = 20 * 60            # i round durano almeno 20 minuti: appena es
 VR_PUBBLICA_OGNI = 10 * 60          # al massimo una pubblicazione ogni 10 minuti (GitHub Pages: circa 10 aggiornamenti all'ora)
 VR_ATTESA_FINALE = 20 * 60          # dopo la finale decisa: 20 minuti di controlli, poi ultimo salvataggio e stop
 VR_PRIMA = 3600                     # si comincia a guardare un'ora prima dell'inizio
-VR_DOPO = 18 * 3600                 # e si smette 18 ore dopo
+VR_DOPO = 48 * 3600                 # e si smette 48 ore dopo (i VR con Day 2 finiscono la domenica); prima si ferma da sola quando la finale e' decisa
 VR_ATTESA_PAGINA = 10 * 60          # pagina del torneo non ancora pubblicata: si riprova ogni 10 minuti
 VR_RINUNCIA = 3 * 3600              # se 3 ore dopo l'inizio la pagina non c'e', si rinuncia
 
