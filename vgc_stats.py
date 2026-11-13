@@ -723,6 +723,67 @@ def vr_round_salvati(it):
     return 0
 
 
+AVVISO_VR_REPO = "rakings/VGCrAKings"                 # repo del sito: e' li' che partono gli avvisi
+AVVISO_VR_WORKFLOW = "avviso-vincitore-vr-live.yml"   # flusso che manda «Vincitore Victory Road» (canale vrwin)
+
+
+def esito_vr(folder):
+    """Dal tabellone salvato (players.json + swiss.json): vincitore, finalista e i due perdenti in semifinale, ognuno (nome, paese).
+    None se la finale non e' decisa o il tabellone non e' chiaro (meglio nessun avviso che un avviso sbagliato)."""
+    pl = load(os.path.join(folder, "players.json"), [])
+    sw = (load(os.path.join(folder, "swiss.json"), {}) or {}).get("p") or {}
+    if not pl or not sw or not finale_decisa(sw):
+        return None
+    byid = {str(p[0]): p for p in pl if isinstance(p, list) and len(p) > 2}
+    R = max(len(v) for v in sw.values())
+
+    def ultimi(n, esito):
+        return [str(k) for k, v in sw.items() if len(v) == n and v and v[-1] and v[-1][-1] == esito]
+
+    def persona(k):
+        p = byid.get(k)
+        nome = str(p[1] or "").strip() if p else ""
+        return (nome, str(p[2] or "").strip()) if nome else None
+    w, f, se = ultimi(R, "W"), ultimi(R, "L"), ultimi(R - 1, "L")
+    if len(w) != 1 or len(f) != 1 or len(se) != 2:
+        return None
+    v, fi, ss = persona(w[0]), persona(f[0]), [persona(k) for k in se]
+    if not v or not fi or not all(ss):
+        return None
+    return {"v": v, "f": fi, "s": ss}
+
+
+def avvisa_vr(ev):
+    """Appena la finale del VR e' decisa: lancia nel repo del sito il flusso che manda «Vincitore Victory Road».
+    Usa la chiave AVVISI_TOKEN (segreto di questa repo, valida solo per il repo del sito). Non deve MAI fermare la raccolta:
+    ogni problema si scrive e basta (resta l'avviso di sempre, dalla home di victoryroad.pro)."""
+    try:
+        chiave = os.environ.get("AVVISI_TOKEN", "").strip()
+        if not chiave:
+            print("Finale VR decisa: manca il segreto AVVISI_TOKEN, nessun avviso immediato (resta quello di sempre).")
+            return False
+        r = esito_vr(os.path.join(OUT, ev["id"]))
+        if not r:
+            print("Finale VR decisa, ma il tabellone non e' chiaro: nessun avviso immediato (resta quello di sempre).")
+            return False
+
+        def nc(x):
+            return "%s|%s" % (x[0].replace("|", " ").replace(";", " "), x[1].replace("|", " ").replace(";", " "))
+        args = ["gh", "workflow", "run", AVVISO_VR_WORKFLOW, "--repo", AVVISO_VR_REPO, "-f", "id=%s" % ev["id"], "-f", "nome=%s" % (ev.get("name") or ""),
+                "-f", "fine=%s" % (ev.get("end") or ev.get("start") or ""), "-f", "vincitore=%s" % nc(r["v"]),
+                "-f", "finalista=%s" % nc(r["f"]), "-f", "semifinali=%s" % ";".join(nc(x) for x in r["s"])]
+        amb = {k: v for k, v in os.environ.items() if k not in ("GH_TOKEN", "GITHUB_TOKEN", "AVVISI_TOKEN")}
+        amb["GH_TOKEN"] = chiave
+        p = subprocess.run(args, capture_output=True, text=True, timeout=90, env=amb)
+        if p.returncode == 0:
+            print("Finale VR decisa: avviso del vincitore (%s) lanciato nel repo del sito." % r["v"][0])
+            return True
+        print("Finale VR decisa, ma l'avviso immediato non e' partito (%s): resta quello di sempre." % ((p.stderr or p.stdout or "").strip()[:160]))
+    except Exception as ex:
+        print("Finale VR decisa, ma l'avviso immediato non e' partito (%s): resta quello di sempre." % str(ex)[:160])
+    return False
+
+
 def vr_finale_salvata(it):
     """Momento (gia' salvato in meta.json) in cui si e' vista la finale decisa: cosi' anche un lavoro appena ripartito sa da quanto e' finita
     e chiude subito il torneo (status finished), senza rifare i 20 minuti di attesa da capo."""
@@ -844,6 +905,8 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
             s["round"] = r["round"]
             if r["fin"] and not s["fin_t"]:
                 s["fin_t"] = t
+                if live and write and commit:
+                    avvisa_vr(r["ev"])   # avviso «Vincitore Victory Road» subito (una volta: dopo un riavvio fin_t arriva gia' da meta.json)
             if write and r["cambiato"]:
                 s["da_pubblicare"] = True
                 vr_indice(conf, evs, t)
