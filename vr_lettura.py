@@ -291,6 +291,78 @@ def leggi_home(pagina):
 
 # --------------------------------------------------------------- conversione
 
+def leggi_metagame(pagina):
+    """Pagina «metagame» del torneo (/tournament/<slug>/metagame): contiene un JSON (script id="metagame-json") con le squadre COMPLETE
+    di ogni giocatore: abilita', natura, mosse. Ritorna {chiave: [mon, ...]} dove chiave e' l'id del paste (fine del link «team» della
+    classifica) e anche "n:" + nome del giocatore; ogni mon = {species, item, ability, nature, moves}. {} se la pagina non ha il JSON."""
+    import json as _json
+    import html as _html
+    m = re.search(r'<script[^>]*id="metagame-json"[^>]*>(.*?)</script>', pagina or "", re.S)
+    if not m:
+        return {}
+    try:
+        d = _json.loads(_html.unescape(m.group(1).strip()))
+    except ValueError:
+        return {}
+    S = d.get("s") if isinstance(d.get("s"), list) else []
+    sn = d.get("sn") if isinstance(d.get("sn"), dict) else {}
+
+    def st(i):
+        return S[i] if isinstance(i, int) and 0 <= i < len(S) and isinstance(S[i], str) else ""
+    out = {}
+    for p in d.get("j") if isinstance(d.get("j"), list) else []:
+        try:
+            team, nome, paste = p[1], st(p[3]), p[6] if len(p) > 6 and isinstance(p[6], str) else ""
+        except (IndexError, TypeError):
+            continue
+        mons = []
+        for t in team if isinstance(team, list) else []:
+            if not isinstance(t, list) or len(t) < 5:
+                continue
+            sp = t[0]
+            mons.append({"species": st(sn.get(str(sp))) or st(sp), "item": st(t[1]), "ability": st(t[2]), "nature": st(t[3]),
+                         "moves": [st(x) for x in (t[4] if isinstance(t[4], list) else []) if st(x)]})
+        if not mons:
+            continue
+        if paste:
+            out[paste] = mons
+        if nome:
+            out["n:" + _chiave(nome)] = mons
+    return out
+
+
+def completa_squadre(giocatori, dettagli):
+    """Aggiunge abilita', natura e mosse alle squadre lette dalla classifica (che hanno solo Pokemon e strumento).
+    Abbinamento: giocatore per id del paste (o per nome), Pokemon per posizione con lo stesso strumento (o, se l'ordine e' diverso,
+    per strumento). Ritorna quanti giocatori sono stati completati. Se qualcosa non torna, quel Pokemon resta com'era."""
+    n = 0
+    for g in giocatori:
+        pid = (g.get("team_url") or "").rstrip("/").rsplit("/", 1)[-1]
+        det = dettagli.get(pid) if pid else None
+        if det is None:
+            det = dettagli.get("n:" + _chiave(g.get("name", "")))
+        if not det:
+            continue
+        usati, fatto = set(), False
+        for i, t in enumerate(g.get("team") or []):
+            scelta = None
+            if i < len(det) and i not in usati and det[i]["item"] == t.get("item"):
+                scelta = i
+            else:
+                for k, x in enumerate(det):
+                    if k not in usati and x["item"] and x["item"] == t.get("item"):
+                        scelta = k
+                        break
+            if scelta is None:
+                continue
+            usati.add(scelta)
+            x = det[scelta]
+            t["ability"], t["nature"], t["moves"] = x["ability"], x["nature"], list(x["moves"])
+            fatto = True
+        n += fatto
+    return n
+
+
 def _chiave(s):
     return " ".join(str(s).split()).lower()
 
@@ -311,7 +383,9 @@ def converti(giocatori, rounds, cut, ev, finito=False):
     for g in giocatori:
         raw.append({"name": "%s [%s]" % (g["name"], g["cc"]) if g["cc"] else g["name"], "placing": g["pos"],
                     "record": {"wins": g["w"], "losses": g["l"], "ties": g["t"]}, "rounds": {},
-                    "teamlist": [{"name": nome_dal_slug(t["slug"]) if t["slug"] else t["name"], "item": t["item"]} for t in g["team"]]})
+                    "teamlist": [dict({"name": nome_dal_slug(t["slug"]) if t["slug"] else t["name"], "item": t["item"]},
+                                      **({"ability": t.get("ability") or "", "stat alignment": t.get("nature") or "", "badges": t.get("moves") or []}
+                                         if t.get("ability") or t.get("nature") or t.get("moves") else {})) for t in g["team"]]})
 
     def metti(round_n, tavolo, j):
         if len(j) == 1:

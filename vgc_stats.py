@@ -221,7 +221,7 @@ def process(data):
                         "day2": 1 if day1 and played and max(played) > day1 else 0,
                         "topcut": 1 if swiss_total and played and max(played) > swiss_total else 0,
                         "team": ",".join(m_["slug"] for m_ in mons), "trainer": p.get("Trainer name")})
-        if mons and placing <= TOP:
+        if mons and (placing <= TOP or SQUADRE_TUTTE[0]):   # Regionali: squadre della fase 2 (Top 256, da Pokedata dopo il Day 1); VR: tutte, si sanno dall'inizio
             teams[str(pid)] = mons
     return info, players, teams, swiss, day1, swiss_total
 
@@ -532,6 +532,7 @@ def storico(write, quanti):
 
 VR_CONF = "vr_tornei.json"          # tornei da seguire: [{"id": "vr-nov26", "alt": ["vr-nov26-1"], "nome": "...", "inizio": "2026-11-07T14:00:00Z"}]
 VR_OUT = "vr"
+SQUADRE_TUTTE = [False]             # True nel modo VR: si salvano le squadre di tutti (nei Regionali solo la fase 2, Top 256)
 VR_SITO = "https://circuit.victoryroad.pro"
 VR_POLL = 5 * 60                    # controllo a intervalli di 5 minuti mentre si aspettano i nuovi abbinamenti
 VR_PAUSA_ROUND = 20 * 60            # i round durano almeno 20 minuti: appena escono i nuovi abbinamenti si aspetta 20 minuti
@@ -680,6 +681,62 @@ def vr_evento(it, slug=None, nome=None, status="not started"):
             "updated": "", "winners": {}, "players_div": {}, "vr": True, "fonte": "Victory Road Circuit (circuit.victoryroad.pro)"}
 
 
+VR_DETTAGLI = {}                    # squadre complete (abilita', natura, mosse) dalla pagina «metagame»: {slug: {"t": momento, "d": dati, "ok": completo}}
+VR_DETTAGLI_RIPROVA = 30 * 60       # solo se la pagina non c'e' ancora o e' incompleta: si riprova dopo 30 minuti
+
+
+def vr_dettagli_salvati(slug):
+    """Squadre complete gia' salvate in questo torneo (players.json + teams.json), nella stessa forma di leggi_metagame:
+    un lavoro ripartito le riusa invece di rileggere la pagina."""
+    import vr_lettura as L
+    out, doppi = {}, set()
+    pl = load(os.path.join(OUT, slug, "players.json"), [])
+    tm = load(os.path.join(OUT, slug, "teams.json"), {})
+    for p in pl if isinstance(pl, list) else []:
+        mons = tm.get(str(p[0])) if isinstance(tm, dict) and isinstance(p, list) and len(p) > 1 else None
+        if mons and any(len(m) > 5 and m[5] for m in mons):
+            k = "n:" + L._chiave(p[1])
+            if k in out:
+                doppi.add(k)   # due giocatori con lo stesso nome: non si possono distinguere, per loro si rilegge la pagina
+            out[k] = [{"species": m[1], "item": m[2], "ability": m[3], "nature": m[4], "moves": list(m[5])} for m in mons]
+    for k in doppi:
+        out.pop(k, None)
+    return out
+
+
+def vr_completa(slug, giocatori, cache, finito=False):
+    """Completa le squadre della classifica con abilita', natura e mosse dalla pagina «metagame» del torneo (un solo JSON per tutti).
+    Le squadre dei VR si conoscono dall'inizio: la pagina si legge UNA volta; si rilegge (ogni 30 minuti) solo se non c'e' ancora
+    o non copre tutti i giocatori. Un lavoro ripartito riusa le squadre gia' salvate, senza nuove richieste.
+    Non deve MAI fermare la raccolta: se la pagina manca o cambia formato, le squadre restano con Pokemon e strumenti come prima."""
+    import vr_lettura as L
+    try:
+        v = VR_DETTAGLI.get(slug)
+        if v is None:
+            d = vr_dettagli_salvati(slug)
+            salvabili = giocatori   # nei VR si salvano le squadre di tutti
+            if d and salvabili and L.completa_squadre([dict(g, team=[dict(t) for t in g["team"]]) for g in salvabili], d) == len(salvabili):
+                v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d, "ok": True}
+                print("Squadre complete gia' salvate: le riuso (nessuna nuova lettura).")
+        if v is None or (not v["ok"] and time.time() - v["t"] >= VR_DETTAGLI_RIPROVA):
+            vr_pausa()
+            st, txt = vr_scarica("%s/tournament/%s/metagame" % (VR_SITO, slug), cache)
+            d = L.leggi_metagame(txt) if st in (200, 304) else {}
+            v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d or (v or {}).get("d") or {}, "ok": False}
+            n = L.completa_squadre(giocatori, v["d"]) if v["d"] else 0
+            v["ok"] = n >= 0.95 * len(giocatori)
+            print("Squadre complete (abilita', natura, mosse) dalla pagina metagame: %d giocatori su %d%s." % (n, len(giocatori), "" if v["ok"] else ": riprovo tra 30 minuti"))
+            return n
+        return L.completa_squadre(giocatori, v["d"]) if v["d"] else 0
+    except (Stop, Rallenta):
+        print("Pagina metagame non letta adesso (il sito chiede di rallentare): squadre con Pokemon e strumenti, riprovo tra 30 minuti.")
+    except Exception as ex:
+        print("Pagina metagame non letta (%s): squadre con Pokemon e strumenti, riprovo tra 30 minuti." % str(ex)[:120])
+    vecchio = VR_DETTAGLI.get(slug) or {}
+    VR_DETTAGLI[slug] = {"t": time.time(), "d": vecchio.get("d") or {}, "ok": bool(vecchio.get("ok"))}
+    return 0
+
+
 def vr_ciclo(it, cache, write, finito="auto", slug_noto=None):
     """Un controllo: legge abbinamenti e classifica, li converte e li passa al collettore. None = la pagina del torneo non c'e' ancora."""
     import vr_lettura as L
@@ -705,6 +762,7 @@ def vr_ciclo(it, cache, write, finito="auto", slug_noto=None):
         raise ValueError("lette %d righe su %d giocatori dichiarati: non salvo" % (len(giocatori), dich))
     fin = L.finale_decisa(cut)
     stato_finito = fin if finito == "auto" else bool(finito)
+    vr_completa(slug, giocatori, cache, stato_finito)
     nome = (meta.get("titolo") or "").split(" \u00b7 ")[0].strip() or it["nome"]
     ev = vr_evento(it, slug, nome, "finished" if stato_finito else "running")
     data, doppi = L.converti(giocatori, rounds, cut, ev, finito=stato_finito)
@@ -819,6 +877,7 @@ def vr(write, commit, live=False, max_cycles=0, max_run=None, now=time.time, sle
     global OUT
     max_run = LIVE_MAX_RUN if max_run is None else max_run
     OUT = VR_OUT
+    SQUADRE_TUTTE[0] = True
     FONTE[0], FONTE[1] = "Victory Road Circuit", VR_SITO
     cache, stato, evs, t0, giri = {}, {}, {}, now(), 0
     rinunciati = set()
