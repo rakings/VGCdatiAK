@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Avvisi ricevuti · rAKings VGC</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--card:#f4f4f6;--line:#d9d9de;--mut:#666;--ok:#16794a;--ko:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#160d10;--fg:#f1e9ec;--card:#25171c;--line:#43272f;--mut:#b4a3a9;--ok:#5fd39b;--ko:#ff8a80}}
+*{box-sizing:border-box}
+body{margin:0;padding:14px;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,sans-serif}
+h1{font-size:1.15rem;margin:0 0 6px}
+p{margin:6px 0;color:var(--mut)}
+button{font:inherit;padding:9px 14px;margin:4px 6px 4px 0;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 11px;margin:8px 0}
+.t{font-weight:700}.b{color:var(--mut);font-size:.9rem;word-break:break-word}
+.ok{color:var(--ok)}.ko{color:var(--ko)}
+textarea{width:100%;height:120px;margin-top:8px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px;font:12px/1.3 ui-monospace,monospace}
+</style>
+</head>
+<body>
+<h1>Avvisi ricevuti da questo dispositivo</h1>
+<p>Il telefono tiene un diario di ogni avviso che gli arriva (ora di arrivo e testo), anche se poi non lo hai visto comparire. Qui sotto gli ultimi, dal piu' recente.</p>
+<p>Accanto a ogni avviso: <b class="ok">in campanella: si</b> = e' anche nella cronologia del sito; <b class="ko">in campanella: NO</b> = e' arrivato al telefono ma la cronologia non lo ha salvato.</p>
+<div><button id="agg" type="button">Aggiorna</button><button id="cop" type="button">Copia l'elenco</button><button id="svu" type="button">Svuota il diario</button></div>
+<p id="stato">Carico...</p>
+<div id="lista"></div>
+<textarea id="txt" readonly aria-label="Elenco in testo" hidden></textarea>
+<script>
+(function(){
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function campo(raw,nome){var m=raw.match(new RegExp('"'+nome+'"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"'));if(!m)return"";try{return JSON.parse('"'+m[1]+'"')}catch(e){return m[1]}}
+function hh(d){function p(n){return n<10?"0"+n:""+n}return p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds())}
+async function leggi(){
+  var st=$("stato"),ul=$("lista"),tx=$("txt");ul.innerHTML="";
+  if(!("caches" in window)){st.textContent="Questo browser non permette di leggere il diario.";return}
+  var voci=[],hist=[];
+  try{
+    var c=await caches.open("fcm-log"),ks=await c.keys();
+    for(var i=0;i<ks.length;i++){try{var r=await c.match(ks[i]);var j=await r.json();voci.push(j)}catch(e){}}
+  }catch(e){st.textContent="Non riesco a leggere il diario: "+e.message;return}
+  try{var h=await caches.open("vgc-hist"),r2=await h.match("hist.json");if(r2){var a=await r2.json();if(Array.isArray(a))hist=a}}catch(e){}
+  voci.sort(function(p,q){return new Date(q.t)-new Date(p.t)});
+  if(!voci.length){st.textContent="Il diario e' vuoto: da questo browser non risultano avvisi ricevuti. Se usi l'app installata, apri questa pagina da li'.";tx.hidden=true;return}
+  st.textContent=voci.length+" avvisi nel diario (mostro gli ultimi 60). Orario: quello di questo telefono.";
+  var righe=[],html="";
+  voci.slice(0,60).forEach(function(v){
+    var d=new Date(v.t),raw=v.raw||"";
+    var vicino=function(x){return [x.t||0].concat(Array.isArray(x.arr)?x.arr:[]).some(function(u){return Math.abs(u-d.getTime())<8000})};
+    // titolo e testo: salvati a parte dal service worker nuovo; per i vecchi si leggono dal testo grezzo (troncato a 300 lettere)
+    // e, se il titolo e' stato tagliato, si prende dalla riga della campanella arrivata nello stesso momento
+    var tit=v.title||campo(raw,"title"),cor=v.body||campo(raw,"body");
+    if(!tit){var hv=hist.filter(vicino);if(hv.length===1){tit=hv[0].title||"";cor=cor||hv[0].body||""}}
+    tit=tit||"(senza titolo)";
+    var inH=hist.some(function(x){return x.title===tit&&vicino(x)});
+    righe.push(d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"})+" "+hh(d)+" | "+tit+" | in campanella: "+(inH?"si":"NO"));
+    html+='<div class="row"><div class="t">'+esc(hh(d))+" · "+esc(tit)+'</div><div class="b">'+esc(cor)+'</div><div class="'+(inH?"ok":"ko")+'">in campanella: '+(inH?"si":"NO")+"</div></div>";
+  });
+  ul.innerHTML=html;tx.value=righe.join("\n");tx.hidden=false;
+}
+$("agg").addEventListener("click",leggi);
+$("cop").addEventListener("click",function(){var tx=$("txt");tx.hidden=false;tx.select();try{document.execCommand("copy");$("stato").textContent="Elenco copiato: incollalo nella chat."}catch(e){}});
+$("svu").addEventListener("click",async function(){if(!confirm("Svuoto solo il diario degli avvisi ricevuti (non la cronologia del sito). Continuo?"))return;try{await caches.delete("fcm-log")}catch(e){}leggi()});
+leggi();
+})();
+</script>
+</body>
+</html>
