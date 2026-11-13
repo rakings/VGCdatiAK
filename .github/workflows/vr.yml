@@ -48,6 +48,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Raccolta VR
+        env:
+          AVVISI_TOKEN: ${{ secrets.AVVISI_TOKEN }}   # chiave valida solo per il repo del sito: lancia l'avviso del vincitore appena la finale e' decisa
         run: |
           if [ "$MODO" = "prova" ]; then
             python3 -u vgc_stats.py --vr
