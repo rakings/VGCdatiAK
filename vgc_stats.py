@@ -683,6 +683,12 @@ def vr_evento(it, slug=None, nome=None, status="not started"):
 
 VR_DETTAGLI = {}                    # squadre complete (abilita', natura, mosse) dalla pagina «metagame»: {slug: {"t": momento, "d": dati, "ok": completo}}
 VR_DETTAGLI_RIPROVA = 30 * 60       # solo se la pagina non c'e' ancora o e' incompleta: si riprova dopo 30 minuti
+VR_DETTAGLI_MAX = 8                 # al massimo 8 letture per torneo (oltre la prima): poi si aspetta solo la fine
+
+
+def vr_mancanti(giocatori):
+    """Pokemon della classifica ancora senza abilita'/natura/mosse (la pagina metagame non li aveva quando e' stata letta)."""
+    return sum(1 for g in giocatori for t in (g.get("team") or []) if "moves" not in t)
 
 
 def vr_dettagli_salvati(slug):
@@ -716,24 +722,33 @@ def vr_completa(slug, giocatori, cache, finito=False):
             d = vr_dettagli_salvati(slug)
             salvabili = giocatori   # nei VR si salvano le squadre di tutti
             if d and salvabili and L.completa_squadre([dict(g, team=[dict(t) for t in g["team"]]) for g in salvabili], d) == len(salvabili):
-                v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d, "ok": True}
+                v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d, "ok": True, "n": 0, "finale": False}
                 print("Squadre complete gia' salvate: le riuso (nessuna nuova lettura).")
-        if v is None or (not v["ok"] and time.time() - v["t"] >= VR_DETTAGLI_RIPROVA):
+        n = L.completa_squadre(giocatori, v["d"]) if v and v["d"] else 0
+        manca = vr_mancanti(giocatori)
+        # si rilegge SOLO se qualche Pokemon e' ancora incompleto: subito la prima volta, poi ogni 30 minuti (massimo VR_DETTAGLI_MAX volte),
+        # e un'ultima volta a fine torneo. Squadre gia' complete = nessuna nuova lettura.
+        rileggi = v is None or (manca and ((v.get("n", 0) < VR_DETTAGLI_MAX and time.time() - v["t"] >= VR_DETTAGLI_RIPROVA)
+                                           or (finito and not v.get("finale"))))
+        if rileggi:
             vr_pausa()
             st, txt = vr_scarica("%s/tournament/%s/metagame" % (VR_SITO, slug), cache)
             d = L.leggi_metagame(txt) if st in (200, 304) else {}
-            v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d or (v or {}).get("d") or {}, "ok": False}
+            v = VR_DETTAGLI[slug] = {"t": time.time(), "d": d or (v or {}).get("d") or {}, "ok": False,
+                                     "n": (v or {}).get("n", -1) + 1, "finale": bool(finito) or bool((v or {}).get("finale"))}
             n = L.completa_squadre(giocatori, v["d"]) if v["d"] else 0
-            v["ok"] = n >= 0.95 * len(giocatori)
-            print("Squadre complete (abilita', natura, mosse) dalla pagina metagame: %d giocatori su %d%s." % (n, len(giocatori), "" if v["ok"] else ": riprovo tra 30 minuti"))
-            return n
-        return L.completa_squadre(giocatori, v["d"]) if v["d"] else 0
+            manca = vr_mancanti(giocatori)
+            print("Squadre complete (abilita', natura, mosse) dalla pagina metagame: %d giocatori su %d%s." % (
+                n, len(giocatori), "" if not manca else ": %d Pokemon ancora senza mosse, riprovo tra 30 minuti" % manca))
+        v["ok"] = not manca
+        return n
     except (Stop, Rallenta):
         print("Pagina metagame non letta adesso (il sito chiede di rallentare): squadre con Pokemon e strumenti, riprovo tra 30 minuti.")
     except Exception as ex:
         print("Pagina metagame non letta (%s): squadre con Pokemon e strumenti, riprovo tra 30 minuti." % str(ex)[:120])
     vecchio = VR_DETTAGLI.get(slug) or {}
-    VR_DETTAGLI[slug] = {"t": time.time(), "d": vecchio.get("d") or {}, "ok": bool(vecchio.get("ok"))}
+    VR_DETTAGLI[slug] = {"t": time.time(), "d": vecchio.get("d") or {}, "ok": bool(vecchio.get("ok")),
+                         "n": vecchio.get("n", -1) + 1, "finale": bool(vecchio.get("finale"))}
     return 0
 
 
