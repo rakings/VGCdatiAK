@@ -11,9 +11,10 @@ on:
           - "no"
           - "si"
   schedule:
-    # Due volte al giorno, a 12 ore e 28 minuti l'una dall'altra (orari UTC): 05:17 e 17:45.
-    - cron: "17 5 * * *"
-    - cron: "45 17 * * *"
+    # Ogni 2 ore guarda se e' ora: il giro vero parte solo se dall'ultimo sono passate almeno 22 ore (CP_OGNI_ORE),
+    # quindi l'orario scivola di 2 ore al giorno. I primi 150 si leggono a ogni giro; tutta la classifica solo se e' cambiata
+    # (o una volta a settimana): vedi cp_pokedata.py.
+    - cron: "17 */2 * * *"
 permissions:
   contents: write
 concurrency:
@@ -22,12 +23,13 @@ concurrency:
 jobs:
   cp:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Leggi la classifica
         env:
           SALVA: ${{ github.event_name == 'schedule' && 'si' || inputs.salva }}
+          CP_OGNI_ORE: ${{ github.event_name == 'schedule' && '22' || '' }}
         run: |
           if [ "$SALVA" = "si" ]; then python3 cp_pokedata.py --write; else python3 cp_pokedata.py; fi
       - name: Pubblica su GitHub
