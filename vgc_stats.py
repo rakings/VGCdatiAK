@@ -22,6 +22,7 @@ al massimo ogni 30 minuti (e alla fine), come copia di riserva. Se Cloudflare no
 Senza --write e' sempre una prova: stampa un riepilogo e non salva niente.
 """
 import argparse
+import hashlib
 import calendar
 import json
 import os
@@ -153,8 +154,38 @@ def city_of(name):
 
 # ---------- elaborazione di un regionale ----------
 
-def process(data):
-    """Dal JSON di Pokedata a giocatori, squadre e swiss."""
+def chiave_giocatore(p):
+    """Chiave che identifica un giocatore per tutto il torneo: il codice della fonte se c'e' (VR: codice del circuito), altrimenti il nome
+    con la nazione (Pokedata). Gli omonimi si distinguono con il nome allenatore e, se serve, con l'ordine (vedi process)."""
+    if p.get("pid"):
+        return "c:" + str(p["pid"])
+    return "n:" + str(p.get("name") or "").strip()
+
+
+def codici_fissi(raw, ids):
+    """Un numero FISSO per ogni giocatore (1, 2, 3, ... nell'ordine in cui compaiono la prima volta), ricordato in ids
+    (file ids.json della cartella del torneo). Cosi' classifica, squadre e swiss non cambiano numero a ogni round:
+    il file delle squadre resta uguale per tutto il torneo. Ritorna la lista dei codici, nello stesso ordine di raw."""
+    chiavi, viste = [], {}
+    for p in raw:
+        k = chiave_giocatore(p)
+        if k.startswith("n:") and sum(1 for q in raw if chiave_giocatore(q) == k) > 1:
+            k += "|" + str(p.get("Trainer name") or "")
+        viste[k] = viste.get(k, 0) + 1
+        chiavi.append(k if viste[k] == 1 else "%s#%d" % (k, viste[k]))
+    prossimo = max([v for v in ids.values() if isinstance(v, int)] + [0]) + 1
+    out = []
+    for k in chiavi:
+        if not isinstance(ids.get(k), int):
+            ids[k] = prossimo
+            prossimo += 1
+        out.append(ids[k])
+    return out
+
+
+def process(data, ids=None):
+    """Dal JSON di Pokedata a giocatori, squadre e swiss. Con ids (dizionario chiave -> numero, da ids.json) i giocatori hanno
+    codici fissi per tutto il torneo; senza, il codice e' la riga della classifica (come prima)."""
     info = data["tournament"]
     block = next((b for b in data["tournament_data"] if b.get("division") == "masters"), None)
     if not block:
@@ -163,8 +194,9 @@ def process(data):
     swiss_total = (info.get("roundNumbers") or {}).get("masters") or 0
     plain = {}
     pid_of = {}
+    fissi = codici_fissi(raw, ids) if ids is not None else None
     for i, p in enumerate(raw):
-        pid_of[i] = i + 1
+        pid_of[i] = fissi[i] if fissi else i + 1
     # tavoli: (round, tavolo) -> giocatori (risolve anche gli omonimi)
     tables = {}
     for i, p in enumerate(raw):
@@ -187,7 +219,7 @@ def process(data):
         day1 = 0
     players, swiss, teams = [], {}, {}
     for i, p in enumerate(raw):
-        pid = i + 1
+        pid = pid_of[i]
         m = re.match(r"^(.*?)\s*\[([A-Za-z]{2,3})\]$", p["name"])
         name, cc = (m.group(1), m.group(2).upper()) if m else (p["name"], "")
         rec = p.get("record") or {}
@@ -204,7 +236,7 @@ def process(data):
                 continue
             others = [x for x in tables.get((r, e["table"]), []) if x != i]
             code = RESULT.get(e.get("result"), "?")
-            entry.append("%d%s" % (others[0] + 1, code) if len(others) == 1 else "-1%s" % code)
+            entry.append("%d%s" % (pid_of[others[0]], code) if len(others) == 1 else "-1%s" % code)
         swiss[pid] = entry
         mons = []
         for t in p.get("teamlist") or []:
@@ -215,7 +247,7 @@ def process(data):
             mons.append({"slug": slug(nm), "name": nm, "item": t.get("item") or "", "ability": t.get("ability") or "",
                          "nature": t.get("stat alignment") or "", "moves": [x for x in (t.get("badges") or []) if x],
                          "extra": extra})
-        placing = p.get("placing") or pid
+        placing = p.get("placing") or i + 1
         players.append({"tp_id": pid, "name": name, "country": cc, "placement": placing, "wins": rec.get("wins", 0),
                         "losses": rec.get("losses", 0), "ties": rec.get("ties", 0),
                         "day2": 1 if day1 and played and max(played) > day1 else 0,
@@ -1100,7 +1132,10 @@ def collect(ev, write):
         data = converti_storico(get_lista("%s%s/masters/%s_Masters.json" % (STORICO_URL, tid, tid)), ev)
     else:
         data = get_json("%s/vg/id/%s/division/masters" % (API, tid))
-    info, players, teams, swiss, day1, swiss_total = process(data)
+    ids_path = os.path.join(OUT, str(tid), "ids.json")
+    ids = load(ids_path, {})
+    ids = ids if isinstance(ids, dict) else {}
+    info, players, teams, swiss, day1, swiss_total = process(data, ids)
     if ev.get("storico") or ev.get("vr"):
         if ev.get("storico"):
             controlla_torneo(ev, info)
@@ -1146,12 +1181,17 @@ def collect(ev, write):
             "updated": time.strftime("%Y-%m-%d %H:%M", time.gmtime())}
     pl = [[p["tp_id"], p["name"], p["country"], p["placement"], p["wins"], p["losses"], p["day2"], p["topcut"], p["team"]]
           for p in sorted(players, key=lambda x: x["placement"])]
-    tm = {k: [[m["slug"], m["name"], m["item"], m["ability"], m["nature"], m["moves"], m["extra"]] for m in v] for k, v in teams.items()}
+    tm = {k: [[m["slug"], m["name"], m["item"], m["ability"], m["nature"], m["moves"], m["extra"]] for m in teams[k]]
+          for k in sorted(teams, key=lambda x: int(x) if str(x).isdigit() else 0)}   # ordine fisso (per codice): il file non cambia se cambia solo la classifica
+    # impronta delle squadre: l'app, durante la diretta, riscarica teams.json SOLO se l'impronta e' cambiata
+    meta["tv"] = hashlib.sha1(json.dumps(tm, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:12]
+    meta["ids"] = "fissi"
     ita = [[p["placement"], p["name"], p["wins"], p["losses"]] for p in sorted(players, key=lambda x: x["placement"])
            if p["country"] == "IT" and p["placement"] <= 32]
     ch = [dump(os.path.join(folder, "italiani.json"), ita), dump(os.path.join(folder, "players.json"), pl),
           dump(os.path.join(folder, "pokemon.json"), stats), dump(os.path.join(folder, "teams.json"), tm),
-          dump(os.path.join(folder, "swiss.json"), {"rounds": swiss_total, "p": {str(k): v for k, v in swiss.items()}})]
+          dump(os.path.join(folder, "swiss.json"), {"rounds": swiss_total, "p": {str(k): v for k, v in swiss.items()}}),
+          dump(ids_path, ids)]
     # "updated" cambia SOLO se e' cambiato qualcosa in qualsiasi file di questo regionale: l'app controlla solo meta.json
     # (un file minuscolo) e ricarica il resto soltanto quando questa data cambia. Cosi' con tanta gente il carico resta basso.
     if not any(ch) and {k: v for k, v in old.items() if k != "updated"} == {k: v for k, v in meta.items() if k != "updated"}:

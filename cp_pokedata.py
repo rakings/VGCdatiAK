@@ -2,7 +2,13 @@
 """CP bar - classifica dei Championship Points da Pokedata (https://www.pokedata.ovh/2027/).
 Poche richieste (3 pagine), lente e a tempi irregolari, con un'identificazione onesta e senza dati personali.
 Senza --write e' una PROVA: legge e stampa quello che trova, ma non salva nulla.
-Con --write salva in dati/cp/ (ultima classifica + una copia per giorno, solo se e' cambiata)."""
+Con --write salva in dati/cp/ (ultima classifica + una copia per giorno, solo se e' cambiata).
+
+CLASSIFICA COMPLETA (tutti i giocatori, circa 126 pagine): per non pesare su Pokedata NON si legge a ogni giro.
+  - ogni giro legge le prime 3 pagine (come sempre): primi 150 con la storia dei punti -> <nome>.json
+  - SOLO se i primi 150 sono cambiati (cioe' dopo un torneo con punti), o se la copia completa ha piu' di 7 giorni,
+    rilegge tutte le pagine, lentamente -> <nome>-tutti.json (posizione, nome, paese, punti: file leggero)
+Con CP_OGNI_ORE=22 (lo mette il flusso automatico) un giro parte solo se dall'ultimo sono passate almeno 22 ore."""
 import datetime
 import hashlib
 import html as _html
@@ -24,6 +30,10 @@ PAGINE = 3                                    # 3 pagine da circa 50 giocatori =
 SOGLIA_POSIZIONE = 90                         # ultimo posto utile (stima NON ufficiale)
 OUT = os.path.join("dati", "cp")
 PAUSA = (6.0, 14.0)                           # secondi tra una richiesta e l'altra, a caso
+PAUSA_TUTTI = (4.0, 8.0)                      # lettura completa (molte pagine): pausa un po' piu' corta, sempre a tempi irregolari
+TUTTI_MAX_PAGINE = 400                        # tetto di sicurezza (oggi sono circa 126)
+TUTTI_OGNI_GIORNI = 7                         # lettura completa di sicurezza anche se i primi 150 non cambiano
+STATO = os.path.join(OUT, "stato.json")       # quando e' stato fatto l'ultimo giro e l'ultima lettura completa
 
 
 class Stop(Exception):
@@ -138,6 +148,74 @@ def leggi_classifica(game, region, division, scarica_fn=scarica, pausa_fn=None, 
     return righe, totale
 
 
+def leggi_tutti(game, region, division, prime, totale, stagione, scarica_fn=scarica, pausa_fn=None):
+    """Tutte le pagine dopo le prime 3 (gia' lette). Se Pokedata si ferma a meta', solleva Stop: la copia completa vecchia resta."""
+    pausa_fn = pausa_fn or (lambda: time.sleep(random.uniform(*PAUSA_TUTTI)))
+    righe = list(prime)
+    ultima = min(TUTTI_MAX_PAGINE, -(-totale // 50) + 1) if totale else TUTTI_MAX_PAGINE
+    for n in range(PAGINE + 1, ultima + 1):
+        pausa_fn()
+        r = righe_da_html(scarica_fn(url_pagina(game, region, division, n, stagione)))
+        if not r:
+            break
+        righe += r
+        if n % 20 == 0:
+            print("  pagina %d: %d giocatori finora" % (n, len(righe)), flush=True)
+    return righe
+
+
+def controlla_tutti(righe):
+    """Come controlla(), ma adatta a migliaia di nomi: tra tanti giocatori i nomi abbreviati uguali («Lucas M») sono normali,
+    quindi i doppioni si contano su posto + nome (pagine ripetute darebbero gli stessi posti)."""
+    p = []
+    if righe and righe[0]["rank"] != 1:
+        p.append("la classifica non parte dal primo posto")
+    coppie = [(r["rank"], r["name"]) for r in righe]
+    if len(set(coppie)) < len(coppie) * 0.98:
+        p.append("troppe righe ripetute: le pagine potrebbero essere uguali")
+    if any(righe[i]["cp"] < righe[i + 1]["cp"] for i in range(len(righe) - 1)):
+        p.append("i punti non scendono con la posizione")
+    return p
+
+
+def serve_tutti(out, base, esito, oggi):
+    """Lettura completa: dopo un cambiamento dei primi 150, se manca, o se e' piu' vecchia di TUTTI_OGNI_GIORNI."""
+    if esito == "cambiata" or not os.path.exists(os.path.join(out, base + "-tutti.json")):
+        return True
+    st = carica_stato(out)
+    ult = (st.get("tutti") or {}).get(base)
+    try:
+        return (oggi - datetime.date.fromisoformat(ult)).days >= TUTTI_OGNI_GIORNI
+    except (TypeError, ValueError):
+        return True
+
+
+def salva_tutti(righe, totale, stagione, base, adesso, out=OUT):
+    righe = [dict(r, pos=i + 1) for i, r in enumerate(righe)]
+    d = {"fonte": "Pokedata", "stagione": stagione, "aggiornato": adesso, "giocatori_totali": totale, "n": len(righe),
+         "campi": ["pos", "rank", "nome", "paese", "cp"], "r": [[r["pos"], r["rank"], r["name"], r["country"], r["cp"]] for r in righe]}
+    cartella_st = os.path.join(out, "stagioni", stagione)
+    os.makedirs(cartella_st, exist_ok=True)
+    for p in (os.path.join(out, base + "-tutti.json"), os.path.join(cartella_st, base + "-tutti.json")):
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
+
+
+def carica_stato(out=OUT):
+    try:
+        with open(os.path.join(out, "stato.json"), encoding="utf-8") as f:
+            d = json.load(f)
+            return d if isinstance(d, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def salva_stato(st, out=OUT):
+    os.makedirs(out, exist_ok=True)
+    with open(os.path.join(out, "stato.json"), "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False, indent=1)
+
+
 def controlla(righe):
     """Ritorna un elenco di problemi: se non e' vuoto NON si salva."""
     p = []
@@ -162,7 +240,7 @@ def costruisci(game, region, division, righe, totale, adesso=None, stagione=None
             "game": game, "region": region, "division": division, "aggiornato": adesso, "giocatori_totali": totale,
             "soglia": {"posizione": SOGLIA_POSIZIONE, "cp": sg["cp"] if sg else None, "rank_stampato": sg["rank"] if sg else None,
                        "nota": "posizione stimata, non ufficiale"},
-            "righe": righe}
+            "righe": righe, "tutti": nome_file(game, region, division) + "-tutti.json"}
 
 
 def nome_file(game, region, division):
@@ -235,7 +313,17 @@ def aggiorna_indice(out, base, corrente, oggi):
 def main(argv=None, scarica_fn=scarica, pausa_fn=None, oggi_fn=datetime.date.today):
     argv = sys.argv[1:] if argv is None else argv
     scrivi = "--write" in argv
-    print("%s - CP Pokedata %s (%d classifiche, massimo %d richieste)" % (
+    ogni = float(os.environ.get("CP_OGNI_ORE") or 0)
+    if scrivi and ogni:   # giro automatico: parte solo se sono passate almeno CP_OGNI_ORE ore dall'ultimo
+        ult = carica_stato().get("giro")
+        try:
+            passate = (time.time() - datetime.datetime.fromisoformat(ult).timestamp()) / 3600
+        except (TypeError, ValueError):
+            passate = 1e9
+        if passate < ogni:
+            print("Ultimo giro %.1f ore fa: il prossimo tra %.1f ore. Niente da fare." % (passate, ogni - passate))
+            return 0
+    print("%s - CP Pokedata %s (%d classifiche, %d richieste per i primi 150; la classifica completa solo se serve)" % (
         "SALVATAGGIO" if scrivi else "PROVA (non salva nulla)", STAGIONE, len(COMBOS), len(COMBOS) * PAGINE))
     errori = 0
     for game, region, division in COMBOS:
@@ -269,8 +357,32 @@ def main(argv=None, scarica_fn=scarica, pausa_fn=None, oggi_fn=datetime.date.tod
         if scrivi:
             esito = salva(dati, oggi=oggi_fn().isoformat())
             print("Classifica cambiata: salvata." if esito == "cambiata" else "Classifica invariata: aggiornati solo la data del controllo e il totale dei giocatori.")
+            base = nome_file(game, region, division)
+            if serve_tutti(OUT, base, esito, oggi_fn()):
+                print("Classifica completa: la rileggo tutta (%s giocatori, lentamente)..." % (totale or "?"), flush=True)
+                try:
+                    tutti = leggi_tutti(game, region, division, righe, totale, stagione, scarica_fn, pausa_fn)
+                    pr = controlla_tutti(tutti)
+                    if totale and len(tutti) < totale * 0.9:
+                        pr.append("letti solo %d giocatori su %d" % (len(tutti), totale))
+                    if pr:
+                        print("Classifica completa NON salvata (resta quella di prima):", "; ".join(pr))
+                    else:
+                        salva_tutti(tutti, totale, stagione, base, dati["aggiornato"])
+                        st = carica_stato()
+                        st.setdefault("tutti", {})[base] = oggi_fn().isoformat()
+                        salva_stato(st)
+                        print("Classifica completa salvata: %d giocatori." % len(tutti))
+                except Stop as e:
+                    print("Classifica completa interrotta (%s): resta quella di prima." % e)
+            else:
+                print("Classifica completa: non serve rileggerla (primi 150 invariati, copia recente).")
         else:
             print("PROVA finita: non e' stato salvato nulla.")
+    if scrivi:
+        st = carica_stato()
+        st["giro"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes")
+        salva_stato(st)
     return 1 if errori else 0
 
 

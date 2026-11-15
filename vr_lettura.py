@@ -382,6 +382,7 @@ def converti(giocatori, rounds, cut, ev, finito=False):
     raw = []
     for g in giocatori:
         raw.append({"name": "%s [%s]" % (g["name"], g["cc"]) if g["cc"] else g["name"], "placing": g["pos"],
+                    "pid": g.get("id") or "",   # codice del giocatore sul circuito: non cambia durante il torneo (vedi codici_fissi)
                     "record": {"wins": g["w"], "losses": g["l"], "ties": g["t"]}, "rounds": {},
                     "teamlist": [dict({"name": nome_dal_slug(t["slug"]) if t["slug"] else t["name"], "item": t["item"]},
                                       **({"ability": t.get("ability") or "", "stat alignment": t.get("nature") or "", "badges": t.get("moves") or []}
