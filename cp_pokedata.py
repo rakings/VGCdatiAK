@@ -180,7 +180,8 @@ def controlla_tutti(righe):
 
 def serve_tutti(out, base, esito, oggi):
     """Lettura completa: dopo un cambiamento dei primi 150, se manca, o se e' piu' vecchia di TUTTI_OGNI_GIORNI."""
-    if esito == "cambiata" or not os.path.exists(os.path.join(out, base + "-tutti.json")):
+    if esito == "cambiata" or not os.path.exists(os.path.join(out, base + "-tutti.json")) \
+            or not os.path.exists(os.path.join(out, base + "-storie.json")):
         return True
     st = carica_stato(out)
     ult = (st.get("tutti") or {}).get(base)
@@ -199,6 +200,13 @@ def salva_tutti(righe, totale, stagione, base, adesso, out=OUT):
     for p in (os.path.join(out, base + "-tutti.json"), os.path.join(cartella_st, base + "-tutti.json")):
         with open(p, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
+    # storia dei punti di TUTTI i giocatori (non solo dei primi 150), in un file a parte: il sito lo scarica solo
+    # quando tocchi un giocatore oltre i primi 150. Chiave = posto nell'elenco (pos), voce = [cp, delta, "AAAA-MM-GG"].
+    s = {"fonte": "Pokedata", "stagione": stagione, "aggiornato": adesso, "campi": ["cp", "delta", "data"],
+         "s": {str(r["pos"]): [[x["cp"], x["delta"], x["data"]] for x in r.get("storia") or []] for r in righe if r.get("storia")}}
+    for p in (os.path.join(out, base + "-storie.json"), os.path.join(cartella_st, base + "-storie.json")):
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(s, f, ensure_ascii=False, separators=(",", ":"))
 
 
 def carica_stato(out=OUT):
