@@ -1,5 +1,5 @@
 {
- "controllo": 1795078381,
+ "controllo": 1795600487,
  "fatte": [
   "s:2526",
   "s:2425",
@@ -3253,6 +3253,15 @@
    "nome": "Special Event Singapore",
    "paese": "SG",
    "vincitore": "SG-Chelsea Tan"
+  },
+  "450": {
+   "data": "2026-11-20",
+   "formato": "m-c",
+   "giocatori": 652,
+   "id": 450,
+   "nome": "LAIC 2026–27, São Paulo",
+   "paese": "BR",
+   "vincitore": "JP-Masahiro Taoka"
   },
   "46": {
    "data": "2016-08-19",
